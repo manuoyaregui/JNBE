@@ -251,3 +251,4 @@ Received Import Request.
 Start importing Assets/Prefabs/Blocks/BasicTerrainBlock.prefab using Guid(a7d252cbc0c941541ae58e8d900b5079) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fd8ca47077512346ac1d07899d2835dc') in 0.105029 seconds 
   Import took 0.108538 seconds .
 
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
