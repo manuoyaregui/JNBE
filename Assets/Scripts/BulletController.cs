@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-    [SerializeField] private GameObject[] damageableObjects;
-    [SerializeField] private GameObject[] solidObjects;
     // Start is called before the first frame update
     void Start()
     {

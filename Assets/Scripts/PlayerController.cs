@@ -5,42 +5,25 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public int lives = 1;
-
     [SerializeField] float mousesensitivity = 150;
-
     [SerializeField] float moveSpeed = 1;
-
     [SerializeField] GameObject playerBody;
-
     [SerializeField] GameObject camera;
-
     CharacterController characterController;
-
     [SerializeField] float gravity = -9.81f;
-
     Vector3 gravityVector;
-
     private float rotationX = 0;
-
     [SerializeField] GameObject footPoint;
-
     [SerializeField] GameObject wallPointL, wallPointR;
-
     [SerializeField] LayerMask floor, wall;
-
     [SerializeField] float jump = 5;
-
     [SerializeField] private GameObject ShieldIndicator;
-
     private bool isInFloor;
-
     private bool isInWall;
-
     Rigidbody rb;
-
     private bool isAlive = true;
-
     private bool dobleJump;
+    private float inertia;
 
     private void Awake()
     {
@@ -63,7 +46,7 @@ public class PlayerController : MonoBehaviour
             Dash();
             Mouse();
             Move();
-
+            InertiaMove();
         }
         CheckShield();
         WallDetection();
@@ -90,7 +73,7 @@ public class PlayerController : MonoBehaviour
 
         float moveZ = Input.GetAxis("Vertical");
 
-        Vector3 move = transform.right * moveX + transform.forward * moveZ;
+        Vector3 move = transform.right * moveX + transform.forward * moveZ*inertia;
 
         characterController.Move(moveSpeed * Time.deltaTime * move);
     }
@@ -211,4 +194,20 @@ public class PlayerController : MonoBehaviour
             dobleJump = true;
         }
     }
+    public void InertiaMove()
+    {
+        inertia = Mathf.Clamp(inertia,1f, 1.5f); // Limitar los valores que puede tomar inertia
+        if (!isInFloor)
+        {
+        inertia += 0.0025f;
+        }
+        else
+        {
+            inertia -= 0.03f;
+        }
+        Debug.Log("Inercia"+inertia);
+    }
+
+
+    
 }
