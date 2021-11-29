@@ -4,46 +4,77 @@ using UnityEngine;
 
 public class ShootWeapon : MonoBehaviour
 {
-    [SerializeField] Transform barrel;
+    public Weapon GunSettings;
 
-    [SerializeField] GameObject ammo;
+    [SerializeField] protected Transform barrel; //de donde salen las balas?
 
-    [SerializeField] float shotSpeed = 1500f;
+    [SerializeField] protected GameObject ammo;  //qué balas usa?
 
-    float rpm = 500f;
+    protected float rps; // Rondas por segundo del arma
 
-    float rps;
+    protected float timeBwShots; // Tiempo entre disparos
 
-    float timeBwShots;
+    protected int bulletsRemaining;
 
-    float shootTime;
+    protected float shootTime; //Tiempo de disparo
 
-
+    protected GameObject player;
     // Start is called before the first frame update
     void Start()
     {
-        rps = rpm / 60f;
-        timeBwShots = 1 / rps;
+        bulletsRemaining = GunSettings.initialBullets;
+        player = GameObject.FindGameObjectWithTag("Player");
+        rps = GunSettings.rpm / 60f; // Pasaje de Rondas por minuto a rondas por segundo
+        timeBwShots = 1 / rps; // Dividir el 1 entre las rps, da el tiempo que pasa entre cada disparo
     }
 
     // Update is called once per frame
     void Update()
     {
-        FireWeapon();
-    }
-    void FireWeapon()
-    {
-        if (Time.time > shootTime && Input.GetButtonDown("Fire1"))
+        if (player.GetComponent<PlayerController>().isAlive //si está vivo
+            &&
+            bulletsRemaining > 0) //y tiene al menos una bala
         {
-            GameObject newAmmo;
-
-            newAmmo = Instantiate(ammo, barrel.position, barrel.rotation);
-
-            newAmmo.GetComponent<Rigidbody>().AddForce(barrel.forward*shotSpeed);
-
-            shootTime = Time.time + timeBwShots;
-
-            Destroy(newAmmo, 4f);
+            FireWeapon(); // puede disparar el arma
         }
     }
+
+    protected virtual void FireWeapon()
+    {
+        if (Time.time > shootTime && Input.GetButtonDown("Fire1")) //Si el tiempo es mayor al tiempo de disparo
+        {
+            GameObject newAmmo; //Nuevo GameObject para instanciar la bala
+
+            newAmmo = Instantiate(ammo, barrel.position, barrel.rotation); //Se instancia la bala
+
+            newAmmo.GetComponent<Rigidbody>().AddForce(barrel.forward * GunSettings.shotSpeed); //Se agrega fuerza al rigidbody para que la bala se mueva
+
+            shootTime = Time.time + timeBwShots; // Variable para calcular la cadencia de disparo
+
+            Destroy(newAmmo, GunSettings.bulletTime); // La bala es destruida 4 segundos despues de ser instanciada
+
+            MinusBullets(); //Resto una Bala del cargador
+        }
+    }
+    public int GetBulletsRemaining()
+    {
+        return bulletsRemaining;
+    }
+
+    public void SetExtraBullets(int value)
+    {
+        Debug.Log("Mas balas lokooo");
+        bulletsRemaining += value;
+    }
+
+    public void EmptyCurrentBullets()
+    {
+        bulletsRemaining = 0;
+    }
+
+    private void MinusBullets()
+    {
+        bulletsRemaining--;
+    }
+
 }

@@ -11,7 +11,8 @@ public class PickUpGunController : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        typeofGun = Random.Range(1, player.GetComponent<PlayerPickUpGuns>().GetNumberOfGuns()-1);
+        typeofGun = Random.Range(0, player.GetComponent<PlayerPickUpGuns>().GetNumberOfGuns()); // Defino aleatoriamente
+                                                                                                  // que arma va a dar el PickUpGun 
     }
     // Update is called once per frame
     void Update()

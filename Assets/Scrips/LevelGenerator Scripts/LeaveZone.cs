@@ -20,8 +20,8 @@ public class LeaveZone : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            LevelGenerator.comunicadorSape.AddLevelBlock();
-            LevelGenerator.comunicadorSape.RemoveOldestGameBlock();
+            LevelGenerator.comunicadorSape.AddLevelBlock(); //Al entrar en colicion con el player agrega un nuevo bloque
+            LevelGenerator.comunicadorSape.RemoveOldestGameBlock(); //Al entrar en colicion con el player remueve un bloque viejo
         }
     }
 }

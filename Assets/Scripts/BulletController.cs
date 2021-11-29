@@ -21,16 +21,16 @@ public class BulletController : MonoBehaviour
         string tagColl = collObj.tag;
 
         switch (tagColl){
-            case "Player":
-                if(this.CompareTag("EnemyBullet")) //Si la bala es del enemigo, dañá al jugador
+            case "Player": //Si colisione con Player
+                if(this.CompareTag("EnemyBullet")) //y la bala viene del enemigo...
                 {
-                    collObj.GetComponent<PlayerController>().lives--;
+                    collObj.GetComponent<PlayerController>().MinusLives(); // sacale una vida al Player
                 }
-                Destroy(gameObject);
+                Destroy(gameObject); // Destruir la bala
             break;
-            case "Enemy":
-                collObj.GetComponent<EnemyController>().lives--;
-                Destroy(gameObject);
+            case "Enemy": //Si colisioné con un enemigo
+                collObj.GetComponent<EnemyController>().MinusLives(); // sacale una vida al enemigo
+                Destroy(gameObject); // Destruir la bala
             break;
         }
         

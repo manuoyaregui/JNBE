@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GameBlock : MonoBehaviour
 {
-    public Transform startPoint;
-    public Transform endPoint;
+    public Transform startPoint; //Punto de inicio de un bloque
+    public Transform endPoint; //Punto final de un bloque
 
     // Start is called before the first frame update
     void Start()

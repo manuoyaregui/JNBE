@@ -5,7 +5,6 @@ using UnityEngine;
 public class ShielPUController : MonoBehaviour
 {
     private GameObject Player;
-    [SerializeField] private GameObject ShieldIndicator;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,21 +17,17 @@ public class ShielPUController : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other) 
     {
-        Debug.Log("entre al colission enter");
-        ShieldIndicator.SetActive(true);
-        Player.GetComponent<PlayerController>().lives = 2;
-        Destroy(gameObject);
+        if (other.CompareTag("Player") || other.CompareTag("PlayerBullet")) // si choco o disparo, activar el escudo
+        {
+            GiveShield();
+        }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void GiveShield()
     {
-        if (other.CompareTag("Player") || other.CompareTag("PlayerBullet"))
-        {
-            ShieldIndicator.SetActive(true);
-            Player.GetComponent<PlayerController>().lives = 2;
-            Destroy(gameObject);
-        }
+        Player.GetComponent<PlayerController>().SetLives(2); // cambio vida de player a 2, valor el cual pone el escudo activo
+        Destroy(gameObject);
     }
 }
