@@ -16,9 +16,12 @@ public class EnemyController : MonoBehaviour
     private float distance; //Distancia entre jugador y enemigo
     float timeBetwShots;
     float timeLapse;
+    [SerializeField] Renderer enemyEye;
+    [SerializeField] ParticleSystem agroParticles;
     // Start is called before the first frame update
     void Start()
     {
+        agroParticles.Pause();
         timeBetwShots = 1 / bulletPerSec;
         PlayerObject = GameObject.FindGameObjectWithTag("Player");
     }
@@ -36,6 +39,8 @@ public class EnemyController : MonoBehaviour
     {
         if(distance <= enemyVision)
         {
+            agroParticles.Play();
+            enemyEye.material.color = Color.black;
             LookAt(); // mirar al objetivo
             timeLapse += Time.fixedDeltaTime; // time lapse se usa para contar el tiempo entre disparos
             if (timeLapse >= timeBetwShots)

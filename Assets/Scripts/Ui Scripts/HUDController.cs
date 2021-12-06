@@ -6,84 +6,94 @@ using UnityEngine.SceneManagement;
 
 public class HUDController : MonoBehaviour
 {
-    private GameObject player;
+
+    //Valor de Score
+    [SerializeField] private float scoreAddition;
 
     //Para las Balas
     [SerializeField] private Text textBullet;
-    [SerializeField] private GameObject gun;
+    private GameObject gun;
     private ShootWeapon pistolScript;
     private int bulletsValue;
 
     //Para el escudo
-    [SerializeField] private GameObject disabledShield, activeShield;
-    private int playerShieldState;
+    [SerializeField] private GameObject activeShield;
+    private int playerLives;
 
     //Para el Score
     [SerializeField] private Text textScore;
-    float formula = 0;
+    private int formula = 0;
 
     //Para el mensaje de fin de juego
     [SerializeField] private GameObject deathPanel;
 
+    private void Awake()
+    {
+        /*Con eventos*/
+        PlayerController.onLivesChange += CheckShield;
+        PlayerPickUpGuns.onGunChange += GetGun;
+        ShootWeapon.onBulletsChange += CheckBullets;
+        ShielPUController.OnShieldPickedUp += CheckShield;
+        LeaveZone.OnChangeGB += CheckScore;
+        textBullet.text = "";
+
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        textBullet.text = "";
-        pistolScript = gun.GetComponent<ShootWeapon>();
-        bulletsValue = pistolScript.GetBulletsRemaining();
-        playerShieldState = player.GetComponent<PlayerController>().getPlayerLives();
-        getGun();
+        
+        ResetScore();
     }
 
     // Update is called once per frame
     void Update()
     {
-        getGun();
-        CheckBullets();
-        CheckShield();
-        CheckScore();
+
     }
 
-    private void getGun()
+    private void GetGun(GameObject gun)
     {
-        gun = player.GetComponent<PlayerPickUpGuns>().GetActiveGun();
-        pistolScript = gun.GetComponent<ShootWeapon>();
+        this.gun = gun;
+        pistolScript = this.gun.GetComponent<ShootWeapon>();
     }
 
-    private void CheckBullets()
+    private void CheckBullets(int bullets)
     {
-        bulletsValue = pistolScript.GetBulletsRemaining();
+        bulletsValue = bullets;
         textBullet.text = "" + bulletsValue;
     }
 
-    private void CheckShield()
+    private void CheckShield(int lives)
     {
-        playerShieldState = player.GetComponent<PlayerController>().getPlayerLives();
-        switch (playerShieldState)
+        playerLives = lives;
+        switch (lives)
         {
             case 0:
-                deathPanel.SetActive(true);
-                deathPanel.GetComponentsInChildren<Text>()[1].text = "" + textScore.text;
+
                 break;
             case 1:
-                disabledShield.SetActive(true);
-                activeShield.SetActive(false);
+                activeShield.GetComponent<Image>().color = Color.black;
                 break;
-            case 2:
-                disabledShield.SetActive(false);
-                activeShield.SetActive(true);
+            case 2:          
+                activeShield.GetComponent<Image>().color = Color.green;
                 break;
         }
     }
 
-    private void CheckScore()
+    private void CheckScore() //Este metodo se llama cuando colisiono con el LeaveZone mediante un evento
     {
-        if(playerShieldState > 0)
+        if(playerLives > 0)
         {
-            formula += (int)(Time.time * player.GetComponent<PlayerController>().GetInertia()/2);
-            textScore.text = "Score = " + formula;
+            formula += (int)(scoreAddition * PlayerController.GetInertia());
+            textScore.text = "SCORE = " + formula;
         }
+    }
+
+    private void ResetScore()
+    {
+        formula = 0;
+        textScore.text = "Score = " + formula;
     }
 
     //Eventos de Buttons
@@ -95,5 +105,20 @@ public class HUDController : MonoBehaviour
     public void GoToMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void OnDeathUnityEventHandler()
+    {
+        deathPanel.SetActive(true);
+        deathPanel.GetComponentsInChildren<Text>()[1].text = "" + textScore.text;
+    }
+
+    private void OnDestroy()
+    {
+        PlayerController.onLivesChange -= CheckShield;
+        PlayerPickUpGuns.onGunChange -= GetGun;
+        ShootWeapon.onBulletsChange -= CheckBullets;
+        ShielPUController.OnShieldPickedUp -= CheckShield;
+        LeaveZone.OnChangeGB -= CheckScore;
     }
 }

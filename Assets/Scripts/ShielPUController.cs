@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class ShielPUController : MonoBehaviour
 {
     private GameObject Player;
+    public static event Action<int> OnShieldPickedUp;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +30,7 @@ public class ShielPUController : MonoBehaviour
 
     private void GiveShield()
     {
+        OnShieldPickedUp?.Invoke(2);
         Player.GetComponent<PlayerController>().SetLives(2); // cambio vida de player a 2, valor el cual pone el escudo activo
         Destroy(gameObject);
     }

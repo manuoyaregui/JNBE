@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
@@ -21,15 +23,28 @@ public class PlayerController : MonoBehaviour
     private bool isInWall;
     public bool isAlive = true;
     private bool dobleJump;
-    private float inertia;
+    private static float inertia;
+    private float inertiaFOV = 50;
+    private bool isInInertiaCharger;
+    [SerializeField] LayerMask inertiaChargerLayer;
+    [SerializeField] float dashTime;
+    [SerializeField] float dashSpeed;
+    private float dashCD;
+    private Vector3 move;
+
+    //eventos
+    public static event Action<int> onLivesChange;
+    [SerializeField] private UnityEvent OnDeathUnityEvent;
 
     private void Awake()
     {
         Application.targetFrameRate = 60; //Capear los fps en 60
+
     }
     // Start is called before the first frame update
     void Start()
     {
+       onLivesChange?.Invoke(lives);
        dobleJump = true; //Activo el doble jump
        characterController = GetComponent<CharacterController>();
     }
@@ -45,9 +60,11 @@ public class PlayerController : MonoBehaviour
             Move();
             InertiaMove();
             GravityForce();
+            ChangeFOV();
         }
         CheckShield();
         WallDetection();
+        InerciaCharger();
         //Move();
 
 
@@ -66,6 +83,8 @@ public class PlayerController : MonoBehaviour
     public void MinusLives()
     {
         lives--;
+        //lanzar evento
+        onLivesChange?.Invoke(lives);
     }
 
     public void SetLives(int value)
@@ -79,7 +98,7 @@ public class PlayerController : MonoBehaviour
 
         float moveZ = Input.GetAxis("Vertical"); //Imput vertical
 
-        Vector3 move = transform.right * moveX + transform.forward * moveZ*inertia; //Creo un vector que contiene mi imput en x y z, y al movimiento en z lo mulplico por inercia
+        move = transform.right * moveX + transform.forward * moveZ*inertia; //Creo un vector que contiene mi imput en x y z, y al movimiento en z lo mulplico por inercia
 
         characterController.Move(moveSpeed * Time.deltaTime * move); // Aplico el vector move en el character controller
     }
@@ -112,6 +131,7 @@ public class PlayerController : MonoBehaviour
         {
             case 0:
                 isAlive = false;
+                OnDeathUnityEvent?.Invoke();
                 break;
             case 1:
                 //ShieldIndicator.SetActive(false); -- debe ser cambiado por un elemento de la interfaz
@@ -160,14 +180,21 @@ public class PlayerController : MonoBehaviour
 
     private void Dash() //Dash para adelante apretando el shift, no esta del todo terminado
     {
-        if (isInFloor && Input.GetButtonDown("Fire3"))
+        float CD = 1F;
+        if (Time.time > dashCD && Input.GetButtonDown("Fire3"))
         {
-            float moveX = Input.GetAxis("Horizontal");
+            StartCoroutine(IDash());
+            dashCD = Time.time + CD;
+        }
+    }
 
-            Vector3 move = transform.right * moveX + transform.forward * 1;
-
-            characterController.Move(moveSpeed * Time.deltaTime * move * 5);
-
+    IEnumerator IDash()
+    {
+        float startTime = Time.time;
+        while (Time.time < startTime + dashTime)
+        {
+            characterController.Move(move * dashSpeed * Time.deltaTime);
+            yield return null;
         }
     }
     private void Jumpp() 
@@ -185,19 +212,19 @@ public class PlayerController : MonoBehaviour
              gravityVector.y = Mathf.Sqrt(jump * -2 * gravity);
              characterController.Move(gravityVector * Time.fixedDeltaTime);
         }
-        if (Input.GetButtonDown("Jump") && isInWall) //Si estoy en la pared y salto, aplico un impuso para arriba
+        if (Input.GetButtonDown("Jump") && (isInWall || isInInertiaCharger)) //Si estoy en la pared y salto, aplico un impuso para arriba
         {
              gravityVector.y = Mathf.Sqrt(jump * -2 * gravity);
              characterController.Move(gravityVector * Time.fixedDeltaTime);
         }
         
-        if(Input.GetButtonDown("Jump") && (isInFloor == false || isInWall == false) && dobleJump == true) //Para controlar el doble salto, si no estoy en el piso o la pared, y tengo el doble jump disponible aplico un impulso para arriba
+        if(Input.GetButtonDown("Jump") && (isInFloor == false || isInWall == false || isInInertiaCharger == false) && dobleJump == true) //Para controlar el doble salto, si no estoy en el piso o la pared, y tengo el doble jump disponible aplico un impulso para arriba
         {
             gravityVector.y = Mathf.Sqrt(jump * -2 * gravity);
             characterController.Move(gravityVector * Time.fixedDeltaTime);
             dobleJump = false;
         }
-        if((isInFloor == true || isInWall == true) && dobleJump == false) //Si estoy en la pared o el piso y me gaste el doble salto lo vuelvo a activar
+        if((isInFloor == true || isInWall == true || isInInertiaCharger == true) && dobleJump == false) //Si estoy en la pared o el piso y me gaste el doble salto lo vuelvo a activar
         {
             dobleJump = true;
         }
@@ -224,12 +251,43 @@ public class PlayerController : MonoBehaviour
         {
             lives = 0;
             isAlive = false;
+            onLivesChange?.Invoke(lives);
+            
         }
     }
 
-    public float GetInertia()
+    public static float GetInertia()
     {
-        return this.inertia;
+        return inertia;
+    }
+
+    public void ChangeFOV()
+    {
+
+        inertiaFOV = Mathf.Clamp(inertiaFOV, 50f, 75f);
+
+        if (isInWall)
+        {
+            inertiaFOV += 0.35f;
+        }
+        if (isInFloor)
+        {
+            inertiaFOV -= 0.5f;
+        }
+
+        Camera.main.fieldOfView = inertiaFOV;
+    }
+    public void InerciaCharger()
+    {
+        RaycastHit hit;
+
+        isInInertiaCharger = Physics.CheckSphere(footPoint.transform.position, 0.2f, inertiaChargerLayer);
+
+        if (isInInertiaCharger)
+        {
+            inertia = 1.5f;
+            inertiaFOV += 2.5f; 
+        }
     }
 
 

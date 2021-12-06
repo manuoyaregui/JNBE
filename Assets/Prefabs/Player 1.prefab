@@ -198,6 +198,24 @@ MonoBehaviour:
     m_Bits: 2048
   jump: 150
   isAlive: 1
+  inertiaChargerLayer:
+    serializedVersion: 2
+    m_Bits: 4096
+  OnDeathUnityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3551836985131733500, guid: db8188a6e7e6ce442b8c8b0fc0f29fb1, type: 3}
+        m_TargetAssemblyTypeName: HUDController, Assembly-CSharp
+        m_MethodName: OnDeathUnityEventHandler
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!143 &7662437387015370099
 CharacterController:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 //Este script va unido al Player
 public class PlayerPickUpGuns : MonoBehaviour
@@ -8,6 +9,13 @@ public class PlayerPickUpGuns : MonoBehaviour
     [SerializeField] private GameObject[] listOfGuns;
     [SerializeField] private int extraBullets;
     private GameObject gun;
+
+    public static event Action<GameObject> onGunChange;
+
+    private void Awake()
+    {
+        onGunChange?.Invoke(gun);
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +25,7 @@ public class PlayerPickUpGuns : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        gun = gameObject.GetComponent<PlayerPickUpGuns>().GetActiveGun();
+        gun = GetActiveGun();
         extraBullets = gun.GetComponent<ShootWeapon>().GunSettings.magazine;
     }
 
@@ -48,6 +56,7 @@ public class PlayerPickUpGuns : MonoBehaviour
                 listOfGuns[numberOfGun].SetActive(true); //la activo en el player
                 gun.GetComponent<ShootWeapon>().EmptyCurrentBullets();
                 gun.GetComponent<ShootWeapon>().SetExtraBullets(extraBullets);
+                onGunChange?.Invoke(gun);
 
             }
             
