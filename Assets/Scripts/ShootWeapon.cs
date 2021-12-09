@@ -12,12 +12,14 @@ public class ShootWeapon : MonoBehaviour
     protected float timeBwShots; // Tiempo entre disparos
     protected int bulletsRemaining;
     protected float shootTime; //Tiempo de disparo
-    public static event Action<int> onBulletsChange;
+    
+
+    public static event Action<int,GameObject> onBulletsChange;
+
     protected GameObject player;
     [SerializeField] private ParticleSystem shootParticles;
-    private void Awake()
-    {
-    }
+
+    public AudioClip shootClip;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +29,8 @@ public class ShootWeapon : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         rps = GunSettings.rpm / 60f; // Pasaje de Rondas por minuto a rondas por segundo
         timeBwShots = 1 / rps; // Dividir el 1 entre las rps, da el tiempo que pasa entre cada disparo
-        onBulletsChange?.Invoke(bulletsRemaining);
+
+        onBulletsChange?.Invoke(bulletsRemaining,gameObject);
     }
 
     // Update is called once per frame
@@ -42,10 +45,11 @@ public class ShootWeapon : MonoBehaviour
         }
     }
 
-    protected virtual void FireWeapon()
+    protected virtual bool FireWeapon()
     {
         if (Time.time > shootTime && Input.GetButtonDown("Fire1")) //Si el tiempo es mayor al tiempo de disparo
         {
+            GameManager.singletonGameManager.PlaySound(shootClip);
             StartCoroutine(IShootParticle());
             GameObject newAmmo; //Nuevo GameObject para instanciar la bala
 
@@ -59,7 +63,13 @@ public class ShootWeapon : MonoBehaviour
 
             MinusBullets(); //Resto una Bala del cargador
 
+            return true;
         }
+        else
+        {
+            //GameManager.singletonGameManager.PlaySound(shootClipWihtOutBullets);
+        }
+        return false;
     }
     IEnumerator IShootParticle()
     {
@@ -73,11 +83,14 @@ public class ShootWeapon : MonoBehaviour
         return bulletsRemaining;
     }
 
-    public void SetExtraBullets(int value)
+    public void SetExtraBullets()
     {
         Debug.Log("Mas balas lokooo");
-        bulletsRemaining += value;
-        onBulletsChange?.Invoke(bulletsRemaining);
+        bulletsRemaining += GunSettings.magazine;
+        if (gameObject.activeSelf) //si el arma esta en mano lanza el evento
+        {
+            onBulletsChange?.Invoke(bulletsRemaining,gameObject);
+        }
     }
 
     public void EmptyCurrentBullets()
@@ -88,8 +101,13 @@ public class ShootWeapon : MonoBehaviour
     private void MinusBullets()
     {
         bulletsRemaining--;
-        onBulletsChange?.Invoke(bulletsRemaining);
+        onBulletsChange?.Invoke(bulletsRemaining,gameObject);
 
+    }
+
+    private void OnEnable()
+    {
+        shootParticles.Pause();
     }
 
 }

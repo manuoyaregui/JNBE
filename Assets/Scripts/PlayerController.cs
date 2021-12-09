@@ -18,10 +18,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject wallPointL, wallPointR;
     [SerializeField] LayerMask floor, wall; // capas para reconocer qué cosa es pared y qué cosa es piso
     [SerializeField] float jump = 5;
-    CharacterController characterController;
+    private CharacterController characterController;
     private bool isInFloor;
     private bool isInWall;
-    public bool isAlive = true;
+    public bool isAlive;
     private bool dobleJump;
     private static float inertia;
     private float inertiaFOV = 50;
@@ -31,6 +31,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float dashSpeed;
     private float dashCD;
     private Vector3 move;
+    public AudioClip JumpSound;
+    public AudioClip DobleJumpSound;
+    public AudioClip DashSound;
+    public AudioClip killZoneDeath;
+    
 
     //eventos
     public static event Action<int> onLivesChange;
@@ -44,15 +49,17 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       onLivesChange?.Invoke(lives);
-       dobleJump = true; //Activo el doble jump
-       characterController = GetComponent<CharacterController>();
+        isAlive = true;
+        onLivesChange?.Invoke(lives);
+        dobleJump = true; //Activo el doble jump
+        characterController = GetComponent<CharacterController>();
+        ShotgunController.OnShotgunRecoil += DoShotgunRecoil;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(isAlive)
+        if (isAlive)
         {
             Jumpp();
             Dash();
@@ -98,7 +105,7 @@ public class PlayerController : MonoBehaviour
 
         float moveZ = Input.GetAxis("Vertical"); //Imput vertical
 
-        move = transform.right * moveX + transform.forward * moveZ*inertia; //Creo un vector que contiene mi imput en x y z, y al movimiento en z lo mulplico por inercia
+        move = transform.right * moveX + transform.forward * moveZ * inertia; //Creo un vector que contiene mi imput en x y z, y al movimiento en z lo mulplico por inercia
 
         characterController.Move(moveSpeed * Time.deltaTime * move); // Aplico el vector move en el character controller
     }
@@ -110,9 +117,9 @@ public class PlayerController : MonoBehaviour
 
         rotationX += mouseY;
 
-        rotationX = Mathf.Clamp(rotationX,-90, 90); //Clampeo la rotacion del mouse en Y
+        rotationX = Mathf.Clamp(rotationX, -90, 90); //Clampeo la rotacion del mouse en Y
 
-        camera.transform.localRotation = Quaternion.Euler(rotationX*-1,0,0);
+        camera.transform.localRotation = Quaternion.Euler(rotationX * -1, 0, 0);
 
         transform.Rotate(Vector3.up * mouseX);
 
@@ -120,9 +127,9 @@ public class PlayerController : MonoBehaviour
 
     private void GravityForce() //Fuerza de gravedad artificial, es sumada con el tiempo
     {
-        gravityVector.y += gravity; 
+        gravityVector.y += gravity;
 
-        characterController.Move(gravityVector*Time.deltaTime);
+        characterController.Move(gravityVector * Time.deltaTime);
     }
 
     private void CheckShield()
@@ -144,14 +151,14 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
-    private void WallDetection() 
+    private void WallDetection()
     {
-        RaycastHit hitL; 
+        RaycastHit hitL;
         RaycastHit hitR;
-         
+
 
         //Raycast para detectar colicion con la pared
-        if((Physics.Raycast(wallPointL.transform.position, transform.TransformDirection(Vector3.left), out hitL, 0.5f)) || 
+        if ((Physics.Raycast(wallPointL.transform.position, transform.TransformDirection(Vector3.left), out hitL, 0.5f)) ||
         Physics.Raycast(wallPointR.transform.position, transform.TransformDirection(Vector3.right), out hitR, 0.5f))
         {
             isInWall = true;
@@ -161,19 +168,19 @@ public class PlayerController : MonoBehaviour
             isInWall = false;
         }
 
-       /* if ((Physics.Raycast(wallPointL.transform.position, transform.TransformDirection(Vector3.left), out hitL, 0.5f)) && Input.GetButtonDown("Jump"))
-        {
-            float move = Input.GetAxis("Jump");
-            Vector3 moveRight = transform.right * 5 * move;
-            characterController.Move(moveSpeed * Time.deltaTime * moveRight);
-        }
-        if ((Physics.Raycast(wallPointL.transform.position, transform.TransformDirection(Vector3.left), out hitL, 0.5f)) && Input.GetButtonDown("Jump"))
-        {
-            float move = Input.GetAxis("Jump");
-            Vector3 moveLeft = transform.TransformDirection(Vector3.left) * -5 * move;
-            characterController.Move(moveSpeed * Time.deltaTime * moveLeft);
-        }
-        */
+        /* if ((Physics.Raycast(wallPointL.transform.position, transform.TransformDirection(Vector3.left), out hitL, 0.5f)) && Input.GetButtonDown("Jump"))
+         {
+             float move = Input.GetAxis("Jump");
+             Vector3 moveRight = transform.right * 5 * move;
+             characterController.Move(moveSpeed * Time.deltaTime * moveRight);
+         }
+         if ((Physics.Raycast(wallPointL.transform.position, transform.TransformDirection(Vector3.left), out hitL, 0.5f)) && Input.GetButtonDown("Jump"))
+         {
+             float move = Input.GetAxis("Jump");
+             Vector3 moveLeft = transform.TransformDirection(Vector3.left) * -5 * move;
+             characterController.Move(moveSpeed * Time.deltaTime * moveLeft);
+         }
+         */
 
 
     }
@@ -183,6 +190,7 @@ public class PlayerController : MonoBehaviour
         float CD = 1F;
         if (Time.time > dashCD && Input.GetButtonDown("Fire3"))
         {
+            GameManager.singletonGameManager.PlaySound(DashSound);
             StartCoroutine(IDash());
             dashCD = Time.time + CD;
         }
@@ -193,15 +201,15 @@ public class PlayerController : MonoBehaviour
         float startTime = Time.time;
         while (Time.time < startTime + dashTime)
         {
-            characterController.Move(move * dashSpeed * Time.deltaTime);
+            characterController.Move(dashSpeed * Time.deltaTime * move);
             yield return null;
         }
     }
-    private void Jumpp() 
+    private void Jumpp()
     {
         isInFloor = Physics.CheckSphere(footPoint.transform.position, 0.2f, floor); // Una espera que controla colicion con el piso
 
-        if (isInFloor && gravityVector.y < 0) //Si estoy en el piso disminuyo la graverdad
+        if (isInFloor && gravityVector.y < 0) //Si estoy en el piso disminuyo la gravedad
         {
             gravityVector.y = -2f;
         }
@@ -209,22 +217,25 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && isInFloor) //Si estoy en el piso y salto, aplico un impulso para arriba
         {
-             gravityVector.y = Mathf.Sqrt(jump * -2 * gravity);
-             characterController.Move(gravityVector * Time.fixedDeltaTime);
+            GameManager.singletonGameManager.PlaySound(JumpSound);
+            gravityVector.y = Mathf.Sqrt(jump * -2 * gravity);
+            characterController.Move(gravityVector * Time.fixedDeltaTime);
         }
         if (Input.GetButtonDown("Jump") && (isInWall || isInInertiaCharger)) //Si estoy en la pared y salto, aplico un impuso para arriba
         {
-             gravityVector.y = Mathf.Sqrt(jump * -2 * gravity);
-             characterController.Move(gravityVector * Time.fixedDeltaTime);
+            GameManager.singletonGameManager.PlaySound(JumpSound);
+            gravityVector.y = Mathf.Sqrt(jump * -2 * gravity);
+            characterController.Move(gravityVector * Time.fixedDeltaTime);
         }
-        
-        if(Input.GetButtonDown("Jump") && (isInFloor == false || isInWall == false || isInInertiaCharger == false) && dobleJump == true) //Para controlar el doble salto, si no estoy en el piso o la pared, y tengo el doble jump disponible aplico un impulso para arriba
+
+        if (Input.GetButtonDown("Jump") && (isInFloor == false || isInWall == false || isInInertiaCharger == false) && dobleJump == true) //Para controlar el doble salto, si no estoy en el piso o la pared, y tengo el doble jump disponible aplico un impulso para arriba
         {
+            GameManager.singletonGameManager.PlaySound(DobleJumpSound);
             gravityVector.y = Mathf.Sqrt(jump * -2 * gravity);
             characterController.Move(gravityVector * Time.fixedDeltaTime);
             dobleJump = false;
         }
-        if((isInFloor == true || isInWall == true || isInInertiaCharger == true) && dobleJump == false) //Si estoy en la pared o el piso y me gaste el doble salto lo vuelvo a activar
+        if ((isInFloor == true || isInWall == true || isInInertiaCharger == true) && dobleJump == false) //Si estoy en la pared o el piso y me gaste el doble salto lo vuelvo a activar
         {
             dobleJump = true;
         }
@@ -232,17 +243,17 @@ public class PlayerController : MonoBehaviour
 
     public void InertiaMove() //Modifico un flot que esta directamente relacionado con el movimiento
     {
-        inertia = Mathf.Clamp(inertia,1f, 1.5f); // Limitar los valores que puede tomar inertia
+        inertia = Mathf.Clamp(inertia, 1f, 1.5f); // Limitar los valores que puede tomar inertia
 
         if (!isInFloor)//Si no estoy en el piso aumento la inercia
         {
-        inertia += 0.0025f;
+            inertia += 0.0025f;
         }
         else
         {
             inertia -= 0.03f; //Si estoy en el piso disminuyo la inercia
         }
-        Debug.Log("Inercia"+inertia);
+        Debug.Log("Inercia" + inertia);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -251,8 +262,9 @@ public class PlayerController : MonoBehaviour
         {
             lives = 0;
             isAlive = false;
+            GameManager.singletonGameManager.PlaySound(killZoneDeath);
             onLivesChange?.Invoke(lives);
-            
+
         }
     }
 
@@ -286,9 +298,28 @@ public class PlayerController : MonoBehaviour
         if (isInInertiaCharger)
         {
             inertia = 1.5f;
-            inertiaFOV += 2.5f; 
+            inertiaFOV += 2.5f;
         }
     }
 
+    private void DoShotgunRecoil(float recoilTime, float recoilSpeed)
+    {
+        StartCoroutine(IEShRecoil(recoilTime,recoilSpeed));
+    }
 
+    IEnumerator IEShRecoil(float recoilTime, float recoilSpeed)
+    {
+        float startTime = Time.time;
+        while (Time.time < startTime + recoilTime)
+        {
+            characterController.Move(-1 * recoilSpeed * Time.deltaTime * camera.transform.forward); // disparo en sentido contrario a la direccion de la camara
+            gravityVector.y = -2f; // reinicio el vector gravedad, para q no caiga muy rapido
+            yield return null;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        ShotgunController.OnShotgunRecoil -= DoShotgunRecoil;
+    }
 }

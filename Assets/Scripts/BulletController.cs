@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
+    public AudioClip PlayerDamageSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,15 +25,23 @@ public class BulletController : MonoBehaviour
             case "Player": //Si colisione con Player
                 if(this.CompareTag("EnemyBullet")) //y la bala viene del enemigo...
                 {
+                    GameManager.singletonGameManager.PlaySound(PlayerDamageSound);
                     collObj.GetComponent<PlayerController>().MinusLives(); // sacale una vida al Player
                 }
-                Destroy(gameObject); // Destruir la bala
+                 // Destruir la bala
             break;
             case "Enemy": //Si colisioné con un enemigo
                 collObj.GetComponent<EnemyController>().MinusLives(); // sacale una vida al enemigo
-                Destroy(gameObject); // Destruir la bala
+                 // Destruir la bala
             break;
+            default:
+                if (this.CompareTag("EnemyBullet"))
+                {
+                    Destroy(gameObject);
+                }
+                break;
         }
         
+
     }
 }

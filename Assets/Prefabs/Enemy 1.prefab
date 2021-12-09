@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f09470d18d7773b498abf4f4003c7e3a, type: 2}
+  - {fileID: 2100000, guid: 7e1ce4763959588479ad14611fd8d7ee, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -250,6 +250,7 @@ MonoBehaviour:
   enemyVision: 15
   enemyEye: {fileID: 100796837440279519}
   agroParticles: {fileID: 1440883838687652008}
+  shootEnemy: {fileID: 8300000, guid: 064facb662dde9140b272865d2d363ec, type: 3}
 --- !u!114 &4193365220539479576
 MonoBehaviour:
   m_ObjectHideFlags: 0

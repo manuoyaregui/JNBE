@@ -11,6 +11,7 @@ TagManager:
   - Shield
   - PUgun
   - KillZone
+  - PlayerDeath
   layers:
   - Default
   - TransparentFX

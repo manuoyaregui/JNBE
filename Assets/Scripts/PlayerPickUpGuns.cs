@@ -7,10 +7,15 @@ using System;
 public class PlayerPickUpGuns : MonoBehaviour
 {
     [SerializeField] private GameObject[] listOfGuns;
-    [SerializeField] private int extraBullets;
+
     private GameObject gun;
 
     public static event Action<GameObject> onGunChange;
+    public static event Action OnExtraBullets;
+
+    public AudioClip ChangeWeapon;
+
+    public AudioClip PickUp;
 
     private void Awake()
     {
@@ -26,7 +31,43 @@ public class PlayerPickUpGuns : MonoBehaviour
     void Update()
     {
         gun = GetActiveGun();
-        extraBullets = gun.GetComponent<ShootWeapon>().GunSettings.magazine;
+        SwitchWeapons();
+    }
+
+    private void SwitchWeapons()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            GameManager.singletonGameManager.PlaySound(ChangeWeapon);
+            //obtener el nro de arma activa
+            int currentWeapon = 0;
+            for (int i=0 ; i < listOfGuns.Length; i++)
+            {
+                if(listOfGuns[i] != null && listOfGuns[i].activeSelf == true)
+                {
+                    currentWeapon = i;
+                }
+            }
+            //desactivar todas las armas
+            foreach(GameObject gun in listOfGuns)
+            {
+                gun.SetActive(false);
+            }
+            //activar arma con el nro siguiente
+            //si paso el largo del array volver al inicio
+            if(currentWeapon + 1 >= listOfGuns.Length)
+            {
+                listOfGuns[0].SetActive(true);
+                onGunChange?.Invoke(listOfGuns[0]);
+            }
+            else
+            {
+                listOfGuns[currentWeapon + 1].SetActive(true);
+                onGunChange?.Invoke(listOfGuns[currentWeapon + 1]);
+            }
+            
+            
+        }
     }
 
     public int GetNumberOfGuns()
@@ -39,28 +80,11 @@ public class PlayerPickUpGuns : MonoBehaviour
         //si colisiono con el PickUpGun
         if (other.CompareTag("PUgun"))
         {
+            GameManager.singletonGameManager.PlaySound(PickUp);
             int numberOfGun = other.GetComponent<PickUpGunController>().GetTypeOfGun(); //chequeo que tipo de arma es
-            if (listOfGuns[numberOfGun].activeSelf == true)
-            {
-                Debug.Log("el arma esta activa");
-                gun.GetComponent<ShootWeapon>().SetExtraBullets(extraBullets);
-            }
-            else
-            {
-                //desactivo todas las armas
-                foreach (GameObject gun in listOfGuns)
-                {
-                    gun.SetActive(false);
-                }
-                Debug.Log("cambio de arma");
-                listOfGuns[numberOfGun].SetActive(true); //la activo en el player
-                gun.GetComponent<ShootWeapon>().EmptyCurrentBullets();
-                gun.GetComponent<ShootWeapon>().SetExtraBullets(extraBullets);
-                onGunChange?.Invoke(gun);
-
-            }
-            
-            Destroy(other.gameObject); //y destruyo el PickUpGun
+            listOfGuns[numberOfGun].GetComponent<ShootWeapon>().SetExtraBullets(); //y le agrego balas
+            OnExtraBullets?.Invoke();
+            Destroy(other.gameObject); // destruyo el pickup
         }
     }
 

@@ -18,6 +18,7 @@ public class EnemyController : MonoBehaviour
     float timeLapse;
     [SerializeField] Renderer enemyEye;
     [SerializeField] ParticleSystem agroParticles;
+    public AudioClip shootEnemy;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,7 +41,7 @@ public class EnemyController : MonoBehaviour
         if(distance <= enemyVision)
         {
             agroParticles.Play();
-            enemyEye.material.color = Color.black;
+            enemyEye.material.color = Color.white;
             LookAt(); // mirar al objetivo
             timeLapse += Time.fixedDeltaTime; // time lapse se usa para contar el tiempo entre disparos
             if (timeLapse >= timeBetwShots)
@@ -77,6 +78,7 @@ public class EnemyController : MonoBehaviour
 
     void FireWeapon()
     {
+            GameManager.singletonGameManager.PlaySound(shootEnemy);
             GameObject newAmmo;
 
             newAmmo = Instantiate(ammo, barrel.position, barrel.rotation); // creo una bala

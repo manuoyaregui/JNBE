@@ -8,6 +8,8 @@ public class ShielPUController : MonoBehaviour
     private GameObject Player;
     public static event Action<int> OnShieldPickedUp;
 
+    public AudioClip PickUpShield;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +26,7 @@ public class ShielPUController : MonoBehaviour
     {
         if (other.CompareTag("Player") || other.CompareTag("PlayerBullet")) // si choco o disparo, activar el escudo
         {
+            GameManager.singletonGameManager.PlaySound(PickUpShield);
             GiveShield();
         }
     }
