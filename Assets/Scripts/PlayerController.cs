@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     private float rotationX = 0;
     [SerializeField] GameObject footPoint; // puntos de apoyo y colision
     [SerializeField] GameObject wallPointL, wallPointR;
-    [SerializeField] LayerMask floor, wall; // capas para reconocer qué cosa es pared y qué cosa es piso
+    [SerializeField] LayerMask floor, wall,ramp; // capas para reconocer qué cosa es pared y qué cosa es piso
     [SerializeField] float jump = 5;
     private CharacterController characterController;
     private bool isInFloor;
@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     private static float inertia;
     private float inertiaFOV = 50;
     private bool isInInertiaCharger;
+    private bool isInTheRamp;
     [SerializeField] LayerMask inertiaChargerLayer;
     [SerializeField] float dashTime;
     [SerializeField] float dashSpeed;
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip DobleJumpSound;
     public AudioClip DashSound;
     public AudioClip killZoneDeath;
+
     
 
     //eventos
@@ -313,10 +315,44 @@ public class PlayerController : MonoBehaviour
         while (Time.time < startTime + recoilTime)
         {
             characterController.Move(-1 * recoilSpeed * Time.deltaTime * camera.transform.forward); // disparo en sentido contrario a la direccion de la camara
-            gravityVector.y = -2f; // reinicio el vector gravedad, para q no caiga muy rapido
             yield return null;
         }
+            gravityVector.y = -2f; // reinicio el vector gravedad, para q no caiga muy rapido
     }
+    bool isthrowed = false;
+    
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.gameObject.CompareTag("Ramp"))
+        {
+
+            Vector3 throwDirection = hit.gameObject.transform.forward;
+            RampController rampCont = hit.gameObject.GetComponent<RampController>();
+            if (isthrowed == false)
+            {
+                StartCoroutine(IEThrowPlayer(throwDirection,rampCont.GetRampPower(),rampCont.GetRampTime()));
+            }
+            inertia = 1.5f;
+            inertiaFOV += 2.5f;
+            
+        }
+    }
+
+    IEnumerator IEThrowPlayer(Vector3 ThrowDirection,float rampPower,float rampTime)
+    {
+        isthrowed = true;
+        float startTime = Time.time;
+        while (Time.time < startTime + rampTime)
+        {
+            Debug.Log("Acá está entrando pa");
+            characterController.Move(rampPower * Time.deltaTime * ThrowDirection);
+            yield return null;
+        }
+        gravityVector.y = -2f;
+        isthrowed = false;
+    }
+
+
 
     private void OnDestroy()
     {

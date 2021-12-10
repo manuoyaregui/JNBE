@@ -23,7 +23,7 @@ public class RotationBackground : MonoBehaviour
 
     public void ChangePosition()
     {
-        transform.position = new Vector3(transform.position.x, player.transform.position.y, player.transform.position.z);
+        transform.position = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
     }
     public void Rotate()
     {
