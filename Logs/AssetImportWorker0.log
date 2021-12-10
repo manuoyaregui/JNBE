@@ -7888,3 +7888,4 @@ Received Import Request.
 Start importing Assets/Scrips/StaticBackground.cs using Guid(520d38dc454e4974db4d907c8b9cd518) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0e7e81d2ae5950ea05a3da730643e0fd') in 0.012255 seconds 
   Import took 0.018287 seconds .
 
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
