@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip DobleJumpSound;
     public AudioClip DashSound;
     public AudioClip killZoneDeath;
+    [SerializeField] private ParticleSystem InertiaParticles;
 
     
 
@@ -56,6 +57,7 @@ public class PlayerController : MonoBehaviour
         dobleJump = true; //Activo el doble jump
         characterController = GetComponent<CharacterController>();
         ShotgunController.OnShotgunRecoil += DoShotgunRecoil;
+        InertiaParticles.Stop();
     }
 
     // Update is called once per frame
@@ -85,6 +87,8 @@ public class PlayerController : MonoBehaviour
         Debug.Log(isInWall);
 
     }
+
+
     public int getPlayerLives()
     {
         return lives;
@@ -254,6 +258,14 @@ public class PlayerController : MonoBehaviour
         else
         {
             inertia -= 0.03f; //Si estoy en el piso disminuyo la inercia
+        }
+        if(inertia >= 1.3f)
+        {
+            InertiaParticles.Play();
+        }
+        else
+        {
+            InertiaParticles.Pause();
         }
         Debug.Log("Inercia" + inertia);
     }
