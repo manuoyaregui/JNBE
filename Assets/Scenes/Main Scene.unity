@@ -1405,7 +1405,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allTheGameBlocks:
-  - {fileID: 251853890602171151, guid: 4431a55c7d3a4f2478d143e02411c480, type: 3}
+  - {fileID: 251853890602171151, guid: 01da738e077da094fab67b6f9bd5d451, type: 3}
+  - {fileID: 251853890602171151, guid: 01da738e077da094fab67b6f9bd5d451, type: 3}
   levelStartPoint: {fileID: 149767719}
   currentBlocks: []
 --- !u!82 &1343912594
@@ -7638,7 +7639,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7869864867890093352, guid: 9b1cc2feddb6850459a6fdc7d2f2d7f6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -10.8
       objectReference: {fileID: 0}
     - target: {fileID: 7869864867890093352, guid: 9b1cc2feddb6850459a6fdc7d2f2d7f6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7949,6 +7950,10 @@ PrefabInstance:
     - target: {fileID: 3551836985131733500, guid: db8188a6e7e6ce442b8c8b0fc0f29fb1, type: 3}
       propertyPath: OnScoreSpecificValueUnityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4770473712780254461, guid: db8188a6e7e6ce442b8c8b0fc0f29fb1, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 53.19995
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: db8188a6e7e6ce442b8c8b0fc0f29fb1, type: 3}

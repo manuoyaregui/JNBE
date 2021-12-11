@@ -7,11 +7,14 @@ public class PostGlobalController : MonoBehaviour
 {
     private PostProcessVolume globalVolume;
     [SerializeField] List<Color> Colores;
+    int random;
+    int buffer;
 
     // Start is called before the first frame update
     void Start()
     {
         globalVolume = GetComponent<PostProcessVolume>();
+        buffer = Random.Range(0, Colores.Capacity);
     }
 
     // Update is called once per frame
@@ -22,11 +25,17 @@ public class PostGlobalController : MonoBehaviour
 
     public void ChangeGradentColor(int score)
     {
-        Debug.Log("LLEGUÉ HASTA ACÁ");
-        ColorGrading colorGr = globalVolume.profile.GetSetting<UnityEngine.Rendering.PostProcessing.ColorGrading>();
-        var colorParameter = new UnityEngine.Rendering.PostProcessing.ColorParameter
+        do
         {
-            value = Colores[Random.Range(0,Colores.Capacity)]
+            random = Random.Range(0, Colores.Capacity);
+        } while (buffer == random);
+
+        buffer = random;
+        
+        ColorGrading colorGr = globalVolume.profile.GetSetting<UnityEngine.Rendering.PostProcessing.ColorGrading>();
+        Color colorParameter = new UnityEngine.Rendering.PostProcessing.ColorParameter
+        {
+            value = Colores[random]
         };
         colorGr.colorFilter.Override(colorParameter);
     }

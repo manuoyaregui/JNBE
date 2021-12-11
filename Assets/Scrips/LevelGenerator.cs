@@ -12,11 +12,16 @@ public class LevelGenerator : MonoBehaviour
 
     public List<GameBlock> currentBlocks = new List<GameBlock>(); // Lista para almacenar los gameblokcs actuales de la escena
 
+    private int random;
+
+    int buffer;
+
 
     // Start is called before the first frame update
     void Start()
     {
         comunicadorSape = this;
+        buffer = Random.Range(0, allTheGameBlocks.Count);
         GenerateInitialBlocks();
     }
 
@@ -27,8 +32,14 @@ public class LevelGenerator : MonoBehaviour
     }
 
     public void AddLevelBlock()
-    {
-        int random = Random.Range(0, allTheGameBlocks.Count);  // Genero un numero aleatorio entre el numero de gameblocks que tenga
+    { 
+        do
+        {
+            random = Random.Range(0, allTheGameBlocks.Count);  // Genero un numero aleatorio entre el numero de gameblocks que tenga
+
+        } while (random ==buffer);
+
+        buffer = random;
 
         GameBlock currentBlock = (GameBlock)Instantiate(allTheGameBlocks[random]); // instancio un nuevo Gameblock
 
