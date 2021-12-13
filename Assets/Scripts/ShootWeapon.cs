@@ -12,6 +12,7 @@ public class ShootWeapon : MonoBehaviour
     protected float timeBwShots; // Tiempo entre disparos
     protected int bulletsRemaining;
     protected float shootTime; //Tiempo de disparo
+    public Animator anim;
     
 
     public static event Action<int,GameObject> onBulletsChange;
@@ -24,6 +25,7 @@ public class ShootWeapon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        anim = GetComponent<Animator>();
         shootParticles.Pause();
         bulletsRemaining = GunSettings.initialBullets;
         player = GameObject.FindGameObjectWithTag("Player");
@@ -40,8 +42,12 @@ public class ShootWeapon : MonoBehaviour
             &&
             bulletsRemaining > 0) //y tiene al menos una bala
         {
-            FireWeapon(); // puede disparar el arma
+            FireWeapon(); // puede disparar el arm
 
+        }
+        else
+        {
+        anim.SetBool("isShoot", false);
         }
     }
 
@@ -49,6 +55,7 @@ public class ShootWeapon : MonoBehaviour
     {
         if (Time.time > shootTime && Input.GetButtonDown("Fire1")) //Si el tiempo es mayor al tiempo de disparo
         {
+            anim.SetBool("isShoot", true);
             GameManager.singletonGameManager.PlaySound(shootClip);
             StartCoroutine(IShootParticle());
             GameObject newAmmo; //Nuevo GameObject para instanciar la bala
@@ -63,10 +70,14 @@ public class ShootWeapon : MonoBehaviour
 
             MinusBullets(); //Resto una Bala del cargador
 
+            anim.SetBool("isShoot", true);
+
             return true;
         }
         else
         {
+            anim.SetBool("isShoot", false);
+            return false;
             //GameManager.singletonGameManager.PlaySound(shootClipWihtOutBullets);
         }
         return false;

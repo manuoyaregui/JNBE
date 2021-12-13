@@ -463,7 +463,7 @@ GameObject:
   - component: {fileID: 8849345539949265359}
   m_Layer: 12
   m_Name: Cube (1)
-  m_TagString: Ramp
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
