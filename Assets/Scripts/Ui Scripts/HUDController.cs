@@ -118,7 +118,7 @@ public class HUDController : MonoBehaviour
     private void ResetScore()
     {
         formula = 0;
-        textScore.text = "Score = " + formula;
+        textScore.text = "SCORE: " + formula;
     }
 
     //Eventos de Buttons

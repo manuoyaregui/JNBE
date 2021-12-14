@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HandgunSettings
   m_EditorClassIdentifier: 
   bulletTime: 3
-  shotSpeed: 3000
+  shotSpeed: 4500
   initialBullets: 10
   rpm: 500
   magazine: 10

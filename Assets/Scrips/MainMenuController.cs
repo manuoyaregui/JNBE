@@ -92,4 +92,9 @@ public class MainMenuController : MonoBehaviour
     {
         SceneManager.LoadScene("Main Scene");
     }
+
+    public void PlayTutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
+    }
 }
