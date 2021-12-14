@@ -36,6 +36,12 @@ public class HUDController : MonoBehaviour
     [SerializeField] private UnityEvent<int> OnScoreSpecificValueUnityEvent;
     int extraValue = 0;
 
+    //Eventos del Tutorial
+    [SerializeField] private GameObject tutorialPanel;
+    [SerializeField] private Text tutorialText;
+    [SerializeField] private Color taskColor;
+    [SerializeField] private Color taskDoneColor;
+
     private void Awake()
     {
         /*Con eventos*/
@@ -53,14 +59,15 @@ public class HUDController : MonoBehaviour
     void Start()
     {
         ResetScore();
+        tutorialPanel.GetComponent<Image>().color = taskColor;
     }
-
+    /*
     // Update is called once per frame
     void Update()
     {
 
     }
-
+    */
     private void GetGun(GameObject gun)
     {
         this.gun = gun;
@@ -138,6 +145,19 @@ public class HUDController : MonoBehaviour
         deathPanel.GetComponentsInChildren<Text>()[1].text = "" + textScore.text;
     }
 
+    public void OnActivateTutorialMessageUnityEventHandler(string message)
+    {
+        StartCoroutine(IEcolorChange(message));
+    }
+
+    IEnumerator IEcolorChange(string message)
+    {
+        tutorialPanel.GetComponent<Image>().color = taskDoneColor;
+        yield return new WaitForSeconds(1f);
+        tutorialPanel.GetComponent<Image>().color = taskColor;
+        tutorialText.text = message;
+    }
+
     private void OnDestroy()
     {
         PlayerController.onLivesChange -= CheckShield;
@@ -147,4 +167,5 @@ public class HUDController : MonoBehaviour
         ShielPUController.OnShieldPickedUp -= CheckShield;
         LeaveZone.OnChangeGB -= CheckScore;
     }
+
 }
