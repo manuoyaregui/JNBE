@@ -264,6 +264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyFrag: {fileID: 5619944305915276186, guid: 59d7a94b20531f848a98a0e5cd5589d2, type: 3}
+  EnemyDestroySound: {fileID: 0}
 --- !u!1001 &585160743625697080
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -274,7 +275,7 @@ PrefabInstance:
     - target: {fileID: 1810121543744426980, guid: 5ef4e3584e6875145a53c6f470daa51b, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 435bdb59b0338cb4b84b0f26a153ae9b, type: 2}
+      objectReference: {fileID: 2100000, guid: a8fea3faf57a7d9438e7de4866bce419, type: 2}
     - target: {fileID: 4788226536865631183, guid: 5ef4e3584e6875145a53c6f470daa51b, type: 3}
       propertyPath: m_Name
       value: Enemigo

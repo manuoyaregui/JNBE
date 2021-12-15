@@ -5385,6 +5385,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: InertiaParticles
       objectReference: {fileID: 0}
+    - target: {fileID: 1904604792002773084, guid: 1905db7b1c2aff7409c7955cef1a3ceb, type: 3}
+      propertyPath: SubModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1905db7b1c2aff7409c7955cef1a3ceb, type: 3}
 --- !u!198 &3221805786589413051 stripped

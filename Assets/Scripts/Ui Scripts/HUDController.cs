@@ -100,7 +100,7 @@ public class HUDController : MonoBehaviour
 
                 break;
             case 1:
-                activeShield.GetComponent<Image>().color = new Color(0,0,0,0.3f);
+                activeShield.GetComponent<Image>().color = new Color(255,255,255,0.6f);
                 break;
             case 2:          
                 activeShield.GetComponent<Image>().color = Color.green;

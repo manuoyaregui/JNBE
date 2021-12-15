@@ -2792,6 +2792,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 669749871069641059, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: recoilTime
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 669749871069641059, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: recoilSpeed
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 3221805786676314309, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: d87d1e869c4a41340af1d9d0ff852c95, type: 2}
     - target: {fileID: 3671765639798592436, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
       propertyPath: OnDeathUnityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2858,6 +2870,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3551836984675832736, guid: db8188a6e7e6ce442b8c8b0fc0f29fb1, type: 3}
+      propertyPath: m_Color.a
+      value: 0.39215687
+      objectReference: {fileID: 0}
     - target: {fileID: 3551836985131733443, guid: db8188a6e7e6ce442b8c8b0fc0f29fb1, type: 3}
       propertyPath: m_Pivot.x
       value: 0
