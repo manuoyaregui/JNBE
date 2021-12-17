@@ -19,6 +19,7 @@ public class PlayerPickUpGuns : MonoBehaviour
 
     private void Awake()
     {
+        gun = GetActiveGun();
         onGunChange?.Invoke(gun);
     }
 
@@ -31,7 +32,8 @@ public class PlayerPickUpGuns : MonoBehaviour
     void Update()
     {
         gun = GetActiveGun();
-        SwitchWeapons();
+        if(HUDController.isPause == false)
+            SwitchWeapons();
     }
 
     private void SwitchWeapons()

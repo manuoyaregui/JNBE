@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 public class HUDController : MonoBehaviour
 {
-
+    public static bool isPause;
     //Valor de Score
     [SerializeField] private float scoreAddition;
 
@@ -31,10 +31,15 @@ public class HUDController : MonoBehaviour
     //Para el mensaje de fin de juego
     [SerializeField] private GameObject deathPanel;
 
+    //Para menuPausa
+    [SerializeField] private GameObject pauseMenu;
+
     //Eventos de Score
     [SerializeField] private int changeColorValue; //Cada cuanto cambio de color?
     [SerializeField] private UnityEvent<int> OnScoreSpecificValueUnityEvent;
     int extraValue = 0;
+    public Player playerSettings;
+    [SerializeField] private GameObject highScorePanel;
 
     //Eventos del Tutorial
     [SerializeField] private GameObject tutorialPanel;
@@ -44,6 +49,7 @@ public class HUDController : MonoBehaviour
 
     private void Awake()
     {
+        isPause = false;
         /*Con eventos*/
         PlayerController.onLivesChange += CheckShield;
         PlayerPickUpGuns.onGunChange += GetGun;
@@ -61,13 +67,32 @@ public class HUDController : MonoBehaviour
         ResetScore();
         tutorialPanel.GetComponent<Image>().color = taskColor;
     }
-    /*
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Escape) && isPause == false)
+        {
+            EscapeButtonMenu();
+        }
+        CheckIfItPaused();
     }
-    */
+
+    public void ToggleIsPause()
+    {
+        isPause = !isPause;
+    }
+
+    private void CheckIfItPaused()
+    {
+        if (isPause)
+        {
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
+    }
     private void GetGun(GameObject gun)
     {
         this.gun = gun;
@@ -143,6 +168,11 @@ public class HUDController : MonoBehaviour
     {
         deathPanel.SetActive(true);
         deathPanel.GetComponentsInChildren<Text>()[1].text = "" + textScore.text;
+        if(formula > playerSettings.highScore)
+        {
+            playerSettings.highScore = formula;
+            highScorePanel.SetActive(true);
+        }
     }
 
     public void OnActivateTutorialMessageUnityEventHandler(string message)
@@ -156,6 +186,20 @@ public class HUDController : MonoBehaviour
         yield return new WaitForSeconds(1f);
         tutorialPanel.GetComponent<Image>().color = taskColor;
         tutorialText.text = message;
+    }
+
+    public void EscapeButtonMenu()
+    {
+        ToggleIsPause();
+
+        if (isPause)
+        {
+            pauseMenu.SetActive(true);
+        }
+        else
+        {
+            pauseMenu.SetActive(false);
+        }
     }
 
     private void OnDestroy()

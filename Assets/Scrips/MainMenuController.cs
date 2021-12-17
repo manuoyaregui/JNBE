@@ -8,6 +8,8 @@ public class MainMenuController : MonoBehaviour
 {
     public Canvas mainMenu,shop,custom,options,exit;
     public menuState currentState;
+
+
     // Start is called before the first frame update
     void Start()
     {

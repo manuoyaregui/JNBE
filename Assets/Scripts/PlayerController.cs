@@ -6,18 +6,19 @@ using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] int lives = 1; //Vidas del jugador
-    [SerializeField] float mousesensitivity = 150; //sensibilidad del mouse
-    [SerializeField] float moveSpeed = 1; //Velocidad de movimiento del jugador
+    public Player playerSettings;
+    private int lives = 1; //Vidas del jugador
+    private float mousesensitivity = 150; //sensibilidad del mouse
+    private float moveSpeed = 1; //Velocidad de movimiento del jugador
     [SerializeField] GameObject playerBody; //no se usa, hay q ver de sacarlo quiza 
     [SerializeField] GameObject camera; // trabaja la rotacion de la camara
-    [SerializeField] float gravity = -9.81f; // valor de la gravedad
+    private float gravity; // valor de la gravedad
     Vector3 gravityVector;
     private float rotationX = 0;
     [SerializeField] GameObject footPoint; // puntos de apoyo y colision
     [SerializeField] GameObject wallPointL, wallPointR;
     [SerializeField] LayerMask floor, wall,ramp; // capas para reconocer qué cosa es pared y qué cosa es piso
-    [SerializeField] float jump = 5;
+    private float jump = 5;
     private CharacterController characterController;
     private bool isInFloor;
     private bool isInWall;
@@ -28,8 +29,8 @@ public class PlayerController : MonoBehaviour
     private bool isInInertiaCharger;
     private bool isInTheRamp;
     [SerializeField] LayerMask inertiaChargerLayer;
-    [SerializeField] float dashTime;
-    [SerializeField] float dashSpeed;
+    private float dashTime;
+    private float dashSpeed;
     private float dashCD;
     private Vector3 move;
     public AudioClip JumpSound;
@@ -52,6 +53,15 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //getSettings
+        lives = playerSettings.lives;
+        mousesensitivity = playerSettings.mouseSensibility;
+        gravity = playerSettings.gravity;
+        jump = playerSettings.jumpValue;
+        dashSpeed = playerSettings.dashSpeed;
+        dashTime = playerSettings.dashTime;
+        moveSpeed = playerSettings.moveSpeed;
+        ///////
         isAlive = true;
         onLivesChange?.Invoke(lives);
         dobleJump = true; //Activo el doble jump
@@ -63,7 +73,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isAlive)
+        if (isAlive && HUDController.isPause == false)
         {
             Jumpp();
             Dash();

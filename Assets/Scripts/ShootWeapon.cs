@@ -38,16 +38,18 @@ public class ShootWeapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player.GetComponent<PlayerController>().isAlive //si está vivo
-            &&
-            bulletsRemaining > 0) //y tiene al menos una bala
+        if (HUDController.isPause == false)
         {
-            FireWeapon(); // puede disparar el arm
-
-        }
-        else
-        {
-        anim.SetBool("isShoot", false);
+            if (player.GetComponent<PlayerController>().isAlive //si está vivo
+                &&
+                bulletsRemaining > 0) //y tiene al menos una bala
+            {
+                FireWeapon(); // puede disparar el arma
+            }
+            else
+            {
+            anim.SetBool("isShoot", false);
+            }
         }
     }
 
