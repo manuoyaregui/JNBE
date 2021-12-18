@@ -374,7 +374,10 @@ public class PlayerController : MonoBehaviour
         isthrowed = false;
     }
 
-
+    public void ReCheckMouseSensibility()
+    {
+        mousesensitivity = playerSettings.mouseSensibility;
+    }
 
     private void OnDestroy()
     {
