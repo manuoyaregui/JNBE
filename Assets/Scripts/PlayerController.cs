@@ -87,6 +87,7 @@ public class PlayerController : MonoBehaviour
         WallDetection();
         InerciaCharger();
         //Move();
+        Debug.Log("Vidas " + lives);
 
 
         if (isInWall && gravityVector.y < 0)
