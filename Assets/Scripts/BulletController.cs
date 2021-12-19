@@ -14,6 +14,10 @@ public class BulletController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (HUDController.isPause)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)

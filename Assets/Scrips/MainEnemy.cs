@@ -7,7 +7,15 @@ public class MainEnemy : MonoBehaviour
     [SerializeField] Transform player;
     [SerializeField] private GameObject playerGameObject;
 
-    [SerializeField] private float speed = 15f;
+    private float enemySpeed;
+    [SerializeField] private float speed1 = 15f;
+    [SerializeField] private float speed2 = 30f;
+    [SerializeField] private float speed3 = 50f;
+
+
+    [SerializeField] private GameObject playerBullet;
+    [SerializeField] private GameObject enemyBullet;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,24 +25,28 @@ public class MainEnemy : MonoBehaviour
     // Update is called once per fram
     void Update()
     {
-        Move();
-        LookPlayer();
+        if( !HUDController.isPause)
+        {
+            Move();
+            LookPlayer();
+        }
     }
     private void Move()
     {
-        if(player.position.z - transform.position.z > 25)
+        float distance = player.position.z - transform.position.z;
+        if ( distance > 25 && distance <= 60)
         {
-            speed = 35f;
+            enemySpeed = speed1;
         }
-        else if(player.position.z - transform.position.z > 60)
+        else if(distance > 60)
         {
-            speed = 80f;
+            enemySpeed = speed3;
         }
         else
         {
-            speed = 17.5f;
+            enemySpeed = speed1;
         }
-        transform.Translate(new Vector3(0, 0, speed * Time.deltaTime));
+        transform.Translate(new Vector3(0, 0, enemySpeed * Time.deltaTime));
     }
     private void LookPlayer()
     {
@@ -47,4 +59,6 @@ public class MainEnemy : MonoBehaviour
             playerGameObject.GetComponent<PlayerController>().SetLives(0);
         }
     }
+
+    
 }

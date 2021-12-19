@@ -166,13 +166,14 @@ public class HUDController : MonoBehaviour
 
     public void OnDeathUnityEventHandler()
     {
+        ToggleIsPause();
         deathPanel.SetActive(true);
         deathPanel.GetComponentsInChildren<Text>()[1].text = "" + textScore.text;
         if(formula > playerSettings.highScore)
         {
             playerSettings.highScore = formula;
             highScorePanel.SetActive(true);
-        }
+        }        
     }
 
     public void OnActivateTutorialMessageUnityEventHandler(string message)

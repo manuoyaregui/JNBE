@@ -30,9 +30,12 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        distance = Vector3.Distance(PlayerObject.transform.position, transform.position);
-        CheckLives(); // chequear si está vivo o muerto
-        CheckVision(); // chequear si está el jugador en rango de visión
+        if( ! HUDController.isPause)
+        {
+            distance = Vector3.Distance(PlayerObject.transform.position, transform.position);
+            CheckLives(); // chequear si está vivo o muerto
+            CheckVision(); // chequear si está el jugador en rango de visión
+        }
     }
 
 
