@@ -1363,7 +1363,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2526,10 +2526,10 @@ RectTransform:
   m_Father: {fileID: 571130722}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00012207031, y: -191}
-  m_SizeDelta: {x: -1419.8052, y: -1602.0615}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 262.90134}
+  m_SizeDelta: {x: 543.0592, y: 525.8027}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1055808079
 MonoBehaviour:
@@ -2702,17 +2702,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1072144897}
   m_CullTransparentMesh: 1
---- !u!114 &1093428053 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5334763838516034542, guid: a75c799343d5232469b164ccb58f1019, type: 3}
-  m_PrefabInstance: {fileID: 5334763837427325115}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1118351484
 GameObject:
   m_ObjectHideFlags: 0
@@ -3188,7 +3177,6 @@ MonoBehaviour:
   playerStatistics: {fileID: 11400000, guid: 44232b7473632db4f9db5cf9a7ece147, type: 2}
   wannaPlayTutorialPanel: {fileID: 1792228043}
   transition: {fileID: 1435587596}
-  keyBindings: {fileID: 1093428053}
 --- !u!4 &1435587592
 Transform:
   m_ObjectHideFlags: 0
@@ -4164,10 +4152,10 @@ RectTransform:
   m_Father: {fileID: 571130722}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: 249}
-  m_SizeDelta: {x: -768.5507, y: -1311.1361}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -221.6135}
+  m_SizeDelta: {x: 1223.9796, y: 443.227}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1873875455
 MonoBehaviour:
@@ -5128,11 +5116,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5334763839034921928, guid: a75c799343d5232469b164ccb58f1019, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -1120
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5334763839034921928, guid: a75c799343d5232469b164ccb58f1019, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -787.60425
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5334763839034921928, guid: a75c799343d5232469b164ccb58f1019, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5185,6 +5173,10 @@ PrefabInstance:
     - target: {fileID: 5334763839034921929, guid: a75c799343d5232469b164ccb58f1019, type: 3}
       propertyPath: m_Name
       value: LoadingScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334763839034921929, guid: a75c799343d5232469b164ccb58f1019, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5334763839034921933, guid: a75c799343d5232469b164ccb58f1019, type: 3}
       propertyPath: m_Alpha

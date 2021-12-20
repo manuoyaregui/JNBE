@@ -14,7 +14,6 @@ public class MainMenuController : MonoBehaviour
 
 
     [SerializeField] private Animator transition;
-    [SerializeField] private Image keyBindings;
 
     private void Awake()
     {
@@ -115,8 +114,6 @@ public class MainMenuController : MonoBehaviour
 
     IEnumerator LoadLevel(string levelName) 
     {
-        //Activo el mapa de teclas
-        keyBindings.gameObject.SetActive(true);
         //Inicio el fadeIn
         transition.SetTrigger("Start");
         yield return new WaitForSeconds(1);

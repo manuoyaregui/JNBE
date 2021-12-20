@@ -17,6 +17,8 @@ public class SkipTextGuide : MonoBehaviour
         if (Input.anyKeyDown)
         {
             canvas.enabled = false;
+            HUDController.isPause = false;
+            Destroy(gameObject);
         }
     }
 }

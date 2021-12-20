@@ -49,12 +49,9 @@ public class HUDController : MonoBehaviour
 
     //Transiciones
     [SerializeField] private Animator transition;
-    [SerializeField] private Image keyBindings;
-    bool keyBindingsOpen = true;
 
     private void Awake()
     {
-        isPause = false;
         /*Con eventos*/
         PlayerController.onLivesChange += CheckShield;
         PlayerPickUpGuns.onGunChange += GetGun;
@@ -69,6 +66,7 @@ public class HUDController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        isPause = false;
         ResetScore();
         tutorialPanel.GetComponent<Image>().color = taskColor;
     }
@@ -90,6 +88,7 @@ public class HUDController : MonoBehaviour
 
     private void CheckIfItPaused()
     {
+        Debug.Log("Esta pausado?" + isPause);
         if (isPause)
         {
             Time.timeScale = 0;
@@ -172,8 +171,6 @@ public class HUDController : MonoBehaviour
 
     IEnumerator LoadLevel(string levelName)
     {
-        //Activo el mapa de teclas
-        keyBindings.gameObject.SetActive(false);
         //Inicio el fadeIn
         transition.SetTrigger("Start");
         yield return new WaitForSeconds(1f);
