@@ -38,6 +38,9 @@ public class PlayerController : MonoBehaviour
     public AudioClip DashSound;
     public AudioClip killZoneDeath;
     [SerializeField] private ParticleSystem InertiaParticles;
+    private bool isInWallLeft;
+    private bool isInWallRight;
+    private float rotatezLeft = 0;
 
     
 
@@ -82,20 +85,21 @@ public class PlayerController : MonoBehaviour
             InertiaMove();
             GravityForce();
             ChangeFOV();
+            RotateCamaraZ();
         }
         CheckShield();
         WallDetection();
         InerciaCharger();
         //Move();
-        Debug.Log("Vidas " + lives);
 
 
         if (isInWall && gravityVector.y < 0)
         {
             gravityVector.y = -2f; //Si estoy en la pared disminuyo la fuerza de la gravedad
         }
+        Debug.Log("RotateZ " + rotatezLeft);
 
-        Debug.Log(isInWall);
+        camera.transform.Rotate(0, 0, rotatezLeft);
 
     }
 
@@ -183,6 +187,24 @@ public class PlayerController : MonoBehaviour
         else
         {
             isInWall = false;
+        }
+
+        if(Physics.Raycast(wallPointL.transform.position, transform.TransformDirection(Vector3.left), out hitL, 0.5f))
+        {
+            isInWallLeft = true;
+        }
+        else
+        {
+            isInWallLeft = false;
+        }
+
+        if(Physics.Raycast(wallPointR.transform.position, transform.TransformDirection(Vector3.right), out hitR, 0.5f))
+        {
+            isInWallRight = true;
+        }
+        else
+        {
+            isInWallRight = false;
         }
 
         /* if ((Physics.Raycast(wallPointL.transform.position, transform.TransformDirection(Vector3.left), out hitL, 0.5f)) && Input.GetButtonDown("Jump"))
@@ -278,7 +300,6 @@ public class PlayerController : MonoBehaviour
         {
             InertiaParticles.Pause();
         }
-        Debug.Log("Inercia" + inertia);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -340,7 +361,7 @@ public class PlayerController : MonoBehaviour
             characterController.Move(-1 * recoilSpeed * Time.deltaTime * camera.transform.forward); // disparo en sentido contrario a la direccion de la camara
             yield return null;
         }
-            gravityVector.y = -2f; // reinicio el vector gravedad, para q no caiga muy rapido
+            gravityVector.y = -2f; // reinicio el vector gravedad, para q no caiga muy rapid
     }
     bool isthrowed = false;
     
@@ -367,7 +388,6 @@ public class PlayerController : MonoBehaviour
         float startTime = Time.time;
         while (Time.time < startTime + rampTime)
         {
-            Debug.Log("Acá está entrando pa");
             characterController.Move(rampPower * Time.deltaTime * ThrowDirection);
             yield return null;
         }
@@ -383,5 +403,29 @@ public class PlayerController : MonoBehaviour
     private void OnDestroy()
     {
         ShotgunController.OnShotgunRecoil -= DoShotgunRecoil;
+    }
+
+    public void RotateCamaraZ()
+    {
+        rotatezLeft = Mathf.Clamp(rotatezLeft, -15, 15);
+
+        if (isInWallLeft)
+        {
+            rotatezLeft -= 1f;
+        }
+        if(isInWallRight)
+        {
+            rotatezLeft += 1f;
+        }
+        if(!isInWall && rotatezLeft < 0)
+        {
+            rotatezLeft = Mathf.Clamp(rotatezLeft, -15, 0);
+            rotatezLeft += 1f;
+        }
+        if(!isInWall && rotatezLeft > 0)
+        {
+            rotatezLeft = Mathf.Clamp(rotatezLeft, 0, 15);
+            rotatezLeft -= 1f;
+        }
     }
 }
