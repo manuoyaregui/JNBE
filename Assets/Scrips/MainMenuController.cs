@@ -13,6 +13,13 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private GameObject wannaPlayTutorialPanel;
 
 
+    [SerializeField] private Animator transition;
+    [SerializeField] private Image keyBindings;
+
+    private void Awake()
+    {
+        Time.timeScale = 1; //Por alguna razon al pasar de una escena desde el DeathPanel El main menu se tilda
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -102,12 +109,23 @@ public class MainMenuController : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene("Main Scene");
+            StartCoroutine(LoadLevel("Main Scene"));
         }
+    }
+
+    IEnumerator LoadLevel(string levelName) 
+    {
+        //Activo el mapa de teclas
+        keyBindings.gameObject.SetActive(true);
+        //Inicio el fadeIn
+        transition.SetTrigger("Start");
+        yield return new WaitForSeconds(1);
+        //y cargo la escena
+        SceneManager.LoadScene(levelName);
     }
 
     public void PlayTutorial()
     {
-        SceneManager.LoadScene("Tutorial");
+        StartCoroutine(LoadLevel("Tutorial"));
     }
 }

@@ -47,6 +47,11 @@ public class HUDController : MonoBehaviour
     [SerializeField] private Color taskColor;
     [SerializeField] private Color taskDoneColor;
 
+    //Transiciones
+    [SerializeField] private Animator transition;
+    [SerializeField] private Image keyBindings;
+    bool keyBindingsOpen = true;
+
     private void Awake()
     {
         isPause = false;
@@ -70,6 +75,7 @@ public class HUDController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.Escape) && isPause == false)
         {
             EscapeButtonMenu();
@@ -156,12 +162,23 @@ public class HUDController : MonoBehaviour
     //Eventos de Buttons
     public void ResetScene()
     {
-        SceneManager.LoadScene("Main Scene");
+        StartCoroutine(LoadLevel("Main Scene"));
     }
 
     public void GoToMainMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        StartCoroutine(LoadLevel("MainMenu"));
+    }
+
+    IEnumerator LoadLevel(string levelName)
+    {
+        //Activo el mapa de teclas
+        keyBindings.gameObject.SetActive(false);
+        //Inicio el fadeIn
+        transition.SetTrigger("Start");
+        yield return new WaitForSeconds(1f);
+        //y cargo la escena
+        SceneManager.LoadScene(levelName);
     }
 
     public void OnDeathUnityEventHandler()
@@ -202,6 +219,9 @@ public class HUDController : MonoBehaviour
             pauseMenu.SetActive(false);
         }
     }
+
+
+
 
     private void OnDestroy()
     {
