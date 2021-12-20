@@ -86,6 +86,7 @@ public class PlayerController : MonoBehaviour
             GravityForce();
             ChangeFOV();
             RotateCamaraZ();
+            camera.transform.Rotate(0, 0, rotatezLeft);
         }
         CheckShield();
         WallDetection();
@@ -97,9 +98,7 @@ public class PlayerController : MonoBehaviour
         {
             gravityVector.y = -2f; //Si estoy en la pared disminuyo la fuerza de la gravedad
         }
-        Debug.Log("RotateZ " + rotatezLeft);
 
-        camera.transform.Rotate(0, 0, rotatezLeft);
 
     }
 
