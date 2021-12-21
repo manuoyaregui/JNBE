@@ -13,10 +13,12 @@ public class MainMenuController : MonoBehaviour
 
 
     [SerializeField] private Animator transition;
+    [SerializeField] private GameObject loadingScreen;
 
     private void Awake()
     {
         Time.timeScale = 1; //Por alguna razon al pasar de una escena desde el DeathPanel El main menu se tilda
+        loadingScreen.SetActive(true);
     }
     // Start is called before the first frame update
     void Start()

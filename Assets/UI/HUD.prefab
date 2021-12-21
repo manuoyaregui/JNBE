@@ -3083,26 +3083,10 @@ MonoBehaviour:
   changeColorValue: 100
   OnScoreSpecificValueUnityEvent:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PostGlobalController, Assembly-CSharp
-        m_MethodName: ChangeGradentColor
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 50
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  playerSettings: {fileID: 0}
+      m_Calls: []
   highScorePanel: {fileID: 0}
-  tutorialPanel: {fileID: 0}
-  tutorialText: {fileID: 0}
-  taskColor: {r: 0, g: 0, b: 0, a: 0}
-  taskDoneColor: {r: 0, g: 0, b: 0, a: 0}
   transition: {fileID: 7202869924284619113}
+  loadingScreen: {fileID: 7608531135452780427}
 --- !u!114 &7892983869056851083
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -20,5 +20,9 @@ public class SkipTextGuide : MonoBehaviour
             HUDController.isPause = false;
             Destroy(gameObject);
         }
+        else
+        {
+            HUDController.isPause = true;
+        }
     }
 }

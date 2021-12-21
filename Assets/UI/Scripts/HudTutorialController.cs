@@ -10,10 +10,13 @@ public class HudTutorialController : MonoBehaviour
     [SerializeField] private Color taskColor;
     [SerializeField] private Color taskDoneColor;
 
+    [SerializeField] private GameObject keyBindingsImage; 
+
     // Start is called before the first frame update
     void Start()
     {
         tutorialPanel.GetComponent<Image>().color = taskColor;
+        keyBindingsImage.SetActive(true);
     }
 
     public void OnActivateTutorialMessageUnityEventHandler(string message)

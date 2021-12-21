@@ -11,6 +11,7 @@ public class HUDController : MonoBehaviour
     //Valor de Score
     [SerializeField] private float scoreAddition;
 
+
     //Para las Balas
     [SerializeField] private Text textBullet;
     private GameObject gun;
@@ -43,6 +44,7 @@ public class HUDController : MonoBehaviour
 
     //Transiciones
     [SerializeField] private Animator transition;
+    [SerializeField] private GameObject loadingScreen;
 
     private void Awake()
     {
@@ -54,6 +56,8 @@ public class HUDController : MonoBehaviour
         ShielPUController.OnShieldPickedUp += CheckShield;
         LeaveZone.OnChangeGB += CheckScore;
         textBullet.text = "";
+
+        loadingScreen.SetActive(true);
     }
 
     // Start is called before the first frame update

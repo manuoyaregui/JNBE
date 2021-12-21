@@ -905,6 +905,11 @@ MonoBehaviour:
   - {r: 0, g: 0.20368052, b: 1, a: 0}
   - {r: 0.71068674, g: 0.02616591, b: 0.7924528, a: 0}
   - {r: 0.9150943, g: 0.9150943, b: 0.9150943, a: 0}
+--- !u!1 &666023905 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7608531135452780427, guid: 325c7111f7c617a4cacf7638d58e213c, type: 3}
+  m_PrefabInstance: {fileID: 5737921809034463226}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -8477,6 +8482,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 6.9031
       objectReference: {fileID: 0}
+    - target: {fileID: 3159699028326974244, guid: 325c7111f7c617a4cacf7638d58e213c, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4284956645790993773, guid: 325c7111f7c617a4cacf7638d58e213c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -8673,6 +8682,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -80.6
       objectReference: {fileID: 0}
+    - target: {fileID: 5737921809970079834, guid: 325c7111f7c617a4cacf7638d58e213c, type: 3}
+      propertyPath: loadingScreen
+      value: 
+      objectReference: {fileID: 666023905}
     - target: {fileID: 5737921809970079834, guid: 325c7111f7c617a4cacf7638d58e213c, type: 3}
       propertyPath: highScorePanel
       value: 
