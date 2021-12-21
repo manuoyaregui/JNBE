@@ -54,7 +54,6 @@ public class HUDController : MonoBehaviour
         ShielPUController.OnShieldPickedUp += CheckShield;
         LeaveZone.OnChangeGB += CheckScore;
         textBullet.text = "";
-
     }
 
     // Start is called before the first frame update
@@ -84,10 +83,12 @@ public class HUDController : MonoBehaviour
         if (isPause)
         {
             Time.timeScale = 0;
+            Cursor.visible = true;
         }
         else
         {
             Time.timeScale = 1;
+            Cursor.visible = false;
         }
     }
     private void GetGun(GameObject gun)
@@ -198,7 +199,6 @@ public class HUDController : MonoBehaviour
             pauseMenu.SetActive(false);
         }
     }
-
 
 
 

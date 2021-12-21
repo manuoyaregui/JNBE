@@ -124,4 +124,9 @@ public class MainMenuController : MonoBehaviour
     {
         StartCoroutine(LoadLevel("Tutorial"));
     }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }
