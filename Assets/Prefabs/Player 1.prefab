@@ -4971,6 +4971,7 @@ GameObject:
   - component: {fileID: 3671765639798592436}
   - component: {fileID: 3671765639798592437}
   - component: {fileID: 2069488366423556786}
+  - component: {fileID: 632082740201163352}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Player
@@ -5009,12 +5010,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c13e57965e724740bde7a4e7d7a9304, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lives: 1
-  mousesensitivity: 150
-  moveSpeed: 20
+  playerSettings: {fileID: 0}
   playerBody: {fileID: 3671765640089704013}
   camera: {fileID: 8251052766463556782}
-  gravity: -0.7
   footPoint: {fileID: 3671765639364811998}
   wallPointL: {fileID: 3221805788215379698}
   wallPointR: {fileID: 3221805786776670470}
@@ -5027,13 +5025,10 @@ MonoBehaviour:
   ramp:
     serializedVersion: 2
     m_Bits: 8192
-  jump: 150
   isAlive: 1
   inertiaChargerLayer:
     serializedVersion: 2
     m_Bits: 4096
-  dashTime: 0.3
-  dashSpeed: 25
   JumpSound: {fileID: 0}
   DobleJumpSound: {fileID: 0}
   DashSound: {fileID: 8300000, guid: 02c3c04da122c624c9dc4941a4ea9daf, type: 3}
@@ -5089,6 +5084,20 @@ MonoBehaviour:
   - {fileID: 3392041204657509604}
   ChangeWeapon: {fileID: 8300000, guid: f95784b1a06bc72419739ed244c3d41b, type: 3}
   PickUp: {fileID: 8300000, guid: af1dcbf5c46f82b4aa2d95758402472b, type: 3}
+--- !u!136 &632082740201163352
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3671765639798592438}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3671765640089704013
 GameObject:
   m_ObjectHideFlags: 0
@@ -5100,10 +5109,9 @@ GameObject:
   - component: {fileID: 3671765640089704002}
   - component: {fileID: 3671765640089704001}
   - component: {fileID: 3671765640089704000}
-  - component: {fileID: 3671765640089704003}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5171,20 +5179,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &3671765640089704003
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3671765640089704013}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &3221805788067666622
 Animator:
   serializedVersion: 3

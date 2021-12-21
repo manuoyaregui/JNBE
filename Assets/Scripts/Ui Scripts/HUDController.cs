@@ -41,11 +41,6 @@ public class HUDController : MonoBehaviour
     public Player playerSettings;
     [SerializeField] private GameObject highScorePanel;
 
-    //Eventos del Tutorial
-    [SerializeField] private GameObject tutorialPanel;
-    [SerializeField] private Text tutorialText;
-    [SerializeField] private Color taskColor;
-    [SerializeField] private Color taskDoneColor;
 
     //Transiciones
     [SerializeField] private Animator transition;
@@ -68,12 +63,10 @@ public class HUDController : MonoBehaviour
     {
         isPause = false;
         ResetScore();
-        tutorialPanel.GetComponent<Image>().color = taskColor;
     }
     // Update is called once per frame
     void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.Escape) && isPause == false)
         {
             EscapeButtonMenu();
@@ -190,18 +183,7 @@ public class HUDController : MonoBehaviour
         }        
     }
 
-    public void OnActivateTutorialMessageUnityEventHandler(string message)
-    {
-        StartCoroutine(IEcolorChange(message));
-    }
-
-    IEnumerator IEcolorChange(string message)
-    {
-        tutorialPanel.GetComponent<Image>().color = taskDoneColor;
-        yield return new WaitForSeconds(1f);
-        tutorialPanel.GetComponent<Image>().color = taskColor;
-        tutorialText.text = message;
-    }
+    
 
     public void EscapeButtonMenu()
     {

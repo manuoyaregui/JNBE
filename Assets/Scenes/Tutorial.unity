@@ -273,8 +273,8 @@ MonoBehaviour:
   OnActivateTutorialUnityEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1644752010}
-        m_TargetAssemblyTypeName: HUDController, Assembly-CSharp
+      - m_Target: {fileID: 1386842258}
+        m_TargetAssemblyTypeName: HudTutorialController, Assembly-CSharp
         m_MethodName: OnActivateTutorialMessageUnityEventHandler
         m_Mode: 5
         m_Arguments:
@@ -2542,8 +2542,8 @@ MonoBehaviour:
   OnActivateTutorialUnityEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1644752010}
-        m_TargetAssemblyTypeName: HUDController, Assembly-CSharp
+      - m_Target: {fileID: 1386842258}
+        m_TargetAssemblyTypeName: HudTutorialController, Assembly-CSharp
         m_MethodName: OnActivateTutorialMessageUnityEventHandler
         m_Mode: 5
         m_Arguments:
@@ -2848,8 +2848,8 @@ MonoBehaviour:
   OnActivateTutorialUnityEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1644752010}
-        m_TargetAssemblyTypeName: HUDController, Assembly-CSharp
+      - m_Target: {fileID: 1386842258}
+        m_TargetAssemblyTypeName: HudTutorialController, Assembly-CSharp
         m_MethodName: OnActivateTutorialMessageUnityEventHandler
         m_Mode: 5
         m_Arguments:
@@ -3924,8 +3924,8 @@ MonoBehaviour:
   OnActivateTutorialUnityEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1644752010}
-        m_TargetAssemblyTypeName: HUDController, Assembly-CSharp
+      - m_Target: {fileID: 1386842258}
+        m_TargetAssemblyTypeName: HudTutorialController, Assembly-CSharp
         m_MethodName: OnActivateTutorialMessageUnityEventHandler
         m_Mode: 5
         m_Arguments:
@@ -4047,6 +4047,22 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5737921809970079841, guid: 325c7111f7c617a4cacf7638d58e213c, type: 3}
   m_PrefabInstance: {fileID: 1674677395}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1386842258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1386842254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5df7e453c3167b04da11fd86568ff800, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorialPanel: {fileID: 1248361788}
+  tutorialText: {fileID: 669607791}
+  taskColor: {r: 0, g: 0.016850948, b: 1, a: 0}
+  taskDoneColor: {r: 0, g: 1, b: 0.24652767, a: 0}
 --- !u!1001 &1400228468
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4601,17 +4617,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5737921809970079845, guid: 325c7111f7c617a4cacf7638d58e213c, type: 3}
   m_PrefabInstance: {fileID: 1674677395}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1644752010 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5737921809970079834, guid: 325c7111f7c617a4cacf7638d58e213c, type: 3}
-  m_PrefabInstance: {fileID: 1674677395}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1386842254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c9ed2f42fe162f4398c20b5bec984a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1662123614 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 890514801439178232, guid: df851eac4c68c0f41947925da98b67e0, type: 3}
@@ -5411,8 +5416,8 @@ MonoBehaviour:
   OnActivateTutorialUnityEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1644752010}
-        m_TargetAssemblyTypeName: HUDController, Assembly-CSharp
+      - m_Target: {fileID: 1386842258}
+        m_TargetAssemblyTypeName: HudTutorialController, Assembly-CSharp
         m_MethodName: OnActivateTutorialMessageUnityEventHandler
         m_Mode: 5
         m_Arguments:
@@ -5494,8 +5499,8 @@ MonoBehaviour:
   OnActivateTutorialUnityEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1644752010}
-        m_TargetAssemblyTypeName: HUDController, Assembly-CSharp
+      - m_Target: {fileID: 1386842258}
+        m_TargetAssemblyTypeName: HudTutorialController, Assembly-CSharp
         m_MethodName: OnActivateTutorialMessageUnityEventHandler
         m_Mode: 5
         m_Arguments:
@@ -5582,8 +5587,8 @@ MonoBehaviour:
   OnActivateTutorialUnityEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1644752010}
-        m_TargetAssemblyTypeName: HUDController, Assembly-CSharp
+      - m_Target: {fileID: 1386842258}
+        m_TargetAssemblyTypeName: HudTutorialController, Assembly-CSharp
         m_MethodName: OnActivateTutorialMessageUnityEventHandler
         m_Mode: 5
         m_Arguments:
