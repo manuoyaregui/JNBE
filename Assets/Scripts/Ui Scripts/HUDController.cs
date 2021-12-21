@@ -38,7 +38,6 @@ public class HUDController : MonoBehaviour
     [SerializeField] private int changeColorValue; //Cada cuanto cambio de color?
     [SerializeField] private UnityEvent<int> OnScoreSpecificValueUnityEvent;
     int extraValue = 0;
-    public Player playerSettings;
     [SerializeField] private GameObject highScorePanel;
 
 
@@ -176,9 +175,10 @@ public class HUDController : MonoBehaviour
         ToggleIsPause();
         deathPanel.SetActive(true);
         deathPanel.GetComponentsInChildren<Text>()[1].text = "" + textScore.text;
-        if(formula > playerSettings.highScore)
+        if(formula > PlayerPrefs.GetFloat("HighScore", 0))
         {
-            playerSettings.highScore = formula;
+            //playerSettings.highScore = formula;
+            PlayerPrefs.SetFloat("HighScore", formula);
             highScorePanel.SetActive(true);
         }        
     }

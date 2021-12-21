@@ -11,7 +11,7 @@ public class UICameraSensibilityController : MonoBehaviour
 
     public void SensibilitySlider(float sensibility)
     {
-        sensibilityTextUI.text = "Sensibility " + sensibility.ToString("0.0");
+        sensibilityTextUI.text = "Sensibility " + sensibility.ToString("0");
     }
 
     public void SaveSensibility()

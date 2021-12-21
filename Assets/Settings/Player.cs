@@ -13,5 +13,4 @@ public class Player : ScriptableObject
     public float jumpValue;
     public float dashTime;
     public float dashSpeed;
-    public float highScore;
 }

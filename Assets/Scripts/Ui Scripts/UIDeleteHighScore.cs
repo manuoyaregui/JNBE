@@ -5,17 +5,16 @@ using UnityEngine.UI;
 
 public class UIDeleteHighScore : MonoBehaviour
 {
-    public Player playerSettings;
     [SerializeField] private Text uICurrentHS = null;
     private void Start()
     {
-        uICurrentHS.text = "Current HighScore: " + playerSettings.highScore.ToString("0.0");
+        uICurrentHS.text = "Current HighScore: " + PlayerPrefs.GetFloat("HighScore" , 0.0f);
     }
 
     public void deleteHighScoreButton()
     {
-        playerSettings.highScore = 0;
-        uICurrentHS.text = "Current HighScore: " + playerSettings.highScore.ToString("0.0");
+        PlayerPrefs.SetFloat("HighScore", 0);
+        uICurrentHS.text = "Current HighScore: " + PlayerPrefs.GetFloat("HighScore" , 0.0f);
     }
 
 }

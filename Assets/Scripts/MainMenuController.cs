@@ -9,7 +9,6 @@ public class MainMenuController : MonoBehaviour
 {
     public Canvas mainMenu,shop,custom,options,exit;
     public menuState currentState;
-    [SerializeField] private Player playerStatistics;
     [SerializeField] private GameObject wannaPlayTutorialPanel;
 
 
@@ -102,7 +101,7 @@ public class MainMenuController : MonoBehaviour
     }
     public void Play(bool isAlreadyAsked)
     {
-        if(playerStatistics.highScore == 0 && isAlreadyAsked == false)
+        if(PlayerPrefs.GetFloat("HighScore" , 0.0f) == 0 && isAlreadyAsked == false)
         {
             wannaPlayTutorialPanel.SetActive(true);
         }
