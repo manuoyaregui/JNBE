@@ -17,6 +17,7 @@ public class MainMenuController : MonoBehaviour
 
     private void Awake()
     {
+        Cursor.visible = true;
         Time.timeScale = 1; //Por alguna razon al pasar de una escena desde el DeathPanel El main menu se tilda
         loadingScreen.SetActive(true);
     }
@@ -115,6 +116,7 @@ public class MainMenuController : MonoBehaviour
 
     IEnumerator LoadLevel(string levelName) 
     {
+        Cursor.visible = false;
         //Inicio el fadeIn
         transition.SetTrigger("Start");
         yield return new WaitForSeconds(1);

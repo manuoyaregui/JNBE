@@ -29,7 +29,7 @@ public class SkipCinematic : MonoBehaviour
     }
     private void SkipPlayable()
     {
-        if(Input.GetButtonDown("Fire2") && wasSkiped == false ) // Tiempo que dura la cinematic
+        if(Input.GetButtonDown("Fire2") && wasSkiped == false && ! HUDController.isPause ) // Tiempo que dura la cinematic
         {
             this.gameObject.SetActive(false);
             wasSkiped = true;
@@ -40,9 +40,9 @@ public class SkipCinematic : MonoBehaviour
              // para que no entre mas esto en el juego
 
         }
-        if( time > 7 || wasSkiped == true)
+        if( time > playable.duration || wasSkiped == true) // si termino la cinematica o fue salteada...
         {
-            textSkip.SetActive(false);
+            textSkip.SetActive(false); //Apaga el textSkip
         }
     }
 }
