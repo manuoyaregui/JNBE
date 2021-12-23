@@ -83,7 +83,6 @@ public class HUDController : MonoBehaviour
 
     private void CheckIfItPaused()
     {
-        Debug.Log("Esta pausado?" + isPause);
         if (isPause)
         {
             Time.timeScale = 0;
