@@ -8520,7 +8520,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: levelStartPoint
@@ -8528,7 +8528,7 @@ PrefabInstance:
       objectReference: {fileID: 149767719}
     - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: allTheGameBlocks.Array.size
-      value: 9
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: allTheGameBlocks.Array.data[6]
@@ -8537,7 +8537,19 @@ PrefabInstance:
     - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: allTheGameBlocks.Array.data[9]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 251853890602171151, guid: 5168d00f9adb28641b73e9533434dd0b, type: 3}
+    - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
+      propertyPath: allTheGameBlocks.Array.data[10]
+      value: 
+      objectReference: {fileID: 251853890602171151, guid: bfca9e2b0fb63244bac79c50d75bfb81, type: 3}
+    - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
+      propertyPath: allTheGameBlocks.Array.data[11]
+      value: 
+      objectReference: {fileID: 251853890602171151, guid: b8608fc0861abd445bb169aa19c3c29c, type: 3}
+    - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
+      propertyPath: allTheGameBlocks.Array.data[12]
+      value: 
+      objectReference: {fileID: 251853890602171151, guid: 256d534a9727ec5428579007c4c782fc, type: 3}
     - target: {fileID: 1257174691013452303, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -8584,7 +8596,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: levelStartPoint
