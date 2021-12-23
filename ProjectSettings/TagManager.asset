@@ -13,6 +13,7 @@ TagManager:
   - KillZone
   - PlayerDeath
   - Ramp
+  - TutorialDieZone
   layers:
   - Default
   - TransparentFX

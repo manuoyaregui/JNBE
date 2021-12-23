@@ -6,33 +6,20 @@ using UnityEngine.SceneManagement;
 
 public class TriggerScript : MonoBehaviour
 {
-    [SerializeField] UnityEvent<string> OnActivateTutorialUnityEvent;
-    [SerializeField] private string message;
-
-    // Start is called before the first frame update
-    /*void Start()
+    [SerializeField] UnityEvent OnActivateTutorialUnityEvent;
+    //[SerializeField] private string message;
+    public void GoToMainMenu()
     {
-        
+        SceneManager.LoadScene("Main Scene");
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }*/
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             Debug.Log("Se activo el evento");
-            OnActivateTutorialUnityEvent?.Invoke(message);
+            OnActivateTutorialUnityEvent?.Invoke();
             Destroy(gameObject);
         }
-    }
-
-    public void GoToMainMenu()
-    {
-        SceneManager.LoadScene("Main Scene");
     }
 }
