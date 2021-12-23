@@ -8520,7 +8520,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: levelStartPoint
@@ -8584,7 +8584,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: levelStartPoint
@@ -8593,11 +8593,11 @@ PrefabInstance:
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: allTheGameBlocks.Array.data[0]
       value: 
-      objectReference: {fileID: 251853890602171151, guid: 01da738e077da094fab67b6f9bd5d451, type: 3}
+      objectReference: {fileID: 251853890602171151, guid: 256d534a9727ec5428579007c4c782fc, type: 3}
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: allTheGameBlocks.Array.data[1]
       value: 
-      objectReference: {fileID: 251853890602171151, guid: 01da738e077da094fab67b6f9bd5d451, type: 3}
+      objectReference: {fileID: 251853890602171151, guid: 256d534a9727ec5428579007c4c782fc, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
 --- !u!1 &2180476892401515152 stripped
