@@ -5013,6 +5013,7 @@ MonoBehaviour:
   playerSettings: {fileID: 0}
   playerBody: {fileID: 3671765640089704013}
   camera: {fileID: 8251052766463556782}
+  GunCamera: {fileID: 6808182596173768346}
   footPoint: {fileID: 3671765639364811998}
   wallPointL: {fileID: 3221805788215379698}
   wallPointR: {fileID: 3221805786776670470}
@@ -5034,6 +5035,7 @@ MonoBehaviour:
   DashSound: {fileID: 8300000, guid: 02c3c04da122c624c9dc4941a4ea9daf, type: 3}
   killZoneDeath: {fileID: 8300000, guid: 96af09457887b2947ade9bf0bf904c00, type: 3}
   InertiaParticles: {fileID: 3221805786589413051}
+  resetCamera: 0
   OnDeathUnityEvent:
     m_PersistentCalls:
       m_Calls:
