@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private float moveSpeed = 1; //Velocidad de movimiento del jugador
     [SerializeField] GameObject playerBody; //no se usa, hay q ver de sacarlo quiza 
     [SerializeField] GameObject camera; // trabaja la rotacion de la camara
+    [SerializeField] GameObject GunCamera; //Camara aparte con las armas
     private float gravity; // valor de la gravedad
     Vector3 gravityVector;
     private float rotationX = 0;
@@ -41,6 +42,7 @@ public class PlayerController : MonoBehaviour
     private bool isInWallLeft;
     private bool isInWallRight;
     private float rotatezLeft = 0;
+    public bool resetCamera = false;
 
     
 
@@ -134,6 +136,12 @@ public class PlayerController : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X") * mousesensitivity * Time.fixedDeltaTime;
 
         float mouseY = Input.GetAxis("Mouse Y") * mousesensitivity * Time.fixedDeltaTime;
+
+        if (resetCamera == true)
+        {
+            rotationX = 0;
+            resetCamera = false;
+        }
 
         rotationX += mouseY;
 
@@ -333,6 +341,7 @@ public class PlayerController : MonoBehaviour
         }
 
         Camera.main.fieldOfView = inertiaFOV;
+        GunCamera.GetComponent<Camera>().fieldOfView = inertiaFOV;
     }
     public void InerciaCharger()
     {

@@ -42,7 +42,9 @@ public class SkipCinematic : MonoBehaviour
         }
         if( time > playable.duration || wasSkiped == true) // si termino la cinematica o fue salteada...
         {
+            player.GetComponent<PlayerController>().resetCamera = true;
             textSkip.SetActive(false); //Apaga el textSkip
+            Destroy(gameObject);
         }
     }
 }

@@ -5348,8 +5348,28 @@ PrefabInstance:
       value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 8726278146941238953, guid: 5874aff7159d1534b8188ea8406fd39c, type: 3}
+      propertyPath: m_ClearFlags
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8726278146941238953, guid: 5874aff7159d1534b8188ea8406fd39c, type: 3}
+      propertyPath: field of view
+      value: 26.991467
+      objectReference: {fileID: 0}
+    - target: {fileID: 8726278146941238953, guid: 5874aff7159d1534b8188ea8406fd39c, type: 3}
+      propertyPath: far clip plane
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 8726278146941238953, guid: 5874aff7159d1534b8188ea8406fd39c, type: 3}
       propertyPath: m_CullingMask.m_Bits
       value: 15415
+      objectReference: {fileID: 0}
+    - target: {fileID: 8726278146941238953, guid: 5874aff7159d1534b8188ea8406fd39c, type: 3}
+      propertyPath: m_projectionMatrixMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8726278146941238953, guid: 5874aff7159d1534b8188ea8406fd39c, type: 3}
+      propertyPath: m_AllowDynamicResolution
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8726278146941238956, guid: 5874aff7159d1534b8188ea8406fd39c, type: 3}
       propertyPath: m_RootOrder

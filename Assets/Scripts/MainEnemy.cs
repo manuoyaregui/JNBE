@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class MainEnemy : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class MainEnemy : MonoBehaviour
 
     [SerializeField] private GameObject playerBullet;
     [SerializeField] private GameObject enemyBullet;
+
+    //[SerializeField] private AudioClip playerBeingEatedSound;
+    [SerializeField] private PlayableDirector playerBeingEatedClip;
 
     // Start is called before the first frame update
     void Start()
@@ -56,7 +60,9 @@ public class MainEnemy : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            playerBeingEatedClip.Play();
             playerGameObject.GetComponent<PlayerController>().SetLives(0);
+            //GameManager.singletonGameManager.PlaySound(playerBeingEatedSound);
         }
     }
 

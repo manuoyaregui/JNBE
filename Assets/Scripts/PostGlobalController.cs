@@ -15,15 +15,10 @@ public class PostGlobalController : MonoBehaviour
     {
         globalVolume = GetComponent<PostProcessVolume>();
         buffer = Random.Range(0, Colores.Capacity);
+        ChangeGradentColor();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void ChangeGradentColor(int score)
+    public void ChangeGradentColor()
     {
         do
         {
