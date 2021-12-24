@@ -9,6 +9,7 @@ public class PostGlobalController : MonoBehaviour
     [SerializeField] List<Color> Colores;
     int random;
     int buffer;
+    ChromaticAberration crazyEffect;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +17,8 @@ public class PostGlobalController : MonoBehaviour
         globalVolume = GetComponent<PostProcessVolume>();
         buffer = Random.Range(0, Colores.Capacity);
         ChangeGradentColor();
+        PlayerController.onInertiaChange += SetAberrationActive;
+        crazyEffect = globalVolume.profile.GetSetting<UnityEngine.Rendering.PostProcessing.ChromaticAberration>();
     }
 
     public void ChangeGradentColor()
@@ -33,5 +36,17 @@ public class PostGlobalController : MonoBehaviour
             value = Colores[random]
         };
         colorGr.colorFilter.Override(colorParameter);
+    }
+
+    public void SetAberrationActive(float inertiaValue)
+    {
+        if(inertiaValue >= 1.49f)
+        {
+            crazyEffect.active = true;
+        }
+        else
+        {
+            crazyEffect.active = false;
+        }
     }
 }

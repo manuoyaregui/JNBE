@@ -1115,7 +1115,7 @@ Light:
   m_BounceIntensity: 0.05
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 9.61e-43, y: 8.56e-43, z: 0, w: 2.2683214e+38}
+  m_BoundingSphereOverride: {x: 9.1835e-41, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -9229,7 +9229,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: levelStartPoint
@@ -9237,7 +9237,7 @@ PrefabInstance:
       objectReference: {fileID: 149767719}
     - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: allTheGameBlocks.Array.size
-      value: 13
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: allTheGameBlocks.Array.data[6]
@@ -9259,6 +9259,26 @@ PrefabInstance:
       propertyPath: allTheGameBlocks.Array.data[12]
       value: 
       objectReference: {fileID: 251853890602171151, guid: 256d534a9727ec5428579007c4c782fc, type: 3}
+    - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
+      propertyPath: allTheGameBlocks.Array.data[13]
+      value: 
+      objectReference: {fileID: 251853890602171151, guid: d9e056112f3b6ce418a206ad27e61560, type: 3}
+    - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
+      propertyPath: allTheGameBlocks.Array.data[14]
+      value: 
+      objectReference: {fileID: 251853890602171151, guid: c9a4f59b2aba264448afb50166379d3a, type: 3}
+    - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
+      propertyPath: allTheGameBlocks.Array.data[15]
+      value: 
+      objectReference: {fileID: 251853890602171151, guid: 6aaacdaed00699a48880f0446290e3ad, type: 3}
+    - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
+      propertyPath: allTheGameBlocks.Array.data[16]
+      value: 
+      objectReference: {fileID: 251853890602171151, guid: 3277bcea546de98438763f53b782d55b, type: 3}
+    - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
+      propertyPath: allTheGameBlocks.Array.data[17]
+      value: 
+      objectReference: {fileID: 251853890602171151, guid: 768f8453576eab5418abaa0a63394c3f, type: 3}
     - target: {fileID: 1257174691013452303, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -9305,7 +9325,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: levelStartPoint
@@ -9458,7 +9478,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8251052765317076127, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
       propertyPath: m_BoundingSphereOverride.w
-      value: 4.78577e-40
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8251052765317076127, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
       propertyPath: m_BoundingSphereOverride.x
@@ -9466,11 +9486,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8251052765317076127, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
       propertyPath: m_BoundingSphereOverride.y
-      value: -1.0152688e-38
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8251052765317076127, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
       propertyPath: m_BoundingSphereOverride.z
-      value: 9.63e-43
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8251052766463556778, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
       propertyPath: far clip plane
@@ -9650,6 +9670,18 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 3340553535403790187, guid: 325c7111f7c617a4cacf7638d58e213c, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3340553535403790187, guid: 325c7111f7c617a4cacf7638d58e213c, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3340553535403790187, guid: 325c7111f7c617a4cacf7638d58e213c, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4284956645790993773, guid: 325c7111f7c617a4cacf7638d58e213c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -9669,6 +9701,10 @@ PrefabInstance:
     - target: {fileID: 4286811198628581867, guid: 325c7111f7c617a4cacf7638d58e213c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 8.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4386427998350320987, guid: 325c7111f7c617a4cacf7638d58e213c, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4608023521905988461, guid: 325c7111f7c617a4cacf7638d58e213c, type: 3}
       propertyPath: m_AnchoredPosition.x

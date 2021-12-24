@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
     //eventos
     public static event Action<int> onLivesChange;
     [SerializeField] private UnityEvent OnDeathUnityEvent;
+    public static event Action<float> onInertiaChange;
 
     private void Awake()
     {
@@ -73,6 +74,8 @@ public class PlayerController : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         ShotgunController.OnShotgunRecoil += DoShotgunRecoil;
         InertiaParticles.Stop();
+        inertia = 1;
+        onInertiaChange?.Invoke(inertia);
     }
 
     // Update is called once per frame
@@ -286,12 +289,12 @@ public class PlayerController : MonoBehaviour
             dobleJump = true;
         }
     }
-
+    [SerializeField] 
     public void InertiaMove() //Modifico un flot que esta directamente relacionado con el movimiento
     {
         inertia = Mathf.Clamp(inertia, 1f, 1.5f); // Limitar los valores que puede tomar inertia
 
-        if (!isInFloor)//Si no estoy en el piso aumento la inercia
+        if ( ! isInFloor)//Si no estoy en el piso aumento la inercia
         {
             inertia += 0.0025f;
         }
@@ -307,6 +310,7 @@ public class PlayerController : MonoBehaviour
         {
             InertiaParticles.Pause();
         }
+        onInertiaChange?.Invoke(inertia);
     }
 
     private void OnTriggerEnter(Collider other)

@@ -10,6 +10,8 @@ public class HUDController : MonoBehaviour
     public static bool isPause;
     //Valor de Score
     [SerializeField] private float scoreAddition;
+    private int scoreMultiplier;
+    [SerializeField] private Text scoreMultiplierText;
 
 
     //Para las Balas
@@ -24,6 +26,9 @@ public class HUDController : MonoBehaviour
     //Para el escudo
     [SerializeField] private GameObject activeShield;
     private int playerLives;
+
+    //para la inercia
+    [SerializeField] private Slider inertiaBar;
 
     //Para el Score
     [SerializeField] private Text textScore;
@@ -52,6 +57,8 @@ public class HUDController : MonoBehaviour
         PlayerController.onLivesChange += CheckShield;
         PlayerPickUpGuns.onGunChange += GetGun;
         PlayerPickUpGuns.OnExtraBullets += ShowPlusBulletsPannel;
+        PlayerController.onInertiaChange += SetInertiaBar;
+        PlayerController.onInertiaChange += SetScoreMultiplier;
         ShootWeapon.onBulletsChange += CheckBullets;
         ShielPUController.OnShieldPickedUp += CheckShield;
         LeaveZone.OnChangeGB += CheckScore;
@@ -65,11 +72,12 @@ public class HUDController : MonoBehaviour
     {
         isPause = false;
         ResetScore();
+        scoreMultiplier = 1;
     }
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && isPause == false)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             EscapeButtonMenu();
         }
@@ -133,12 +141,33 @@ public class HUDController : MonoBehaviour
                 break;
         }
     }
+
+    public void SetScoreMultiplier(float inertiaValue)
+    {
+        if(inertiaValue >= 1.3f && inertiaValue < 1.49f) //Si estoy en estado de inercia
+        {
+            scoreMultiplier = 2; //duplica el score
+            scoreMultiplierText.text = "X 2";
+        }
+        else if(inertiaValue >= 1.49f) //Si estoy en estado de "locura"
+        {
+            scoreMultiplier = 4; //cuadruplicalo
+            scoreMultiplierText.text = "X 4";
+        }
+        else
+        {
+            scoreMultiplier = 1; //Sino no hagas nada
+            scoreMultiplierText.text = "X 1";
+
+        }
+    }
+
     private void CheckScore() //Este metodo se llama cuando colisiono con el LeaveZone mediante un evento
     {
         if(playerLives > 0)
         {
-            extraValue += (int)(scoreAddition * PlayerController.GetInertia());
-            formula += (int)(scoreAddition * PlayerController.GetInertia());
+            extraValue += (int)(scoreAddition * scoreMultiplier);
+            formula += (int)(scoreAddition * scoreMultiplier);
             textScore.text = "SCORE = " + formula;
             if(extraValue >= changeColorValue)
             {
@@ -203,11 +232,16 @@ public class HUDController : MonoBehaviour
         }
     }
 
+    public void SetInertiaBar(float inertia)
+    {
+        inertiaBar.value = inertia;
+    }
 
 
     private void OnDestroy()
     {
         PlayerController.onLivesChange -= CheckShield;
+        PlayerController.onInertiaChange -= SetInertiaBar;
         PlayerPickUpGuns.onGunChange -= GetGun;
         PlayerPickUpGuns.OnExtraBullets -= ShowPlusBulletsPannel;
         ShootWeapon.onBulletsChange -= CheckBullets;
