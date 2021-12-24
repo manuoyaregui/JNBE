@@ -244,6 +244,7 @@ public class HUDController : MonoBehaviour
         PlayerController.onInertiaChange -= SetInertiaBar;
         PlayerPickUpGuns.onGunChange -= GetGun;
         PlayerPickUpGuns.OnExtraBullets -= ShowPlusBulletsPannel;
+        PlayerController.onInertiaChange -= SetScoreMultiplier;
         ShootWeapon.onBulletsChange -= CheckBullets;
         ShielPUController.OnShieldPickedUp -= CheckShield;
         LeaveZone.OnChangeGB -= CheckScore;

@@ -312,14 +312,19 @@ public class PlayerController : MonoBehaviour
         }
         onInertiaChange?.Invoke(inertia);
     }
-
-    private void OnTriggerEnter(Collider other)
+    private bool alreadyIn;
+    private void OnTriggerStay(Collider other)
     {
+        
         if (other.gameObject.CompareTag("KillZone"))
         {
             lives = 0;
             isAlive = false;
-            GameManager.singletonGameManager.PlaySound(killZoneDeath);
+            if (alreadyIn == false)
+            {
+                GameManager.singletonGameManager.PlaySound(killZoneDeath);
+                alreadyIn = true;
+            }
             onLivesChange?.Invoke(lives);
 
         }
