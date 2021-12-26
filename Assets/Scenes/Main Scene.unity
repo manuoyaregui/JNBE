@@ -597,6 +597,7 @@ GameObject:
   - component: {fileID: 595823365}
   - component: {fileID: 595823364}
   - component: {fileID: 595823366}
+  - component: {fileID: 595823367}
   m_Layer: 0
   m_Name: GlobalVolume
   m_TagString: Untagged
@@ -620,7 +621,7 @@ MonoBehaviour:
   isGlobal: 1
   blendDistance: 0
   weight: 1
-  priority: 0
+  priority: 15
 --- !u!4 &595823365
 Transform:
   m_ObjectHideFlags: 0
@@ -653,6 +654,30 @@ MonoBehaviour:
   - {r: 0, g: 0.20368052, b: 1, a: 0}
   - {r: 0.71068674, g: 0.02616591, b: 0.7924528, a: 0}
   - {r: 0.9150943, g: 0.9150943, b: 0.9150943, a: 0}
+  - {r: 1, g: 0.5185516, b: 0, a: 0}
+  - {r: 0, g: 0.9375839, b: 1, a: 0}
+  - {r: 1, g: 0.9753064, b: 0, a: 0}
+  - {r: 0.6132076, g: 0.035445437, b: 0, a: 0}
+  - {r: 0, g: 1, b: 0.6509804, a: 0}
+--- !u!95 &595823367
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595823363}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &620177051 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6808182596173768346, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
@@ -797,7 +822,7 @@ Light:
   m_BounceIntensity: 0.05
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 9.1835e-41, y: 0, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 9.1835e-41, y: 0, z: 0, w: NaN}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -7400,11 +7425,12 @@ PlayableDirector:
   - key: {fileID: -1645081245160566408, guid: 500406c3d66e700468d3f4afedcd5845, type: 2}
     value: {fileID: 94533013822413714}
   - key: {fileID: 5603747874766325056, guid: 500406c3d66e700468d3f4afedcd5845, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 275062212}
   - key: {fileID: 4726951088252652147, guid: 500406c3d66e700468d3f4afedcd5845, type: 2}
     value: {fileID: 791599940}
   m_ExposedReferences:
     m_References:
+    - fd6bcefc10bce0d4e8a028d52c57c45e: {fileID: 595823363}
     - e936e15143aa69843a64d581f89ac0cf: {fileID: 1129242003}
     - cfba58c55f3d2c443a09cb5338ee25c2: {fileID: 70512104}
 --- !u!4 &2064136052
@@ -8711,6 +8737,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 620177051}
     - target: {fileID: 3671765639798592436, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: resetCamera
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3671765639798592436, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
       propertyPath: playerSettings
       value: 
       objectReference: {fileID: 11400000, guid: 44232b7473632db4f9db5cf9a7ece147, type: 2}
@@ -8792,11 +8822,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8251052765317076127, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
       propertyPath: m_BoundingSphereOverride.y
-      value: 0
+      value: 1e-45
       objectReference: {fileID: 0}
     - target: {fileID: 8251052765317076127, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
       propertyPath: m_BoundingSphereOverride.z
-      value: 0
+      value: 2.3157239e-36
       objectReference: {fileID: 0}
     - target: {fileID: 8251052766463556778, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
       propertyPath: far clip plane
