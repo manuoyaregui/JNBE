@@ -44,7 +44,8 @@ public class PlayerController : MonoBehaviour
     private float rotatezLeft = 0;
     public bool resetCamera = false;
 
-    
+    private bool jumpButton;
+    private bool dashButton;
 
     //eventos
     public static event Action<int> onLivesChange;
@@ -78,16 +79,14 @@ public class PlayerController : MonoBehaviour
         onInertiaChange?.Invoke(inertia);
     }
 
-
-    private bool jumpButton;
-
     // Update is called once per frame
     void Update()
     {
         if (isAlive && HUDController.isPause == false)
         {
-            if (Input.GetKeyDown(KeyCode.Space)) jumpButton = true;
-            else jumpButton = false;
+            checkButtons();
+            
+            WallDetection();
             //Jumpp();
             //Dash();
             //Mouse();
@@ -99,7 +98,6 @@ public class PlayerController : MonoBehaviour
             //camera.transform.Rotate(0, 0, rotatezLeft);
         }
         CheckShield();
-        WallDetection();
         InerciaCharger();
         //Move();
 
@@ -123,9 +121,18 @@ public class PlayerController : MonoBehaviour
             InertiaMove();
             GravityForce();
             ChangeFOV();
-            //RotateCamaraZ();
-            //camera.transform.Rotate(0, 0, rotatezLeft);
+            RotateCamaraZ();
+            camera.transform.Rotate(0, 0, rotatezLeft);
         }
+    }
+
+    private void checkButtons()
+    {
+        if (Input.GetKeyDown(KeyCode.Space)) jumpButton = true;
+        else jumpButton = false;
+
+        if (Input.GetButtonDown("Fire3")) dashButton = true;
+        else dashButton = false;
     }
 
     public int getPlayerLives()
@@ -219,6 +226,8 @@ public class PlayerController : MonoBehaviour
             isInWall = false;
         }
 
+        //chequeo en que pared estoy
+
         if(Physics.Raycast(wallPointL.transform.position, transform.TransformDirection(Vector3.left), out hitL, 0.5f))
         {
             isInWallLeft = true;
@@ -257,8 +266,9 @@ public class PlayerController : MonoBehaviour
     private void Dash() //Dash para adelante apretando el shift, no esta del todo terminado
     {
         float CD = 1F;
-        if (Time.time > dashCD && Input.GetButtonDown("Fire3"))
+        if (Time.time > dashCD && dashButton)
         {
+            dashButton = false;
             GameManager.singletonGameManager.PlaySound(DashSound);
             StartCoroutine(IDash());
             dashCD = Time.time + CD;
@@ -276,7 +286,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Jumpp()
     {
-        isInFloor = Physics.CheckSphere(footPoint.transform.position, 0.2f, floor); // Una espera que controla colicion con el piso
+        isInFloor = Physics.CheckSphere(footPoint.transform.position, 0.2f, floor); // Una esfera que controla colicion con el piso
 
         if (isInFloor && gravityVector.y < 0) //Si estoy en el piso disminuyo la gravedad
         {
