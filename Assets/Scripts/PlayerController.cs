@@ -53,10 +53,10 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        Application.targetFrameRate = 30; //Capear los fps en 60
+        Application.targetFrameRate = 60; //Capear los fps en 60
 
     }
-    // Start is called before the first frame update
+    // Start is called before the first frame updat
     void Start()
     {
         //getSettings
@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour
             Mouse();
             Move();
             InertiaMove();
-            GravityForce();
+            //GravityForce();
             ChangeFOV();
             RotateCamaraZ();
             camera.transform.Rotate(0, 0, rotatezLeft);
@@ -105,6 +105,13 @@ public class PlayerController : MonoBehaviour
         }
 
 
+    }
+    private void FixedUpdate()
+    {
+        if (isAlive && HUDController.isPause == false)
+        {
+            GravityForce();
+        }
     }
 
 
@@ -160,7 +167,7 @@ public class PlayerController : MonoBehaviour
     {
         gravityVector.y += gravity;
 
-        characterController.Move(gravityVector * Time.deltaTime);
+        characterController.Move(gravityVector * Time.deltaTime );
     }
 
     private void CheckShield()
@@ -189,8 +196,8 @@ public class PlayerController : MonoBehaviour
 
 
         //Raycast para detectar colicion con la pared
-        if ((Physics.Raycast(wallPointL.transform.position, transform.TransformDirection(Vector3.left), out hitL, 0.5f)) ||
-        Physics.Raycast(wallPointR.transform.position, transform.TransformDirection(Vector3.right), out hitR, 0.5f))
+        if ((Physics.Raycast(wallPointL.transform.position, transform.TransformDirection(Vector3.left), out hitL, 0.5f, wall)) ||
+        Physics.Raycast(wallPointR.transform.position, transform.TransformDirection(Vector3.right), out hitR, 0.5f, wall))
         {
             isInWall = true;
         }
@@ -199,7 +206,7 @@ public class PlayerController : MonoBehaviour
             isInWall = false;
         }
 
-        if(Physics.Raycast(wallPointL.transform.position, transform.TransformDirection(Vector3.left), out hitL, 0.5f))
+        if(Physics.Raycast(wallPointL.transform.position, transform.TransformDirection(Vector3.left), out hitL, 0.5f, wall))
         {
             isInWallLeft = true;
         }
@@ -208,7 +215,7 @@ public class PlayerController : MonoBehaviour
             isInWallLeft = false;
         }
 
-        if(Physics.Raycast(wallPointR.transform.position, transform.TransformDirection(Vector3.right), out hitR, 0.5f))
+        if(Physics.Raycast(wallPointR.transform.position, transform.TransformDirection(Vector3.right), out hitR, 0.5f, wall))
         {
             isInWallRight = true;
         }
