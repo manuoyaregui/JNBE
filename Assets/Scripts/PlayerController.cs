@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour
             Mouse();
             Move();
             InertiaMove();
-            GravityForce();
+            //GravityForce();
             ChangeFOV();
             RotateCamaraZ();
             camera.transform.Rotate(0, 0, rotatezLeft);
@@ -105,6 +105,10 @@ public class PlayerController : MonoBehaviour
         }
 
 
+    }
+    private void FixedUpdate()
+    {
+        GravityForce();
     }
 
 
@@ -189,8 +193,8 @@ public class PlayerController : MonoBehaviour
 
 
         //Raycast para detectar colicion con la pared
-        if ((Physics.Raycast(wallPointL.transform.position, transform.TransformDirection(Vector3.left), out hitL, 0.5f)) ||
-        Physics.Raycast(wallPointR.transform.position, transform.TransformDirection(Vector3.right), out hitR, 0.5f))
+        if ((Physics.Raycast(wallPointL.transform.position, transform.TransformDirection(Vector3.left), out hitL, 0.5f, wall)) ||
+        Physics.Raycast(wallPointR.transform.position, transform.TransformDirection(Vector3.right), out hitR, 0.5f, wall))
         {
             isInWall = true;
         }
@@ -199,7 +203,7 @@ public class PlayerController : MonoBehaviour
             isInWall = false;
         }
 
-        if(Physics.Raycast(wallPointL.transform.position, transform.TransformDirection(Vector3.left), out hitL, 0.5f))
+        if(Physics.Raycast(wallPointL.transform.position, transform.TransformDirection(Vector3.left), out hitL, 0.5f, wall))
         {
             isInWallLeft = true;
         }
@@ -208,7 +212,7 @@ public class PlayerController : MonoBehaviour
             isInWallLeft = false;
         }
 
-        if(Physics.Raycast(wallPointR.transform.position, transform.TransformDirection(Vector3.right), out hitR, 0.5f))
+        if(Physics.Raycast(wallPointR.transform.position, transform.TransformDirection(Vector3.right), out hitR, 0.5f, wall))
         {
             isInWallRight = true;
         }
