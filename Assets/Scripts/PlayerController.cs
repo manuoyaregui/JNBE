@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        Application.targetFrameRate = 60; //Capear los fps en 60
+        Application.targetFrameRate = 30; //Capear los fps en 60
 
     }
     // Start is called before the first frame update
