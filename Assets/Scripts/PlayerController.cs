@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        Application.targetFrameRate = 60; //Capear los fps en 60
+       Application.targetFrameRate = 30; //Capear los fps en 60
 
     }
     // Start is called before the first frame update
@@ -78,20 +78,25 @@ public class PlayerController : MonoBehaviour
         onInertiaChange?.Invoke(inertia);
     }
 
+
+    private bool jumpButton;
+
     // Update is called once per frame
     void Update()
     {
         if (isAlive && HUDController.isPause == false)
         {
-            Jumpp();
-            Dash();
-            Mouse();
-            Move();
-            InertiaMove();
-            GravityForce();
-            ChangeFOV();
-            RotateCamaraZ();
-            camera.transform.Rotate(0, 0, rotatezLeft);
+            if (Input.GetKeyDown(KeyCode.Space)) jumpButton = true;
+            else jumpButton = false;
+            //Jumpp();
+            //Dash();
+            //Mouse();
+            //Move();
+            //InertiaMove();
+            //GravityForce();
+            //ChangeFOV();
+            //RotateCamaraZ();
+            //camera.transform.Rotate(0, 0, rotatezLeft);
         }
         CheckShield();
         WallDetection();
@@ -107,6 +112,21 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private void FixedUpdate()
+    {
+        if (isAlive && HUDController.isPause == false)
+        {
+            Jumpp();
+            Dash();
+            Mouse();
+            Move();
+            InertiaMove();
+            GravityForce();
+            ChangeFOV();
+            //RotateCamaraZ();
+            //camera.transform.Rotate(0, 0, rotatezLeft);
+        }
+    }
 
     public int getPlayerLives()
     {
@@ -264,21 +284,24 @@ public class PlayerController : MonoBehaviour
         }
         //Debug.Log(gravityVector.y);
 
-        if (Input.GetButtonDown("Jump") && isInFloor) //Si estoy en el piso y salto, aplico un impulso para arriba
+        if (jumpButton && isInFloor) //Si estoy en el piso y salto, aplico un impulso para arriba
         {
+            jumpButton = false;
             GameManager.singletonGameManager.PlaySound(JumpSound);
             gravityVector.y = Mathf.Sqrt(jump * -2 * gravity);
             characterController.Move(gravityVector * Time.fixedDeltaTime);
         }
-        if (Input.GetButtonDown("Jump") && (isInWall || isInInertiaCharger)) //Si estoy en la pared y salto, aplico un impuso para arriba
+        if (jumpButton && (isInWall || isInInertiaCharger)) //Si estoy en la pared y salto, aplico un impuso para arriba
         {
+            jumpButton = false;
             GameManager.singletonGameManager.PlaySound(JumpSound);
             gravityVector.y = Mathf.Sqrt(jump * -2 * gravity);
             characterController.Move(gravityVector * Time.fixedDeltaTime);
         }
 
-        if (Input.GetButtonDown("Jump") && (isInFloor == false || isInWall == false || isInInertiaCharger == false) && dobleJump == true) //Para controlar el doble salto, si no estoy en el piso o la pared, y tengo el doble jump disponible aplico un impulso para arriba
+        if (jumpButton && (isInFloor == false || isInWall == false || isInInertiaCharger == false) && dobleJump == true) //Para controlar el doble salto, si no estoy en el piso o la pared, y tengo el doble jump disponible aplico un impulso para arriba
         {
+            jumpButton = false;
             GameManager.singletonGameManager.PlaySound(DobleJumpSound);
             gravityVector.y = Mathf.Sqrt(jump * -2 * gravity);
             characterController.Move(gravityVector * Time.fixedDeltaTime);
