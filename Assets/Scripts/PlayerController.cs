@@ -43,6 +43,8 @@ public class PlayerController : MonoBehaviour
     private bool isInWallRight;
     private float rotatezLeft = 0;
     public bool resetCamera = false;
+    private bool toogleGravity;
+    [SerializeField] private LayerMask tutorialLayerDieZone;
 
     
 
@@ -56,9 +58,10 @@ public class PlayerController : MonoBehaviour
         Application.targetFrameRate = 60; //Capear los fps en 60
 
     }
-    // Start is called before the first frame update
+    // Start is called before the first frame updat
     void Start()
     {
+        toogleGravity = true;
         //getSettings
         lives = playerSettings.lives;
         mousesensitivity = playerSettings.mouseSensibility;
@@ -101,14 +104,19 @@ public class PlayerController : MonoBehaviour
 
         if (isInWall && gravityVector.y < 0)
         {
-            gravityVector.y = -2f; //Si estoy en la pared disminuyo la fuerza de la gravedad
+            gravityVector.y = -2f; //Si estoy en la pared disminuyo la fuerza de la graveda
         }
 
 
     }
     private void FixedUpdate()
     {
-        GravityForce();
+        RaycastGravity();
+        ActiveGravity();
+        if (isAlive && HUDController.isPause == false && toogleGravity)
+        {
+            GravityForce();
+        }
     }
 
 
@@ -164,7 +172,7 @@ public class PlayerController : MonoBehaviour
     {
         gravityVector.y += gravity;
 
-        characterController.Move(gravityVector * Time.deltaTime);
+        characterController.Move(gravityVector * Time.deltaTime );
     }
 
     private void CheckShield()
@@ -449,4 +457,33 @@ public class PlayerController : MonoBehaviour
             rotatezLeft -= 1f;
         }
     }
+    bool checkGravity;
+
+    public void RaycastGravity()
+    {
+        RaycastHit hit;
+        checkGravity = Physics.Raycast(footPoint.transform.position, transform.TransformDirection(Vector3.down), out hit, 0.5f, tutorialLayerDieZone);
+        if (Physics.Raycast(footPoint.transform.position,transform.TransformDirection(Vector3.down), out hit, 0.5f, tutorialLayerDieZone))
+        {
+            Debug.Log("La gravedad esta " + toogleGravity);
+            toogleGravity = false;
+            GetComponent<CheckPointController>().MovePlayer();
+        }
+    }
+    public void ActiveGravity()
+    {
+        if(isInFloor || isInWall)
+        {
+            toogleGravity = true;
+        }
+    }
+    /*public void MoveToCheckpoint()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Debug.Log("NO ENTIENDO UNA MIERDA QUE PASA");
+            this.transform.position = new Vector3(100, 100, 100);
+        }
+    }*/
+    
 }

@@ -742,6 +742,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 44232b7473632db4f9db5cf9a7ece147, type: 2}
     - target: {fileID: 3671765639798592436, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: tutorialLayerDieZone.m_Bits
+      value: 32768
+      objectReference: {fileID: 0}
+    - target: {fileID: 3671765639798592436, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
       propertyPath: OnDeathUnityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 515893980}
@@ -1925,7 +1929,7 @@ GameObject:
   - component: {fileID: 652674585}
   - component: {fileID: 652674584}
   - component: {fileID: 652674583}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: DieZone (2)
   m_TagString: KillZone
   m_Icon: {fileID: 0}
@@ -3031,7 +3035,7 @@ GameObject:
   - component: {fileID: 857973155}
   - component: {fileID: 857973154}
   - component: {fileID: 857973153}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: DieZone (1)
   m_TagString: KillZone
   m_Icon: {fileID: 0}
@@ -6263,7 +6267,7 @@ GameObject:
   - component: {fileID: 1450150369}
   - component: {fileID: 1450150368}
   - component: {fileID: 1450150367}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: DieZone (3)
   m_TagString: KillZone
   m_Icon: {fileID: 0}
@@ -6358,7 +6362,7 @@ GameObject:
   - component: {fileID: 1483884098}
   - component: {fileID: 1483884097}
   - component: {fileID: 1483884096}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: DieZone (4)
   m_TagString: KillZone
   m_Icon: {fileID: 0}
@@ -7723,7 +7727,7 @@ GameObject:
   - component: {fileID: 1773997107}
   - component: {fileID: 1773997106}
   - component: {fileID: 1773997105}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: DieZone
   m_TagString: KillZone
   m_Icon: {fileID: 0}
