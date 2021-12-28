@@ -63,8 +63,6 @@ public class HUDController : MonoBehaviour
         ShielPUController.OnShieldPickedUp += CheckShield;
         LeaveZone.OnChangeGB += CheckScore;
         textBullet.text = "";
-
-        loadingScreen.SetActive(true);
     }
 
     // Start is called before the first frame update
@@ -73,6 +71,7 @@ public class HUDController : MonoBehaviour
         isPause = false;
         ResetScore();
         scoreMultiplier = 1;
+       
     }
     // Update is called once per frame
     void Update()

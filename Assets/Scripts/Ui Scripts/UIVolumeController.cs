@@ -10,7 +10,7 @@ public class UIVolumeController : MonoBehaviour
 
     public void VolumeSlider(float volume)
     {
-        volumeTextUI.text = "Volume " + (volume * 10).ToString("0");
+        volumeTextUI.text = "Volume " + (volume * 10).ToString("0.0");
     }
 
     public void SaveVolumeButton()

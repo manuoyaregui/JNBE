@@ -7,19 +7,21 @@ public enum menuState { mainMenu,shop,custom,options,exit}
 
 public class MainMenuController : MonoBehaviour
 {
-    public Canvas mainMenu,shop,custom,options,exit;
+    public Canvas mainMenu,shop,custom,options;
     public menuState currentState;
     [SerializeField] private GameObject wannaPlayTutorialPanel;
 
 
-    [SerializeField] private Animator transition;
-    [SerializeField] private GameObject loadingScreen;
+    [SerializeField] private Animator transitionMainMenu;
+    [SerializeField] private Animator transitionOptions;
+    [SerializeField] private GameObject fadeScreenMainCanvas;
+    [SerializeField] private GameObject fadeScreenOptions;
 
     private void Awake()
     {
         Cursor.visible = true;
         Time.timeScale = 1; //Por alguna razon al pasar de una escena desde el DeathPanel El main menu se tilda
-        loadingScreen.SetActive(true);
+        fadeScreenMainCanvas.SetActive(true);
     }
     // Start is called before the first frame update
     void Start()
@@ -50,10 +52,6 @@ public class MainMenuController : MonoBehaviour
     {
         currentState = menuState.options;
     }
-    public void SetMenuExit()
-    {
-        currentState = menuState.exit;
-    }
     public void ChangeCanvas()
     {
         switch (currentState)
@@ -63,42 +61,36 @@ public class MainMenuController : MonoBehaviour
                 shop.enabled = false;
                 custom.enabled = false;
                 options.enabled = false;
-                exit.enabled = false;
                 break;
             case menuState.shop:
                 mainMenu.enabled = false;
                 shop.enabled = true;
                 custom.enabled = false;
                 options.enabled = false;
-                exit.enabled = false;
                 break;
             case menuState.custom:
                 mainMenu.enabled = false;
                 shop.enabled = false;
                 custom.enabled = true;
                 options.enabled = false;
-                exit.enabled = false;
                 break;
             case menuState.options:
                 mainMenu.enabled = false;
                 shop.enabled = false;
                 custom.enabled = false;
                 options.enabled = true;
-                exit.enabled = false;
                 break;
             case menuState.exit:
                 mainMenu.enabled = false;
                 shop.enabled = false;
                 custom.enabled = false;
                 options.enabled = false;
-                exit.enabled = true;
                 break;
             default:
                 mainMenu.enabled = true;
                 shop.enabled = false;
                 custom.enabled = false;
-                options.enabled = false;
-                exit.enabled = false;
+                options.enabled = false;    
                 break;
         }
     }
@@ -110,11 +102,11 @@ public class MainMenuController : MonoBehaviour
         }
         else
         {
-            StartCoroutine(LoadLevel("Main Scene"));
+            StartCoroutine(LoadLevel("Main Scene",transitionMainMenu));
         }
     }
 
-    IEnumerator LoadLevel(string levelName) 
+    IEnumerator LoadLevel(string levelName, Animator transition) 
     {
         Cursor.visible = false;
         //Inicio el fadeIn
@@ -124,9 +116,17 @@ public class MainMenuController : MonoBehaviour
         SceneManager.LoadScene(levelName);
     }
 
-    public void PlayTutorial()
+    public void PlayTutorial(int dondeMeEncuentro)
     {
-        StartCoroutine(LoadLevel("Tutorial"));
+        switch (dondeMeEncuentro) // depende de donde entro lanzo la transicion
+        {
+            case 0: StartCoroutine(LoadLevel("Tutorial", transitionMainMenu));
+                break;
+            case 1: StartCoroutine(LoadLevel("Tutorial", transitionOptions));
+                break;
+            default: StartCoroutine(LoadLevel("Tutorial", transitionMainMenu));
+                break;
+        }
     }
 
     public void ExitGame()
