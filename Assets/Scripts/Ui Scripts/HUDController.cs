@@ -71,6 +71,7 @@ public class HUDController : MonoBehaviour
         isPause = false;
         ResetScore();
         scoreMultiplier = 1;
+        loadingScreen.SetActive(true);
        
     }
     // Update is called once per frame
