@@ -18,7 +18,7 @@ public class CheckPointController : MonoBehaviour
     {
         scriptController.SetLives(1);
         scriptController.isAlive = true;
-        transform.position = checkpoints[currentCheckpoint].position + new Vector3(0,2,0); // Lo subo un poco asi no se traba en el gameobject
+        transform.position = checkpoints[currentCheckpoint].position + new Vector3(0,0.45f,0); // Lo subo un poco asi no se traba en el gameobject
     }
 
     public void CheckPointReached(int checkpointNumber)
