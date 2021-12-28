@@ -8694,8 +8694,42 @@ PrefabInstance:
       propertyPath: allTheGameBlocks.Array.data[1]
       value: 
       objectReference: {fileID: 251853890602171151, guid: 8ec668a57a63b8341810ffe21a4af5a8, type: 3}
+    - target: {fileID: 1257174691013452306, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
+      propertyPath: Loop
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1257174691013452306, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1257174691013452306, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
+--- !u!1 &1257174689670600833 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1257174691013452301, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
+  m_PrefabInstance: {fileID: 1257174689670600832}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1257174689670600834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257174689670600833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af34d3769e3990746a0db24963e7ecaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listOfSongs:
+  - {fileID: 8300000, guid: 68021e35a0ec6c048a7a5074a07ef7d9, type: 3}
+  - {fileID: 8300000, guid: 6f25d1ba2e9d73247bc2c138bf225184, type: 3}
+  - {fileID: 8300000, guid: 1327c5b114950a647868702d0f57343a, type: 3}
+  - {fileID: 8300000, guid: 7015d2530af7e4f4ea380b707555d136, type: 3}
 --- !u!1 &2180476892401515152 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3671765639798592438, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}

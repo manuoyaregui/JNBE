@@ -38,4 +38,9 @@ public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para
     {
         audioSource.Stop();
     }
+
+    public AudioSource GetAudioSource()
+    {
+        return audioSource;
+    }
 }
