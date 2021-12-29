@@ -822,7 +822,7 @@ Light:
   m_BounceIntensity: 0.05
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 4.5904e-41, y: 0, z: 0, w: NaN}
+  m_BoundingSphereOverride: {x: 4.5904e-41, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -8504,6 +8504,22 @@ PrefabInstance:
       propertyPath: playerBeingEatedSound
       value: 
       objectReference: {fileID: 8300000, guid: 2a0a2319f1221d84fa880f21c2dec5d5, type: 3}
+    - target: {fileID: 94533013695335120, guid: 86853763df4f20445b3ee739ec33c00d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.91294616
+      objectReference: {fileID: 0}
+    - target: {fileID: 94533013695335120, guid: 86853763df4f20445b3ee739ec33c00d, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.25054014
+      objectReference: {fileID: 0}
+    - target: {fileID: 94533013695335120, guid: 86853763df4f20445b3ee739ec33c00d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.9795372
+      objectReference: {fileID: 0}
+    - target: {fileID: 94533013695335120, guid: 86853763df4f20445b3ee739ec33c00d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.06
+      objectReference: {fileID: 0}
     - target: {fileID: 299603044656540700, guid: 86853763df4f20445b3ee739ec33c00d, type: 3}
       propertyPath: m_UpdateMode
       value: 2
@@ -8887,19 +8903,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8251052765317076127, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
       propertyPath: m_BoundingSphereOverride.w
-      value: -1.1269992e-17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8251052765317076127, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
       propertyPath: m_BoundingSphereOverride.x
-      value: 1
+      value: 6.53e-43
       objectReference: {fileID: 0}
     - target: {fileID: 8251052765317076127, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
       propertyPath: m_BoundingSphereOverride.y
-      value: 0
+      value: 43
       objectReference: {fileID: 0}
     - target: {fileID: 8251052765317076127, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
       propertyPath: m_BoundingSphereOverride.z
-      value: 0
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 8251052766463556778, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
       propertyPath: far clip plane
