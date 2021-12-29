@@ -13,14 +13,15 @@ public class ShootWeapon : MonoBehaviour
     protected int bulletsRemaining;
     protected float shootTime; //Tiempo de disparo
     public Animator anim;
-    
 
-    public static event Action<int,GameObject> onBulletsChange;
+
+    public static event Action<int, GameObject> onBulletsChange;
 
     protected GameObject player;
     [SerializeField] private ParticleSystem shootParticles;
 
-    public AudioClip shootClip;
+    [SerializeField] private AudioClip shootClip;
+    [SerializeField] private AudioClip emptyMagazineClip;
 
     // Start is called before the first frame update
     void Start()
@@ -50,12 +51,18 @@ public class ShootWeapon : MonoBehaviour
             {
             anim.SetBool("isShoot", false);
             }
+
+            if(bulletsRemaining == 0 && Input.GetButtonDown("Fire1"))
+            {
+                GameManager.singletonGameManager.PlaySound(emptyMagazineClip);
+            }
         }
     }
 
     protected virtual bool FireWeapon()
     {
-        if (Time.time > shootTime && Input.GetButtonDown("Fire1")) //Si el tiempo es mayor al tiempo de disparo
+
+        if (bulletsRemaining > 0 && Time.time > shootTime && Input.GetButtonDown("Fire1")) //Si el tiempo es mayor al tiempo de disparo
         {
             anim.SetBool("isShoot", true);
             GameManager.singletonGameManager.PlaySound(shootClip);
@@ -80,9 +87,11 @@ public class ShootWeapon : MonoBehaviour
         {
             anim.SetBool("isShoot", false);
             return false;
-            //GameManager.singletonGameManager.PlaySound(shootClipWihtOutBullets);
+            if(bulletsRemaining <= 0 && Input.GetButtonDown("Fire1"))
+            {
+                GameManager.singletonGameManager.PlaySound(emptyMagazineClip);
+            }
         }
-        return false;
     }
     IEnumerator IShootParticle()
     {

@@ -10230,6 +10230,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   shootParticles: {fileID: 8251052765291233501}
   shootClip: {fileID: 8300000, guid: 018f0dd134e03e1459cbcc50a129a4b3, type: 3}
+  emptyMagazineClip: {fileID: 8300000, guid: 0ca083ccdee72b547b65d4387bd1882c, type: 3}
 --- !u!1 &8251052765012923179
 GameObject:
   m_ObjectHideFlags: 0
@@ -15633,6 +15634,10 @@ PrefabInstance:
       propertyPath: shootParticles
       value: 
       objectReference: {fileID: 3221805788264981869}
+    - target: {fileID: 8920167633373319190, guid: 9018944f2c2380f449bbb27b7387af8a, type: 3}
+      propertyPath: emptyMagazineClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 0ca083ccdee72b547b65d4387bd1882c, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9018944f2c2380f449bbb27b7387af8a, type: 3}
 --- !u!4 &8997823493750538161 stripped
