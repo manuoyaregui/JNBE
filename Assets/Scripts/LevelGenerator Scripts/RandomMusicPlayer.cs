@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RandomMusicPlayer : MonoBehaviour
 {
@@ -16,13 +17,23 @@ public class RandomMusicPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if( ! GameManager.singletonGameManager.GetAudioSource().isPlaying)
+        if(! SceneManager.GetActiveScene().Equals(SceneManager.GetSceneByName("MainMenu"))) // si no estoy en el menu principal que llame al gamemanager
         {
-            randomMusic = Random.Range(0, listOfSongs.Capacity);
-            GameManager.singletonGameManager.PlaySound(listOfSongs[randomMusic]);
-        }
+            if(!GameManager.singletonGameManager.GetAudioSource().isPlaying)
+            {
+                randomMusic = Random.Range(0, listOfSongs.Capacity);
+                GameManager.singletonGameManager.PlaySound(listOfSongs[randomMusic]);
 
-           
+            }
+        }
+        else //para main menu
+        {
+            if ( !GetComponent<AudioSource>().isPlaying)
+            {
+                randomMusic = Random.Range(0, listOfSongs.Capacity);
+                GetComponent<AudioSource>().PlayOneShot(listOfSongs[randomMusic]);
+            }
+        }
     }
 
 

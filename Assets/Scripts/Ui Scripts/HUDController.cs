@@ -32,6 +32,8 @@ public class HUDController : MonoBehaviour
 
     //Para el Score
     [SerializeField] private Text textScore;
+    [SerializeField] private Text currentHighScoreText;
+    [SerializeField] private GameObject panelHighScoreAdvisor;
     private int formula = 0;
 
     //Para el mensaje de fin de juego
@@ -72,6 +74,7 @@ public class HUDController : MonoBehaviour
         ResetScore();
         scoreMultiplier = 1;
         loadingScreen.SetActive(true);
+        panelHighScoreAdvisor.SetActive(false);
        
     }
     // Update is called once per frame
@@ -174,6 +177,10 @@ public class HUDController : MonoBehaviour
                 extraValue = 0;
                 OnScoreSpecificValueUnityEvent?.Invoke(formula);
             }
+            if(formula > PlayerPrefs.GetFloat("HighScore", 0))
+            {
+                panelHighScoreAdvisor.SetActive(true);
+            }
         }
     }
 
@@ -207,7 +214,8 @@ public class HUDController : MonoBehaviour
     {
         ToggleIsPause();
         deathPanel.SetActive(true);
-        deathPanel.GetComponentsInChildren<Text>()[1].text = "" + textScore.text;
+        deathPanel.GetComponentsInChildren<Text>()[1].text = formula.ToString("0");
+        currentHighScoreText.text = "High Score: " + PlayerPrefs.GetFloat("HighScore", 0).ToString("0");
         if(formula > PlayerPrefs.GetFloat("HighScore", 0))
         {
             //playerSettings.highScore = formula;

@@ -10,7 +10,7 @@ public class UIVolumeController : MonoBehaviour
 
     public void VolumeSlider(float volume)
     {
-        volumeTextUI.text = "Volume " + (volume * 10).ToString("0.0");
+        volumeTextUI.text = "Volume " + (volume * 100).ToString("0");
     }
 
     public void SaveVolumeButton()
@@ -21,7 +21,7 @@ public class UIVolumeController : MonoBehaviour
         Debug.Log("Volumen Guardado Correctamente");
     }
 
-    void LoadValues()
+    public void LoadValues()
     {
         float volumeValue = PlayerPrefs.GetFloat("VolumeValue");
         volumeSlider.value = volumeValue;

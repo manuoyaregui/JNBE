@@ -78,8 +78,10 @@ MonoBehaviour:
   GunSettings: {fileID: 11400000, guid: fabde8c7228b37f4da043d9e3610124a, type: 2}
   barrel: {fileID: 2609182147819031272}
   ammo: {fileID: 5865359197413278604, guid: 91f69e3ffd68767429d7dfa205403d73, type: 3}
+  anim: {fileID: 0}
   shootParticles: {fileID: 0}
   shootClip: {fileID: 0}
+  emptyMagazineClip: {fileID: 0}
   recoilTime: 0
   recoilSpeed: 0
 --- !u!1001 &934844271692835171
