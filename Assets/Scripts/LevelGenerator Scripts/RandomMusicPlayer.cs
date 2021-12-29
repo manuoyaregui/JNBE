@@ -7,32 +7,22 @@ public class RandomMusicPlayer : MonoBehaviour
 {
     [SerializeField] List<AudioClip> listOfSongs;
     private int randomMusic;
+    private AudioSource musicPlayer;
 
     // Start is called before the first frame update
     void Start()
     {
         randomMusic = Random.Range(0, listOfSongs.Capacity);
+        musicPlayer = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(! SceneManager.GetActiveScene().Equals(SceneManager.GetSceneByName("MainMenu"))) // si no estoy en el menu principal que llame al gamemanager
+        if (! musicPlayer.isPlaying)
         {
-            if(!GameManager.singletonGameManager.GetAudioSource().isPlaying)
-            {
-                randomMusic = Random.Range(0, listOfSongs.Capacity);
-                GameManager.singletonGameManager.PlaySound(listOfSongs[randomMusic]);
-
-            }
-        }
-        else //para main menu
-        {
-            if ( !GetComponent<AudioSource>().isPlaying)
-            {
-                randomMusic = Random.Range(0, listOfSongs.Capacity);
-                GetComponent<AudioSource>().PlayOneShot(listOfSongs[randomMusic]);
-            }
+            randomMusic = Random.Range(0, listOfSongs.Capacity);
+            musicPlayer.PlayOneShot(listOfSongs[randomMusic]);
         }
     }
 
