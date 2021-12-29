@@ -45,7 +45,8 @@ public class PlayerController : MonoBehaviour
     public bool resetCamera = false;
     private bool toogleGravity;
     [SerializeField] private LayerMask tutorialLayerDieZone;
-
+    [SerializeField] private ParticleSystem shieldActivated;
+    [SerializeField] private ParticleSystem shieldDisabled;
     
 
     //eventos
@@ -79,6 +80,7 @@ public class PlayerController : MonoBehaviour
         InertiaParticles.Stop();
         inertia = 1;
         onInertiaChange?.Invoke(inertia);
+        ShielPUController.OnShieldPickedUp += ActivateShieldParticleSystem;
     }
 
     // Update is called once per frame
@@ -126,6 +128,11 @@ public class PlayerController : MonoBehaviour
     }
     public void MinusLives()
     {
+        if(lives == 2)
+        {
+            DisableShieldParticleSystem();
+        }
+
         lives--;
         //lanzar evento
         onLivesChange?.Invoke(lives);
@@ -432,6 +439,7 @@ public class PlayerController : MonoBehaviour
     private void OnDestroy()
     {
         ShotgunController.OnShotgunRecoil -= DoShotgunRecoil;
+        ShielPUController.OnShieldPickedUp -= ActivateShieldParticleSystem;
     }
 
     public void RotateCamaraZ()
@@ -466,7 +474,7 @@ public class PlayerController : MonoBehaviour
         if (Physics.Raycast(footPoint.transform.position,transform.TransformDirection(Vector3.down), out hit, 0.5f, tutorialLayerDieZone))
         {
             Debug.Log("La gravedad esta " + toogleGravity);
-            toogleGravity = false;
+            toogleGravity = false;            
             GetComponent<CheckPointController>().MovePlayer();
         }
     }
@@ -485,5 +493,16 @@ public class PlayerController : MonoBehaviour
             this.transform.position = new Vector3(100, 100, 100);
         }
     }*/
+
+    public void ActivateShieldParticleSystem(int value)
+    {
+        if(lives == 1) //Sólo si no tiene el escudo activar las particulas
+            shieldActivated.Play();
+    }
+
+    public void DisableShieldParticleSystem()
+    {
+        shieldDisabled.Play();
+    }
     
 }

@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class ShielPUController : MonoBehaviour
 {
-    private GameObject Player;
+    protected GameObject Player;
     public static event Action<int> OnShieldPickedUp;
 
     public AudioClip PickUpShield;
@@ -28,6 +29,8 @@ public class ShielPUController : MonoBehaviour
         {
             GameManager.singletonGameManager.PlaySound(PickUpShield);
             GiveShield();
+            if (!SceneManager.GetSceneByName("Tutorial").Equals(SceneManager.GetActiveScene()))
+                Destroy(gameObject); //si no estoy en el tutorial destruyo el pickup
         }
     }
 
@@ -35,6 +38,5 @@ public class ShielPUController : MonoBehaviour
     {
         OnShieldPickedUp?.Invoke(2);
         Player.GetComponent<PlayerController>().SetLives(2); // cambio vida de player a 2, valor el cual pone el escudo activo
-        Destroy(gameObject);
     }
 }

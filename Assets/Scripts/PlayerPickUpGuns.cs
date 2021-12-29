@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 //Este script va unido al Player
 public class PlayerPickUpGuns : MonoBehaviour
@@ -86,7 +87,12 @@ public class PlayerPickUpGuns : MonoBehaviour
             int numberOfGun = other.GetComponent<PickUpGunController>().GetTypeOfGun(); //chequeo que tipo de arma es
             listOfGuns[numberOfGun].GetComponent<ShootWeapon>().SetExtraBullets(); //y le agrego balas
             OnExtraBullets?.Invoke();
-            Destroy(other.gameObject); // destruyo el pickup
+            if(!SceneManager.GetSceneByName("Tutorial").Equals(SceneManager.GetActiveScene()))   
+                Destroy(other.gameObject); //si no estoy en el tutorial destruyo el pickup
+            else //si estoy en el tutorial q randomice el nro nuevamente
+            {
+                other.GetComponent<PickUpGunController>().RerollNumber();
+            }
         }
     }
 
