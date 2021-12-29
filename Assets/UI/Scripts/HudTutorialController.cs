@@ -8,6 +8,7 @@ public class HudTutorialController : MonoBehaviour
     [SerializeField] private GameObject tutorialPanel;
     [SerializeField] private Text tutorialText;
     [SerializeField] private Color taskColor;
+    [SerializeField] private Color taskTextColor;
     [SerializeField] private Color taskDoneColor;
 
     [SerializeField] private GameObject keyBindingsImage; 
@@ -27,8 +28,10 @@ public class HudTutorialController : MonoBehaviour
     IEnumerator IEcolorChange(string message)
     {
         tutorialPanel.GetComponent<Image>().color = taskDoneColor;
+        tutorialText.color = taskDoneColor;
         yield return new WaitForSeconds(1f);
         tutorialPanel.GetComponent<Image>().color = taskColor;
+        tutorialText.color = taskTextColor;
         tutorialText.text = message;
     }
 

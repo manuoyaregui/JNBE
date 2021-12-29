@@ -642,7 +642,7 @@ MonoBehaviour:
       - m_Target: {fileID: 1435587591}
         m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
         m_MethodName: PlayTutorial
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -7967,6 +7967,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1072144897}
   m_CullTransparentMesh: 1
+--- !u!1 &1074531426 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5334763839034921929, guid: a75c799343d5232469b164ccb58f1019, type: 3}
+  m_PrefabInstance: {fileID: 991407314}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1238560756
 GameObject:
   m_ObjectHideFlags: 0
@@ -8506,7 +8511,7 @@ MonoBehaviour:
   transitionMainMenu: {fileID: 974888131}
   transitionOptions: {fileID: 766502887545094016}
   fadeScreenMainCanvas: {fileID: 1361233751}
-  fadeScreenOptions: {fileID: 0}
+  fadeScreenOptions: {fileID: 1074531426}
 --- !u!4 &1435587592
 Transform:
   m_ObjectHideFlags: 0
