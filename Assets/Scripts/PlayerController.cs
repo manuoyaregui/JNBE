@@ -47,17 +47,22 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask tutorialLayerDieZone;
     [SerializeField] private ParticleSystem shieldActivated;
     [SerializeField] private ParticleSystem shieldDisabled;
+    [SerializeField] private ParticleSystem extraBulletParticles;
+
     
 
     //eventos
     public static event Action<int> onLivesChange;
     [SerializeField] private UnityEvent OnDeathUnityEvent;
     public static event Action<float> onInertiaChange;
+   
 
     private void Awake()
     {
         Application.targetFrameRate = 60; //Capear los fps en 60
 
+
+        PlayerPickUpGuns.OnExtraBullets += ExtraBulletsPS;
     }
     // Start is called before the first frame updat
     void Start()
@@ -496,13 +501,18 @@ public class PlayerController : MonoBehaviour
 
     public void ActivateShieldParticleSystem(int value)
     {
-        if(lives == 1) //Sólo si no tiene el escudo activar las particulas
+        if(lives == 1) //Sólo si no tenía el escudo activar las particulas
             shieldActivated.Play();
     }
 
     public void DisableShieldParticleSystem()
     {
         shieldDisabled.Play();
+    }
+
+    public void ExtraBulletsPS() 
+    {
+        extraBulletParticles.Play();
     }
     
 }
