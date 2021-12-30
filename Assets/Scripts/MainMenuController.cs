@@ -131,6 +131,13 @@ public class MainMenuController : MonoBehaviour
 
     public void ExitGame()
     {
+        StartCoroutine(ExitGameTransition());
+    }
+
+    IEnumerator ExitGameTransition()
+    {
+        transitionMainMenu.SetTrigger("Start");
+        yield return new WaitForSeconds(1);
         Application.Quit();
     }
 }
