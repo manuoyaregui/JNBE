@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 4477678892614788114}
   - component: {fileID: 5457350736733241546}
   - component: {fileID: 1816609831214944982}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShieldLostParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,10 +57,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3002324259506481881}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.08, y: 2.08, z: 2.03}
+  m_LocalPosition: {x: 0, y: 1.5, z: 2.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 3671765639798592439}
+  m_Father: {fileID: 8251052766463556783}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!198 &5457350736733241546
@@ -9830,9 +9830,6 @@ Transform:
   - {fileID: 3221805788215379699}
   - {fileID: 3221805786776670471}
   - {fileID: 8251052766463556783}
-  - {fileID: 4477678892614788114}
-  - {fileID: 8587406912675540189}
-  - {fileID: 5257769675300593455}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10003,7 +10000,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 1893d51df602b5141abdb57137ff2c17, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10159,7 +10156,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1f15d4981b0de864cbb43e501053c50e, type: 2}
+  - {fileID: 2100000, guid: 1893d51df602b5141abdb57137ff2c17, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10206,7 +10203,7 @@ GameObject:
   - component: {fileID: 5257769675300593455}
   - component: {fileID: 2840087992086710}
   - component: {fileID: 8155468560416786399}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ExtraBulletsParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10221,10 +10218,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7555065603848730724}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.08, y: -2.08, z: 2.03}
+  m_LocalPosition: {x: 0, y: -2.6599998, z: 2.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 3671765639798592439}
+  m_Father: {fileID: 8251052766463556783}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &2840087992086710
@@ -15097,7 +15094,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1f15d4981b0de864cbb43e501053c50e, type: 2}
+  - {fileID: 2100000, guid: 1893d51df602b5141abdb57137ff2c17, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -15168,6 +15165,9 @@ Transform:
   - {fileID: 3221805787016070402}
   - {fileID: 3221805786589413053}
   - {fileID: 1804967212290622152}
+  - {fileID: 4477678892614788114}
+  - {fileID: 8587406912675540189}
+  - {fileID: 5257769675300593455}
   m_Father: {fileID: 3671765639798592439}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15342,7 +15342,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1f15d4981b0de864cbb43e501053c50e, type: 2}
+  - {fileID: 2100000, guid: 1893d51df602b5141abdb57137ff2c17, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -15389,7 +15389,7 @@ GameObject:
   - component: {fileID: 8587406912675540189}
   - component: {fileID: 2016496196370076245}
   - component: {fileID: 6172876408859639133}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShieldAddedParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15404,10 +15404,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9022680572403863659}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.08, y: -2.08, z: 2.03}
+  m_LocalPosition: {x: 0, y: -2.6599998, z: 2.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 3671765639798592439}
+  m_Father: {fileID: 8251052766463556783}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &2016496196370076245
@@ -20242,7 +20242,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1f15d4981b0de864cbb43e501053c50e, type: 2}
+  - {fileID: 2100000, guid: 1893d51df602b5141abdb57137ff2c17, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -20332,6 +20332,10 @@ PrefabInstance:
     - target: {fileID: 1904604792002773083, guid: 1905db7b1c2aff7409c7955cef1a3ceb, type: 3}
       propertyPath: m_Name
       value: InertiaParticles
+      objectReference: {fileID: 0}
+    - target: {fileID: 1904604792002773083, guid: 1905db7b1c2aff7409c7955cef1a3ceb, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 1904604792002773084, guid: 1905db7b1c2aff7409c7955cef1a3ceb, type: 3}
       propertyPath: SubModule.enabled

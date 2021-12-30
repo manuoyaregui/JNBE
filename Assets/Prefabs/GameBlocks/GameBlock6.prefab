@@ -404,7 +404,7 @@ PrefabInstance:
     - target: {fileID: 4672662144833436395, guid: 4f92e10a0e4a89446945fc1b5d8d66ab, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 5d2392b041a74f641ba23b5860113986, type: 2}
+      objectReference: {fileID: 2100000, guid: 31a7f0bdcb6327a4ebbab82f2e6cfa6e, type: 2}
     - target: {fileID: 4672662144833436405, guid: 4f92e10a0e4a89446945fc1b5d8d66ab, type: 3}
       propertyPath: m_Name
       value: InertiaCharger

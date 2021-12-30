@@ -445,6 +445,7 @@ public class PlayerController : MonoBehaviour
     {
         ShotgunController.OnShotgunRecoil -= DoShotgunRecoil;
         ShielPUController.OnShieldPickedUp -= ActivateShieldParticleSystem;
+        PlayerPickUpGuns.OnExtraBullets -= ExtraBulletsPS;
     }
 
     public void RotateCamaraZ()

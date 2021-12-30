@@ -15,7 +15,6 @@ public class PlayerPickUpGuns : MonoBehaviour
     public static event Action OnExtraBullets;
 
     public AudioClip ChangeWeapon;
-
     public AudioClip PickUp;
 
     private void Awake()
