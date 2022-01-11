@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class UIVolumeController : MonoBehaviour
 {
-    [SerializeField] private Slider volumeSlider = null;
-    [SerializeField] private Text volumeTextUI = null;
+    [SerializeField] private Slider volumeSlider;
+    [SerializeField] private Text volumeTextUI;
 
-    public void VolumeSlider(float volume)
+    public void VolumeSlider(float volumeValue)
     {
-        volumeTextUI.text = "Volume " + (volume * 100).ToString("0");
+        Debug.Log("Entro a la funcion");
+        volumeTextUI.text = "Volume " + (volumeValue * 100).ToString("0");
     }
 
     public void SaveVolumeButton()
@@ -23,9 +24,10 @@ public class UIVolumeController : MonoBehaviour
 
     public void LoadValues()
     {
-        float volumeValue = PlayerPrefs.GetFloat("VolumeValue");
+        float volumeValue = PlayerPrefs.GetFloat("VolumeValue", .3f);
         volumeSlider.value = volumeValue;
         AudioListener.volume = volumeValue;
+        VolumeSlider(volumeSlider.value);
     }
 
     // Start is called before the first frame update
