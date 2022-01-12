@@ -7,8 +7,7 @@ public class PostGlobalController : MonoBehaviour
 {
     private PostProcessVolume globalVolume;
     [SerializeField] List<Color> Colores;
-    int random;
-    int buffer;
+    int random,buffer;
     ChromaticAberration crazyEffect;
 
     // Start is called before the first frame update

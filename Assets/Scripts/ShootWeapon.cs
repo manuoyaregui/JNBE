@@ -107,7 +107,6 @@ public class ShootWeapon : MonoBehaviour
 
     public void SetExtraBullets()
     {
-        Debug.Log("Mas balas lokooo");
         bulletsRemaining += GunSettings.magazine;
         if (gameObject.activeSelf) //si el arma esta en mano lanza el evento
         {

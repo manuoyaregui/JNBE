@@ -6,55 +6,71 @@ using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Settings")]
     public Player playerSettings;
-    private int lives = 1; //Vidas del jugador
-    private float mousesensitivity = 150; //sensibilidad del mouse
-    private float moveSpeed = 1; //Velocidad de movimiento del jugador
+
+    [Header("References")]
     [SerializeField] GameObject playerBody; //no se usa, hay q ver de sacarlo quiza 
     [SerializeField] GameObject camera; // trabaja la rotacion de la camara
     [SerializeField] GameObject GunCamera; //Camara aparte con las armas
-    private float gravity; // valor de la gravedad
-    Vector3 gravityVector;
-    private float rotationX = 0;
     [SerializeField] GameObject footPoint; // puntos de apoyo y colision
     [SerializeField] GameObject wallPointL, wallPointR;
-    [SerializeField] LayerMask floor, wall,ramp; // capas para reconocer qué cosa es pared y qué cosa es piso
-    private float jump = 5;
-    private CharacterController characterController;
-    private bool isInFloor;
-    private bool isInWall;
-    public bool isAlive;
-    private bool dobleJump;
-    private static float inertia;
-    private float inertiaFOV = 50;
-    private bool isInInertiaCharger;
-    private bool isInTheRamp;
+
+    [Header("Layer Detections")]
+    [SerializeField] LayerMask floor; // capas para reconocer qué cosa es pared y qué cosa es piso
+    [SerializeField] LayerMask wall;
+    [SerializeField] LayerMask ramp;
     [SerializeField] LayerMask inertiaChargerLayer;
-    private float dashTime;
-    private float dashSpeed;
-    private float dashCD;
-    private Vector3 move;
+
+    [Header("Sounds")]
     public AudioClip JumpSound;
     public AudioClip DobleJumpSound;
     public AudioClip DashSound;
     public AudioClip killZoneDeath;
+
+    [Header("Particles")]
     [SerializeField] private ParticleSystem InertiaParticles;
-    private bool isInWallLeft;
-    private bool isInWallRight;
-    private float rotatezLeft = 0;
-    public bool resetCamera = false;
-    private bool toogleGravity;
-    [SerializeField] private LayerMask tutorialLayerDieZone;
     [SerializeField] private ParticleSystem shieldActivated;
     [SerializeField] private ParticleSystem shieldDisabled;
     [SerializeField] private ParticleSystem extraBulletParticles;
 
-    
+    [Header("Tutorial")] [Tooltip("Dont use in main game")]
+    [SerializeField] private LayerMask tutorialLayerDieZone;
 
     //eventos
     public static event Action<int> onLivesChange;
-    [SerializeField] private UnityEvent OnDeathUnityEvent;
     public static event Action<float> onInertiaChange;
+    [SerializeField] private UnityEvent OnDeathUnityEvent;
+
+    private int lives = 1; //Vidas del jugador
+    private float mousesensitivity = 150; //sensibilidad del mouse
+    private float moveSpeed = 1; //Velocidad de movimiento del jugador
+    private float gravity; // valor de la gravedad
+    Vector3 gravityVector;
+    private float rotationX = 0;
+    private float jump = 5;
+    private CharacterController characterController;
+
+    // Flags
+    public bool isAlive;
+    private static float inertia;
+    private bool isInFloor;
+    private bool dobleJump;
+    private bool isInWall;
+    private float inertiaFOV = 50;
+    private bool isInInertiaCharger;
+    private bool isInTheRamp;
+    private float dashTime;
+    private float dashSpeed;
+    private float dashCD;
+    private bool isInWallLeft;
+    private bool isInWallRight;
+    public bool resetCamera = false;
+    private bool toogleGravity;
+
+    private Vector3 move;
+    private float rotatezLeft = 0;
+
    
 
     private void Awake()

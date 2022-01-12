@@ -34,7 +34,6 @@ public class RotationBackground : MonoBehaviour
         if (Time.time > time) 
         {
             int ranNum = Random.Range(1, 16);
-            Debug.Log("ram " + ranNum);
             switch (ranNum)
             {
                 case 1:

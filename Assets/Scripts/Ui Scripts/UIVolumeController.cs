@@ -10,7 +10,6 @@ public class UIVolumeController : MonoBehaviour
 
     public void VolumeSlider(float volumeValue)
     {
-        Debug.Log("Entro a la funcion");
         volumeTextUI.text = "Volume " + (volumeValue * 100).ToString("0");
     }
 

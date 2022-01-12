@@ -25,7 +25,6 @@ public class SkipCinematic : MonoBehaviour
     {
         SkipPlayable();
         time = Time.timeSinceLevelLoad;
-        Debug.Log("Timepo " + time);
     }
     private void SkipPlayable()
     {
