@@ -8,7 +8,6 @@ public class PostGlobalController : MonoBehaviour
     private PostProcessVolume globalVolume;
     int randomIndex,buffer;
     ChromaticAberration crazyEffect;
-    [SerializeField] List<Color> Colores;
 
     // Start is called before the first frame update
     void Start()
@@ -16,23 +15,10 @@ public class PostGlobalController : MonoBehaviour
         globalVolume = GetComponent<PostProcessVolume>();
         buffer = Random.Range(0, palettes.Length);
         ChangePalette();
-        crazyEffect = globalVolume.profile.GetSetting<UnityEngine.Rendering.PostProcessing.ChromaticAberration>();
+        crazyEffect = globalVolume.profile.GetSetting<ChromaticAberration>();
         crazyEffect.active = false;
         PlayerController.onInertiaChange += SetAberrationActive;
-        //ChangeGradentColor();
     }
-
-    /*public void ChangeGradentColor()
-    {
-        GenerateRandomIndex();
-        
-        ColorGrading colorGr = globalVolume.profile.GetSetting<UnityEngine.Rendering.PostProcessing.ColorGrading>();
-        Color colorParameter = new UnityEngine.Rendering.PostProcessing.ColorParameter
-        {
-            value = Colores[randomIndex]
-        };
-        colorGr.colorFilter.Override(colorParameter);
-    }*/
 
     public void SetAberrationActive(float inertiaValue)
     {
@@ -46,31 +32,13 @@ public class PostGlobalController : MonoBehaviour
         }
     }
 
-    private void GenerateRandomIndex()
-    {
-        do
-        {
-            randomIndex = Random.Range(0, palettes.Length);
-        } while (buffer == randomIndex);
-
-        /*if (randomIndex == palettes.Length) 
-            randomIndex -= 1;*/
-
-        buffer = randomIndex;
-    }
-
-
-
-
-
-
-    [Space][Tooltip("Here goes the materials that´s going to be painted with the primaryColor")]
+    [Space][Tooltip("Enviroment Materials, weapon and arms")]
     [SerializeField] private Material[] primaryMaterials;
 
-    [Space][Tooltip("Here goes the materials that´s going to be painted with the secondaryColor")]
+    [Space][Tooltip("Things that can damage the player")]
     [SerializeField] private Material[] secondaryMaterials;
 
-    [Space][Tooltip("Here goes the materials that´s going to be painted with the otherColor")]
+    [Space][Tooltip("Things that benefits the player")]
     [SerializeField] private Material[] otherMaterials;
 
     [Space]
@@ -113,16 +81,15 @@ public class PostGlobalController : MonoBehaviour
         }
     }
 
-    /*public void SetPaletteValues(int index, Palette subClass)
+    private void GenerateRandomIndex()
     {
-        // Perform any validation checks here.
-        palettes[index] = subClass;
+        do
+        {
+            randomIndex = Random.Range(0, palettes.Length);
+        } while (buffer == randomIndex);
+        buffer = randomIndex;
     }
-    public Palette GetPaletteByIndex(int index)
-    {
-        // Perform any validation checks here.
-        return palettes[index];
-    }*/
+
     private void OnDestroy()
     {
         PlayerController.onInertiaChange -= SetAberrationActive;

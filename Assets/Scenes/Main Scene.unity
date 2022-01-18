@@ -574,17 +574,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bade19249fa300a46a38143784b4f08f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Colores:
-  - {r: 1, g: 0, b: 0.25638866, a: 0}
-  - {r: 0, g: 1, b: 0.24727964, a: 0}
-  - {r: 0, g: 0.20368052, b: 1, a: 0}
-  - {r: 0.71068674, g: 0.02616591, b: 0.7924528, a: 0}
-  - {r: 0.9150943, g: 0.9150943, b: 0.9150943, a: 0}
-  - {r: 1, g: 0.5185516, b: 0, a: 0}
-  - {r: 0, g: 0.9375839, b: 1, a: 0}
-  - {r: 1, g: 0.9753064, b: 0, a: 0}
-  - {r: 0.6132076, g: 0.035445437, b: 0, a: 0}
-  - {r: 0, g: 1, b: 0.6509804, a: 0}
   primaryMaterials:
   - {fileID: 2100000, guid: c73e205b1e6c23e498a7b36631851031, type: 2}
   - {fileID: 2100000, guid: 1893d51df602b5141abdb57137ff2c17, type: 2}
@@ -4162,11 +4151,11 @@ PrefabInstance:
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: allTheGameBlocks.Array.data[0]
       value: 
-      objectReference: {fileID: 251853890602171151, guid: 0d6fc6931c407174182a4cb24f9b5583, type: 3}
+      objectReference: {fileID: 251853890602171151, guid: 8ec668a57a63b8341810ffe21a4af5a8, type: 3}
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: allTheGameBlocks.Array.data[1]
       value: 
-      objectReference: {fileID: 251853890602171151, guid: 0d6fc6931c407174182a4cb24f9b5583, type: 3}
+      objectReference: {fileID: 251853890602171151, guid: 8ec668a57a63b8341810ffe21a4af5a8, type: 3}
     - target: {fileID: 1257174691013452306, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: Loop
       value: 0
