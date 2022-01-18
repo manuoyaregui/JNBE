@@ -249,6 +249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerDamageSound: {fileID: 0}
+  bulletHitSound: {fileID: 8300000, guid: 92310eeff796a8d4a9437a8933c33f05, type: 3}
 --- !u!54 &106888184414298647
 Rigidbody:
   m_ObjectHideFlags: 0

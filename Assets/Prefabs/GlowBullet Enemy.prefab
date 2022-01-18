@@ -127,7 +127,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74a5f5ae84dc9d94cb6f6d6f85fe3db0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerDamageSound: {fileID: 0}
+  PlayerDamageSound: {fileID: 8300000, guid: e74361854d990d840a02f0b759daf813, type: 3}
+  bulletHitSound: {fileID: 0}
 --- !u!1 &1388475719360171229
 GameObject:
   m_ObjectHideFlags: 0

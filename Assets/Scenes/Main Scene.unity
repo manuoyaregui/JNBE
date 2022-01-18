@@ -587,15 +587,13 @@ MonoBehaviour:
   - {r: 0, g: 1, b: 0.6509804, a: 0}
   primaryMaterials:
   - {fileID: 2100000, guid: c73e205b1e6c23e498a7b36631851031, type: 2}
+  - {fileID: 2100000, guid: 1893d51df602b5141abdb57137ff2c17, type: 2}
+  - {fileID: 2100000, guid: 1f15d4981b0de864cbb43e501053c50e, type: 2}
+  - {fileID: 2100000, guid: ec8a7d686193ddc409f1dc93c2a0b7cb, type: 2}
+  - {fileID: 2100000, guid: 7581c046d8de611408df30c5ed934afe, type: 2}
   - {fileID: 2100000, guid: 89321cc36655e4043906364536b0b285, type: 2}
   - {fileID: 2100000, guid: a094bee13cb3c5242badaa13cfeb12f5, type: 2}
-  - {fileID: 2100000, guid: 1893d51df602b5141abdb57137ff2c17, type: 2}
-  - {fileID: 2100000, guid: 7581c046d8de611408df30c5ed934afe, type: 2}
   - {fileID: 2100000, guid: c6a996542a718ce4e90d6648c8c5dab6, type: 2}
-  - {fileID: 2100000, guid: a466ced9395c42b499205f2f9f5128bc, type: 2}
-  - {fileID: 2100000, guid: 33f74cc3be67b4a4e9116afb08a8a0ed, type: 2}
-  - {fileID: 2100000, guid: 33f74cc3be67b4a4e9116afb08a8a0ed, type: 2}
-  - {fileID: 2100000, guid: 04af055997978d74885cd925b532a7db, type: 2}
   secondaryMaterials:
   - {fileID: 2100000, guid: 435bdb59b0338cb4b84b0f26a153ae9b, type: 2}
   - {fileID: 2100000, guid: f09470d18d7773b498abf4f4003c7e3a, type: 2}
@@ -603,7 +601,6 @@ MonoBehaviour:
   - {fileID: 2100000, guid: f09470d18d7773b498abf4f4003c7e3a, type: 2}
   - {fileID: 2100000, guid: a8fea3faf57a7d9438e7de4866bce419, type: 2}
   - {fileID: 2100000, guid: 892e300674b8cec4a88258c7024fd224, type: 2}
-  - {fileID: 2100000, guid: 31a7f0bdcb6327a4ebbab82f2e6cfa6e, type: 2}
   - {fileID: 2100000, guid: 31a7f0bdcb6327a4ebbab82f2e6cfa6e, type: 2}
   - {fileID: 2100000, guid: 49b50b57e9a34884db0ee9ad492ebbb4, type: 2}
   - {fileID: 2100000, guid: 3b57bede7150b9e4ea584dcea35eff1f, type: 2}
@@ -613,6 +610,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: c40f13eebcda36b4888ff8e933cb83f0, type: 2}
   - {fileID: 2100000, guid: e4c8b5438c96b4d4993f742e49fdf6c1, type: 2}
   - {fileID: 2100000, guid: c40f13eebcda36b4888ff8e933cb83f0, type: 2}
+  - {fileID: 2100000, guid: 892e300674b8cec4a88258c7024fd224, type: 2}
+  - {fileID: 2100000, guid: 31a7f0bdcb6327a4ebbab82f2e6cfa6e, type: 2}
   palettes:
   - primary: {r: 2.9960785, g: 0, b: 0, a: 1}
     secondary: {r: 0, g: 2.9960785, b: 0.1254902, a: 1}
@@ -635,6 +634,12 @@ MonoBehaviour:
   - primary: {r: 0, g: 0, b: 2.9960785, a: 1}
     secondary: {r: 2.9960785, g: 0, b: 0, a: 1}
     terciary: {r: 0, g: 2.9960785, b: 0, a: 1}
+  - primary: {r: 2.9960785, g: 1.03138, b: 0, a: 1}
+    secondary: {r: 0, g: 2.9960785, b: 1.0352942, a: 1}
+    terciary: {r: 1.0352942, g: 0, b: 2.9960785, a: 1}
+  - primary: {r: 2.9960785, g: 0.27038202, b: 0, a: 1}
+    secondary: {r: 1.5127864, g: 2.9960785, b: 0, a: 1}
+    terciary: {r: 1.5120642, g: 0, b: 2.9960785, a: 1}
 --- !u!95 &595823367
 Animator:
   serializedVersion: 3
@@ -1183,7 +1188,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3253861156491039078, guid: 607556da3aa70564d9d899b5e90e2636, type: 3}
       propertyPath: m_Name
-      value: MusicEmpty
+      value: MusicManager
       objectReference: {fileID: 0}
     - target: {fileID: 3253861156491039079, guid: 607556da3aa70564d9d899b5e90e2636, type: 3}
       propertyPath: m_RootOrder
@@ -4036,7 +4041,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: levelStartPoint
@@ -4148,7 +4153,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: levelStartPoint

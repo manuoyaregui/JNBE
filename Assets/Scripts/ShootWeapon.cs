@@ -39,9 +39,9 @@ public class ShootWeapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (HUDController.isPause == false)
-        {
-            if (player.GetComponent<PlayerController>().isAlive //si está vivo
+            if (HUDController.isPause == false
+                &&
+                player.GetComponent<PlayerController>().isAlive //si está vivo
                 &&
                 bulletsRemaining > 0) //y tiene al menos una bala
             {
@@ -52,11 +52,14 @@ public class ShootWeapon : MonoBehaviour
             anim.SetBool("isShoot", false);
             }
 
-            if(bulletsRemaining == 0 && Input.GetButtonDown("Fire1"))
+            if(HUDController.isPause == false
+               && 
+               bulletsRemaining == 0 
+               && 
+               Input.GetButtonDown("Fire1"))
             {
                 GameManager.singletonGameManager.PlaySound(emptyMagazineClip);
             }
-        }
     }
 
     protected virtual bool FireWeapon()

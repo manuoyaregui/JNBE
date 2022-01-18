@@ -5,6 +5,7 @@ using UnityEngine;
 public class BulletController : MonoBehaviour
 {
     public AudioClip PlayerDamageSound;
+    [SerializeField] private AudioClip bulletHitSound;
     private bool damage;
     // Start is called before the first frame update
     void Start()
@@ -25,6 +26,7 @@ public class BulletController : MonoBehaviour
     {
         GameObject collObj = collision.gameObject;
         string tagColl = collObj.tag;
+        GameManager.singletonGameManager.PlaySound(bulletHitSound);
         if (damage)
         {
             switch (tagColl){

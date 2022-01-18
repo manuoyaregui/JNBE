@@ -264,7 +264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyFrag: {fileID: 5619944305915276186, guid: 59d7a94b20531f848a98a0e5cd5589d2, type: 3}
-  EnemyDestroySound: {fileID: 0}
+  EnemyDestroySound: {fileID: 8300000, guid: 3f0890979ef44424b93c38ee45dd82b6, type: 3}
 --- !u!1 &2211139065929572919
 GameObject:
   m_ObjectHideFlags: 0
