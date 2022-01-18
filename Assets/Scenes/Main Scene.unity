@@ -596,7 +596,6 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 33f74cc3be67b4a4e9116afb08a8a0ed, type: 2}
   - {fileID: 2100000, guid: 33f74cc3be67b4a4e9116afb08a8a0ed, type: 2}
   - {fileID: 2100000, guid: 04af055997978d74885cd925b532a7db, type: 2}
-  - {fileID: 2100000, guid: 49b50b57e9a34884db0ee9ad492ebbb4, type: 2}
   secondaryMaterials:
   - {fileID: 2100000, guid: 435bdb59b0338cb4b84b0f26a153ae9b, type: 2}
   - {fileID: 2100000, guid: f09470d18d7773b498abf4f4003c7e3a, type: 2}
@@ -605,31 +604,37 @@ MonoBehaviour:
   - {fileID: 2100000, guid: a8fea3faf57a7d9438e7de4866bce419, type: 2}
   - {fileID: 2100000, guid: 892e300674b8cec4a88258c7024fd224, type: 2}
   - {fileID: 2100000, guid: 31a7f0bdcb6327a4ebbab82f2e6cfa6e, type: 2}
-  - {fileID: 2100000, guid: e4c8b5438c96b4d4993f742e49fdf6c1, type: 2}
   - {fileID: 2100000, guid: 31a7f0bdcb6327a4ebbab82f2e6cfa6e, type: 2}
+  - {fileID: 2100000, guid: 49b50b57e9a34884db0ee9ad492ebbb4, type: 2}
+  - {fileID: 2100000, guid: 3b57bede7150b9e4ea584dcea35eff1f, type: 2}
   otherMaterials:
   - {fileID: 2100000, guid: 395fefbc63e835b4689f2790d36a7bb5, type: 2}
   - {fileID: 2100000, guid: a3920b49f5ca2fb41b5148808a52f81c, type: 2}
   - {fileID: 2100000, guid: c40f13eebcda36b4888ff8e933cb83f0, type: 2}
+  - {fileID: 2100000, guid: e4c8b5438c96b4d4993f742e49fdf6c1, type: 2}
+  - {fileID: 2100000, guid: c40f13eebcda36b4888ff8e933cb83f0, type: 2}
   palettes:
   - primary: {r: 2.9960785, g: 0, b: 0, a: 1}
-    secondary: {r: 0, g: 2.9960785, b: 2.9803922, a: 1}
-    terciary: {r: 0.015686275, g: 0, b: 2.9960785, a: 1}
-  - primary: {r: 0, g: 2.9960785, b: 0.3764706, a: 1}
-    secondary: {r: 2.9960785, g: 0, b: 2.9960785, a: 1}
+    secondary: {r: 0, g: 2.9960785, b: 0.1254902, a: 1}
+    terciary: {r: 0, g: 0, b: 2.9960785, a: 1}
+  - primary: {r: 0, g: 2.9960785, b: 1.4117647, a: 1}
+    secondary: {r: 1.4117647, g: 0, b: 2.9960785, a: 1}
     terciary: {r: 2.9960785, g: 1.4117647, b: 0, a: 1}
-  - primary: {r: 2.9960785, g: 0, b: 2.4156864, a: 1}
-    secondary: {r: 2.9960785, g: 2.619608, b: 0, a: 1}
-    terciary: {r: 0.10576233, g: 0, b: 2.9960785, a: 1}
-  - primary: {r: 0.047058824, g: 0, b: 2.9960785, a: 1}
-    secondary: {r: 0, g: 2.9960785, b: 0.21960784, a: 1}
+  - primary: {r: 2.9960785, g: 0, b: 2.509804, a: 1}
+    secondary: {r: 2.9960785, g: 2.509804, b: 0, a: 1}
+    terciary: {r: 0, g: 2.509804, b: 2.9960785, a: 1}
+  - primary: {r: 0.3137255, g: 0, b: 2.9960785, a: 1}
+    secondary: {r: 0, g: 2.9960785, b: 0.3137255, a: 1}
     terciary: {r: 2.9960785, g: 0.3137255, b: 0, a: 1}
   - primary: {r: 1.4901961, g: 2.9960785, b: 0, a: 1}
-    secondary: {r: 0, g: 2.9960785, b: 1.3019608, a: 1}
-    terciary: {r: 2.7764707, g: 0, b: 2.9960785, a: 1}
-  - primary: {r: 2.9960785, g: 0.8627451, b: 0, a: 1}
-    secondary: {r: 0, g: 2.2588236, b: 2.9960785, a: 1}
-    terciary: {r: 2.9960785, g: 2.9960785, b: 0, a: 1}
+    secondary: {r: 0, g: 1.4901961, b: 2.9960785, a: 1}
+    terciary: {r: 2.9960785, g: 0, b: 1.4901961, a: 1}
+  - primary: {r: 0, g: 2.9960785, b: 0, a: 1}
+    secondary: {r: 0, g: 0, b: 2.9960785, a: 1}
+    terciary: {r: 2.9960785, g: 0, b: 0, a: 1}
+  - primary: {r: 0, g: 0, b: 2.9960785, a: 1}
+    secondary: {r: 2.9960785, g: 0, b: 0, a: 1}
+    terciary: {r: 0, g: 2.9960785, b: 0, a: 1}
 --- !u!95 &595823367
 Animator:
   serializedVersion: 3
@@ -4031,7 +4036,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: levelStartPoint
@@ -4143,7 +4148,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: levelStartPoint
