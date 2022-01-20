@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     [Header("Settings")]
     public Player playerSettings;
 
+
+
     [Header("References")]
     [SerializeField] GameObject playerBody; //no se usa, hay q ver de sacarlo quiza 
     [SerializeField] GameObject camera; // trabaja la rotacion de la camara
@@ -34,9 +36,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private ParticleSystem shieldDisabled;
     [SerializeField] private ParticleSystem extraBulletParticles;
 
+
     [Header("Tutorial")] [Tooltip("Dont use in main game")]
     [SerializeField] private LayerMask tutorialLayerDieZone;
 
+    
     //eventos
     public static event Action<int> onLivesChange;
     public static event Action<float> onInertiaChange;
@@ -71,7 +75,6 @@ public class PlayerController : MonoBehaviour
     private Vector3 move;
     private float rotatezLeft = 0;
 
-   
 
     private void Awake()
     {
@@ -436,6 +439,12 @@ public class PlayerController : MonoBehaviour
             inertia = 1.5f;
             inertiaFOV += 2.5f;
             
+        }
+
+        
+        if (hit.gameObject.CompareTag("FallingFloor"))
+        {
+            hit.gameObject.GetComponent<FallingFloorActivation>().ActivateFloor();
         }
     }
 

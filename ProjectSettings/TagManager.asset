@@ -15,6 +15,7 @@ TagManager:
   - Ramp
   - TutorialDieZone
   - TutorialPickUps
+  - FallingFloor
   layers:
   - Default
   - TransparentFX
