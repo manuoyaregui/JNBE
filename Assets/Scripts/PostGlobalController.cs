@@ -41,7 +41,7 @@ public class PostGlobalController : MonoBehaviour
     {
         if (changeAction)
         {
-            if(timeCounter < .05f)
+            if(timeCounter < 1)
             {
                 ChangeMaterials();
                 timeCounter += Time.deltaTime;
@@ -90,21 +90,20 @@ public class PostGlobalController : MonoBehaviour
         //Aplly the colors to the respective materials
         foreach( Material material in primaryMaterials)
         {
-            //material.SetColor("_EmissionColor", primaryColor);
-            material.SetColor("_EmissionColor", primaryColor);
-            Color.Lerp(material.GetColor("_EmissionColor"), primaryColor, lerpSpeed);
+            material.SetColor("_EmissionColor", Color.Lerp(material.GetColor("_EmissionColor"), primaryColor, lerpSpeed));
+            //Lerp allows the smooth transition between colors
         }
 
         foreach (Material material in secondaryMaterials)
         {
-            material.SetColor("_EmissionColor", secondaryColor);
+            material.SetColor("_EmissionColor", Color.Lerp(material.GetColor("_EmissionColor"), secondaryColor, lerpSpeed));
         }
 
         if(otherMaterials.Length > 0)
         {
             foreach (Material material in otherMaterials)
             {
-                material.SetColor("_EmissionColor", otherColor);
+                material.SetColor("_EmissionColor", Color.Lerp(material.GetColor("_EmissionColor"), otherColor, lerpSpeed));
             }
         }
     }
