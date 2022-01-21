@@ -4030,7 +4030,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: levelStartPoint
@@ -4038,7 +4038,7 @@ PrefabInstance:
       objectReference: {fileID: 149767719}
     - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: allTheGameBlocks.Array.size
-      value: 22
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: allTheGameBlocks.Array.data[6]
@@ -4096,6 +4096,14 @@ PrefabInstance:
       propertyPath: allTheGameBlocks.Array.data[21]
       value: 
       objectReference: {fileID: 251853890602171151, guid: 8ec668a57a63b8341810ffe21a4af5a8, type: 3}
+    - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
+      propertyPath: allTheGameBlocks.Array.data[22]
+      value: 
+      objectReference: {fileID: 251853890602171151, guid: 8ec668a57a63b8341810ffe21a4af5a8, type: 3}
+    - target: {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
+      propertyPath: allTheGameBlocks.Array.data[23]
+      value: 
+      objectReference: {fileID: 251853890602171151, guid: 95298c20d4824eb4699e431d663b9c73, type: 3}
     - target: {fileID: 1257174691013452303, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -4142,7 +4150,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: levelStartPoint
@@ -4151,11 +4159,11 @@ PrefabInstance:
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: allTheGameBlocks.Array.data[0]
       value: 
-      objectReference: {fileID: 251853890602171151, guid: 8ec668a57a63b8341810ffe21a4af5a8, type: 3}
+      objectReference: {fileID: 251853890602171151, guid: c4650bfe75378154a854fbea22e1b380, type: 3}
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: allTheGameBlocks.Array.data[1]
       value: 
-      objectReference: {fileID: 251853890602171151, guid: 8ec668a57a63b8341810ffe21a4af5a8, type: 3}
+      objectReference: {fileID: 251853890602171151, guid: c4650bfe75378154a854fbea22e1b380, type: 3}
     - target: {fileID: 1257174691013452306, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: Loop
       value: 0
