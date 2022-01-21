@@ -9,6 +9,8 @@ public class PostGlobalController : MonoBehaviour
     int randomIndex,buffer;
     ChromaticAberration crazyEffect;
 
+    [SerializeField] float lerpSpeed = .03f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,20 +34,28 @@ public class PostGlobalController : MonoBehaviour
         }
     }
 
-    /*
+    
     float timeCounter;
     bool changeAction;
     private void Update()
     {
         if (changeAction)
         {
-
+            if(timeCounter < .05f)
+            {
+                ChangeMaterials();
+                timeCounter += Time.deltaTime;
+            }
+            else
+            {
+                changeAction = false;
+            }
         }
         else
         {
-            timeCounter
+            timeCounter = 0;
         }
-    }*/
+    }
 
     [Space][Tooltip("Enviroment Materials, weapon and arms")]
     [SerializeField] private Material[] primaryMaterials;
@@ -64,6 +74,7 @@ public class PostGlobalController : MonoBehaviour
 
     public void ChangePalette()
     {
+        changeAction = true;
         GenerateRandomIndex();
         currentPalette = palettes[randomIndex];
         ChangeMaterials();
@@ -79,7 +90,9 @@ public class PostGlobalController : MonoBehaviour
         //Aplly the colors to the respective materials
         foreach( Material material in primaryMaterials)
         {
+            //material.SetColor("_EmissionColor", primaryColor);
             material.SetColor("_EmissionColor", primaryColor);
+            Color.Lerp(material.GetColor("_EmissionColor"), primaryColor, lerpSpeed);
         }
 
         foreach (Material material in secondaryMaterials)

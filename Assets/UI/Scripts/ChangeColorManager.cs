@@ -23,8 +23,8 @@ public class ChangeColorManager : MonoBehaviour
         backgroundLight.color = Color.Lerp(backgroundLight.color, colors[randomIndex], speedTransition);
         foreach(Material material in materials)
         {
-            material.SetColor("_EmissionColor", colors[randomIndex]);
-            Color.Lerp(material.GetColor("_EmissionColor"),colors[randomIndex],speedTransition);
+            //material.SetColor("_EmissionColor", colors[randomIndex]);
+            material.SetColor("_EmissionColor", Color.Lerp(material.GetColor("_EmissionColor"), colors[randomIndex], speedTransition));
         }
     }
 
