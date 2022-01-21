@@ -21,16 +21,16 @@ public class ChangeColorManager : MonoBehaviour
     void Update()
     {
         backgroundLight.color = Color.Lerp(backgroundLight.color, colors[randomIndex], speedTransition);
-    }
-
-    private void ChangeColors()
-    {
-        GenerateRandomIndex();
         foreach(Material material in materials)
         {
             material.SetColor("_EmissionColor", colors[randomIndex]);
             Color.Lerp(material.GetColor("_EmissionColor"),colors[randomIndex],speedTransition);
         }
+    }
+
+    private void ChangeColors()
+    {
+        GenerateRandomIndex();
     }
 
     private void GenerateRandomIndex()

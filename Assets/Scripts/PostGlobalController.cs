@@ -32,6 +32,21 @@ public class PostGlobalController : MonoBehaviour
         }
     }
 
+    /*
+    float timeCounter;
+    bool changeAction;
+    private void Update()
+    {
+        if (changeAction)
+        {
+
+        }
+        else
+        {
+            timeCounter
+        }
+    }*/
+
     [Space][Tooltip("Enviroment Materials, weapon and arms")]
     [SerializeField] private Material[] primaryMaterials;
 
