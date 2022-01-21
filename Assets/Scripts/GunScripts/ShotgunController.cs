@@ -15,7 +15,6 @@ public class ShotgunController : ShootWeapon
     {
         if (base.FireWeapon())
         {
-            Debug.Log("Estoy en el fire weapon");
             ShotgunRecoil();
         }
         return false;
