@@ -62,6 +62,8 @@ public class PlayerController : MonoBehaviour
     private bool dobleJump;
     private bool isInWall;
     private float inertiaFOV = 50;
+    private float inertiaMin;
+    private float inertiaMax;
     private bool isInInertiaCharger;
     private bool isInTheRamp;
     private float dashTime;
