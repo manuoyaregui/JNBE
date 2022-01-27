@@ -208,13 +208,18 @@ public class PlayerController : MonoBehaviour
         characterController.Move(gravityVector * Time.deltaTime );
     }
 
+    bool alreadyDeath;
     private void CheckShield()
     {
         switch (lives)
         {
             case 0:
                 isAlive = false;
-                OnDeathUnityEvent?.Invoke();
+                if (!alreadyDeath)
+                {
+                    OnDeathUnityEvent?.Invoke();
+                    alreadyDeath = true;
+                }
                 break;
             case 1:
                 //ShieldIndicator.SetActive(false); -- debe ser cambiado por un elemento de la interfaz

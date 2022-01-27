@@ -48,6 +48,9 @@ public class HUDController : MonoBehaviour
     int extraValue = 0;
     [SerializeField] private GameObject highScorePanel;
 
+    //Check Coins
+    [SerializeField] Text coinsText;
+    [SerializeField] Text coinsInDeathPanelText;
 
     //Transiciones
     [SerializeField] private Animator transition;
@@ -85,6 +88,13 @@ public class HUDController : MonoBehaviour
             EscapeButtonMenu();
         }
         CheckIfItPaused();
+
+        CheckCoins();
+    }
+
+    private void CheckCoins()
+    {
+        coinsText.text = GameManager.singletonGameManager.coinsGrabbed.ToString();
     }
 
     public void ToggleIsPause()
@@ -215,6 +225,7 @@ public class HUDController : MonoBehaviour
         ToggleIsPause();
         deathPanel.SetActive(true);
         deathPanel.GetComponentsInChildren<Text>()[1].text = formula.ToString("0");
+        coinsInDeathPanelText.text = PlayerPrefs.GetInt("ppCoins", 0).ToString();
         currentHighScoreText.text = "High Score: " + PlayerPrefs.GetFloat("HighScore", 0).ToString("0");
         if(formula > PlayerPrefs.GetFloat("HighScore", 0))
         {

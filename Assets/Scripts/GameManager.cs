@@ -6,6 +6,7 @@ using System;
 public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para cumplir un desafio
 {
     private int lives; //Cantidad de vidas, sin uso actualmente
+    public int coinsGrabbed;
     public static GameManager singletonGameManager;
     private AudioSource audioSource;
     
@@ -14,13 +15,6 @@ public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para
     {
         singletonGameManager = this;
         audioSource = GetComponent<AudioSource>();
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
     public void AddLives()
     {
@@ -42,5 +36,17 @@ public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para
     public AudioSource GetAudioSource()
     {
         return audioSource;
+    }
+
+    public void AddCoins(int value)
+    {
+        coinsGrabbed += value;
+    }
+
+    public void OnDeathUnityEventHandler()
+    {
+
+        int previousCoins = PlayerPrefs.GetInt("ppCoins", 0);
+        PlayerPrefs.SetInt("ppCoins", previousCoins + coinsGrabbed);
     }
 }
