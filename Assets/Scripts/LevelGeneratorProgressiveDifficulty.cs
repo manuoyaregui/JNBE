@@ -13,7 +13,7 @@ public class LevelGeneratorProgressiveDifficulty : MonoBehaviour
     [SerializeField] List<GameBlock> HardGameblocks;
     
     
-    [Header(No Modificar)]
+    [Header("No Modificar")]
     public static LevelGeneratorProgressiveDifficulty instance; // Variable para comunicarse entre scrips, tiene un nombre tecnico pero me olvide, asique le puse Sape
 
     public List<GameBlock> allTheGameBlocks = new List<GameBlock>(); // Sirve para tener los GameBlocks generados alcenados en Prefabs
