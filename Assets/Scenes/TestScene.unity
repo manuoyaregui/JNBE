@@ -4058,7 +4058,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: levelStartPoint
@@ -4067,11 +4067,11 @@ PrefabInstance:
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: allTheGameBlocks.Array.data[0]
       value: 
-      objectReference: {fileID: 251853890602171151, guid: 8ec668a57a63b8341810ffe21a4af5a8, type: 3}
+      objectReference: {fileID: 251853890602171151, guid: 13c36dcd9455b3a408f3a6734161431e, type: 3}
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: allTheGameBlocks.Array.data[1]
       value: 
-      objectReference: {fileID: 251853890602171151, guid: 8ec668a57a63b8341810ffe21a4af5a8, type: 3}
+      objectReference: {fileID: 251853890602171151, guid: 13c36dcd9455b3a408f3a6734161431e, type: 3}
     - target: {fileID: 1257174691013452306, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: Loop
       value: 0
@@ -4098,16 +4098,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1257174689670600833}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9fa4b28c6f48ae245826b1e114cf3e6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allTheGameBlocks: []
   levelStartPoint: {fileID: 149767719}
-  currentBlocks: []
-  easyMediumChangeValue: 100
-  mediumHardChangeValue: 200
+  easyMediumChangeValue: 1000
+  mediumHardChangeValue: 4000
   EasyGameblocks:
   - {fileID: 251853890602171151, guid: 945cb322c4e4ab240b7ab9ad72fcc9d2, type: 3}
   - {fileID: 251853890602171151, guid: 3cfb629f910cdd54481f0ce30ecdfd14, type: 3}
@@ -4134,6 +4132,8 @@ MonoBehaviour:
   - {fileID: 251853890602171151, guid: a065b087acd585149b48bde6cad62539, type: 3}
   - {fileID: 251853890602171151, guid: 8ec668a57a63b8341810ffe21a4af5a8, type: 3}
   - {fileID: 251853890602171151, guid: 95298c20d4824eb4699e431d663b9c73, type: 3}
+  allTheGameBlocks: []
+  currentBlocks: []
 --- !u!65 &1596832302448184017
 BoxCollider:
   m_ObjectHideFlags: 0
