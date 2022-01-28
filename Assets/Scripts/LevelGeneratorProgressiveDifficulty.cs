@@ -6,25 +6,25 @@ public class LevelGeneratorProgressiveDifficulty : MonoBehaviour
 {
     public Transform levelStartPoint; // Posicion de la cual voy a spawnear el primer gameblock
     
-    public static LevelGeneratorProgressiveDifficulty instance; // Variable para comunicarse entre scrips, tiene un nombre tecnico pero me olvide, asique le puse Sape
-
-    public List<GameBlock> allTheGameBlocks = new List<GameBlock>(); // Sirve para tener los GameBlocks generados alcenados en Prefabs
-
-
-    public List<GameBlock> currentBlocks = new List<GameBlock>(); // Lista para almacenar los gameblokcs actuales de la escena
-
-    private int random;
-
-    int buffer;
-
     [SerializeField] int easyMediumChangeValue = 1000;
     [SerializeField] int mediumHardChangeValue = 4000;
-
-
-
     [SerializeField] List<GameBlock> EasyGameblocks;
     [SerializeField] List<GameBlock> MediumGameblocks;
     [SerializeField] List<GameBlock> HardGameblocks;
+    
+    
+    [Header(No Modificar)]
+    public static LevelGeneratorProgressiveDifficulty instance; // Variable para comunicarse entre scrips, tiene un nombre tecnico pero me olvide, asique le puse Sape
+
+    public List<GameBlock> allTheGameBlocks = new List<GameBlock>(); // Sirve para tener los GameBlocks generados alcenados en Prefabs
+    public List<GameBlock> currentBlocks = new List<GameBlock>(); // Lista para almacenar los gameblokcs actuales de la escena
+
+    private int random;
+    int buffer;
+
+
+
+
 
 
 
