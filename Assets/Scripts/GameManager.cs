@@ -6,9 +6,11 @@ using System;
 public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para cumplir un desafio
 {
     private int lives; //Cantidad de vidas, sin uso actualmente
-    public int coinsGrabbed;
     public static GameManager singletonGameManager;
     private AudioSource audioSource;
+    [NonSerialized] public int coinsGrabbed;
+    [NonSerialized] public bool isInCinematic;
+
     
     // Start is called before the first frame update
     void Start()

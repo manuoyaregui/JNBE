@@ -112,7 +112,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isAlive && HUDController.isPause == false)
+        if (isAlive && 
+            HUDController.isPause == false && 
+            !GameManager.singletonGameManager.isInCinematic)
         {
             Jumpp();
             Dash();
@@ -547,5 +549,4 @@ public class PlayerController : MonoBehaviour
     {
         extraBulletParticles.Play();
     }
-    
 }

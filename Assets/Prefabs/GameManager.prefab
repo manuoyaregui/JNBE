@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1257174691013452302}
   - component: {fileID: 1257174691013452305}
   - component: {fileID: 1257174691013452306}
+  - component: {fileID: 3816565183444507725}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -46,6 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a94eedd9cbfa764ca101af85f6a0cf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coinsGrabbed: 0
+  isInCinematic: 0
 --- !u!114 &1257174691013452302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,3 +186,46 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3816565183444507725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257174691013452301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fa4b28c6f48ae245826b1e114cf3e6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelStartPoint: {fileID: 0}
+  easyMediumChangeValue: 1000
+  mediumHardChangeValue: 4000
+  EasyGameblocks:
+  - {fileID: 251853890602171151, guid: 945cb322c4e4ab240b7ab9ad72fcc9d2, type: 3}
+  - {fileID: 251853890602171151, guid: 3cfb629f910cdd54481f0ce30ecdfd14, type: 3}
+  - {fileID: 251853890602171151, guid: 55b07c7466c7ade4db3a43490762c964, type: 3}
+  - {fileID: 251853890602171151, guid: bfca9e2b0fb63244bac79c50d75bfb81, type: 3}
+  - {fileID: 251853890602171151, guid: d9e056112f3b6ce418a206ad27e61560, type: 3}
+  - {fileID: 251853890602171151, guid: c9a4f59b2aba264448afb50166379d3a, type: 3}
+  - {fileID: 251853890602171151, guid: 6aaacdaed00699a48880f0446290e3ad, type: 3}
+  MediumGameblocks:
+  - {fileID: 251853890602171151, guid: 62a34fb2573caff4ebbe21991ababfd9, type: 3}
+  - {fileID: 251853890602171151, guid: 5c34dd5371d9d6441ac9f17ad28cff8c, type: 3}
+  - {fileID: 251853890602171151, guid: 0d6fc6931c407174182a4cb24f9b5583, type: 3}
+  - {fileID: 251853890602171151, guid: 4431a55c7d3a4f2478d143e02411c480, type: 3}
+  - {fileID: 251853890602171151, guid: 5168d00f9adb28641b73e9533434dd0b, type: 3}
+  - {fileID: 251853890602171151, guid: b8608fc0861abd445bb169aa19c3c29c, type: 3}
+  - {fileID: 251853890602171151, guid: 256d534a9727ec5428579007c4c782fc, type: 3}
+  - {fileID: 251853890602171151, guid: 3277bcea546de98438763f53b782d55b, type: 3}
+  - {fileID: 251853890602171151, guid: 768f8453576eab5418abaa0a63394c3f, type: 3}
+  - {fileID: 251853890602171151, guid: 028184ee52d1e924cbdc09112b24f44d, type: 3}
+  - {fileID: 251853890602171151, guid: 3989cb969798e4f49bc0660d872d77ed, type: 3}
+  HardGameblocks:
+  - {fileID: 251853890602171151, guid: 13c36dcd9455b3a408f3a6734161431e, type: 3}
+  - {fileID: 251853890602171151, guid: 01da738e077da094fab67b6f9bd5d451, type: 3}
+  - {fileID: 251853890602171151, guid: a065b087acd585149b48bde6cad62539, type: 3}
+  - {fileID: 251853890602171151, guid: 8ec668a57a63b8341810ffe21a4af5a8, type: 3}
+  - {fileID: 251853890602171151, guid: 95298c20d4824eb4699e431d663b9c73, type: 3}
+  allTheGameBlocks: []
+  currentBlocks: []

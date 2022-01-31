@@ -31,9 +31,11 @@ public class PlayerPickUpGuns : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(HUDController.isPause == false)
+        if(HUDController.isPause == false && !GameManager.singletonGameManager.isInCinematic)
+        {
             gun = GetActiveGun();
             SwitchWeapons();
+        }
     }
 
     private void SwitchWeapons()

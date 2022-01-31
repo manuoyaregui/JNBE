@@ -41,6 +41,8 @@ public class ShootWeapon : MonoBehaviour
     {
             if (HUDController.isPause == false
                 &&
+                !GameManager.singletonGameManager.isInCinematic 
+                &&
                 player.GetComponent<PlayerController>().isAlive //si está vivo
                 &&
                 bulletsRemaining > 0) //y tiene al menos una bala
@@ -56,7 +58,9 @@ public class ShootWeapon : MonoBehaviour
                && 
                bulletsRemaining == 0 
                && 
-               Input.GetButtonDown("Fire1"))
+               Input.GetButtonDown("Fire1") 
+               &&
+               !GameManager.singletonGameManager.isInCinematic)
             {
                 GameManager.singletonGameManager.PlaySound(emptyMagazineClip);
             }
