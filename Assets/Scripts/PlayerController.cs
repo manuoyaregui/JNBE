@@ -36,10 +36,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private ParticleSystem shieldDisabled;
     [SerializeField] private ParticleSystem extraBulletParticles;
 
-    [Header("Animators")]
-    [SerializeField] private Animator pistolAnimator;
-    [SerializeField] private Animator shotgunAnimator;
-
 
     [Header("Tutorial")] [Tooltip("Dont use in main game")]
     [SerializeField] private LayerMask tutorialLayerDieZone;
@@ -298,9 +294,6 @@ public class PlayerController : MonoBehaviour
             GameManager.singletonGameManager.PlaySound(DashSound);
             StartCoroutine(IDash());
             dashCD = Time.time + CD;
-
-            pistolAnimator.SetBool("isDashing", true);
-            shotgunAnimator.SetBool("isDashing", true);
         }
     }
 

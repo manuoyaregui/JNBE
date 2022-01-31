@@ -22,7 +22,6 @@ public class ShootWeapon : MonoBehaviour
 
     [SerializeField] private AudioClip shootClip;
     [SerializeField] private AudioClip emptyMagazineClip;
-    [SerializeField] private ParticleSystem dashParticles;
 
     // Start is called before the first frame update
     void Start()
@@ -137,16 +136,6 @@ public class ShootWeapon : MonoBehaviour
     private void OnEnable()
     {
         shootParticles.Pause();
-    }
-
-    private void startParticles()
-    {
-        dashParticles.Play();
-    }
-
-    private void StopDashAnim()
-    {
-        anim.SetBool("isDashing", false);
     }
 
 }

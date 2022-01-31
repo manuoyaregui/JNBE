@@ -14,7 +14,7 @@ public class MarketUIController : MonoBehaviour
         
     }
 
-    // Update is called once per frame
+    // Update is called once per fram
     void Update()
     {
         ChangePrice();   
@@ -24,32 +24,83 @@ public class MarketUIController : MonoBehaviour
     {
         int speedLevel = PlayerPrefs.GetInt("ppMoveSpeedLevel",1);
         speedPrice = GetPrice(speedLevel);
-        moveSpeedPriceText.text = speedPrice.ToString();
+        if(speedPrice == 10000000)
+        {
+            moveSpeedPriceText.text = "Max";
+        }
+        else
+        {
+            moveSpeedPriceText.text = speedPrice.ToString();
+        }
         // speedPrice;
 
         int jumpLevel = PlayerPrefs.GetInt("ppJumpLevel",1);
         jumpPrice = GetPrice(jumpLevel);
-        jumpPriceText.text = jumpPrice.ToString();
+        if(jumpPrice == 10000000)
+        {
+            jumpPriceText.text = "Max";
+        }
+        else
+        {
+            jumpPriceText.text = jumpPrice.ToString();
+        }
 
         int dashSpeedLevel = PlayerPrefs.GetInt("ppDashSpeedLevel", 1);
         dashSpeedPrice = GetPrice(dashSpeedLevel);
-        dashSpeedPriceText.text = dashSpeedPrice.ToString();
+        if(dashSpeedPrice == 10000000)
+        {
+            dashSpeedPriceText.text = "Max";
+        }
+        else
+        {
+            dashSpeedPriceText.text = dashSpeedPrice.ToString();
+        }
 
         int dashTimeLevel = PlayerPrefs.GetInt("ppDashTimeLevel", 1);
         dashTimePrice = GetPrice(dashTimeLevel);
-        dashTimePriceText.text = dashTimePrice.ToString();
+        if(dashTimePrice == 10000000)
+        {
+            dashTimePriceText.text = "Max";
+        }
+        else
+        {
+            dashTimePriceText.text = dashTimePrice.ToString();
+        }
 
         int inertiaMinLevel = PlayerPrefs.GetInt("ppInertiaMinLevel", 1);
         inertiaMinPrice = GetPrice(inertiaMinLevel);
-        inertiaMinPriceText.text = inertiaMinPrice.ToString();
+        if(inertiaMinPrice == 10000000)
+        {
+            inertiaMinPriceText.text = "Max";
+        }
+        else
+        {
+           inertiaMinPriceText.text = inertiaMinPrice.ToString();
+
+        }
 
         int inertiaMaxLevel = PlayerPrefs.GetInt("ppInertiaMaxLevel", 1);
         inertiaMaxPrice = GetPrice(inertiaMaxLevel);
+        if(inertiaMaxPrice == 10000000)
+        {
+            inertiaMaxPriceText.text = "Max";
+        }
+        else
+        {
         inertiaMaxPriceText.text = inertiaMaxPrice.ToString();
+
+        }
 
         int livesLevel = PlayerPrefs.GetInt("ppLivesLevel", 1);
         livesPrice = GetLivesPrice(livesLevel);
-        livesPriceText.text = livesPrice.ToString();
+        if(livesPrice == 10000000)
+        {
+            livesPriceText.text = "Max";
+        }
+        else
+        {
+            livesPriceText.text = livesPrice.ToString();
+        }
 
         int coins = PlayerPrefs.GetInt("ppCoins", 0);
         coinsText.text = coins.ToString();
@@ -121,5 +172,12 @@ public class MarketUIController : MonoBehaviour
             livesPrice = 10000000;
         }
         return livesPrice;
+    }
+
+    public void AddCoins()
+    {
+        int coins = PlayerPrefs.GetInt("ppCoins", 0);
+        coins += 1000;
+        PlayerPrefs.SetInt("ppCoins", coins);
     }
 }

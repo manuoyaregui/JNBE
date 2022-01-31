@@ -24,7 +24,7 @@ public class MarketController : MonoBehaviour
 
         int moveSpeedLevel = PlayerPrefs.GetInt("ppMoveSpeedLevel",1);
         moveSpeedLevel++;
-        PlayerPrefs.GetInt("ppMoveSpeedLevel", moveSpeedLevel);
+        PlayerPrefs.SetInt("ppMoveSpeedLevel", moveSpeedLevel);
         #region
         /*switch (moveSpeedLevel)
         {
@@ -141,8 +141,48 @@ public class MarketController : MonoBehaviour
      * 7 = lives
      * */
 
-    public void CheckCoins(string skillTypeLevel, int idSkill)
+    public void CheckCoins(int idSkill)
     {
+        string skillTypeLevel = "ppMoveSpeedLevel";
+
+        switch (idSkill)
+        {
+            case 1:
+                {
+                    skillTypeLevel = "ppMoveSpeedLevel";
+                    break;
+                }
+            case 2:
+                {
+                    skillTypeLevel = "ppJumpLevel";
+                    break;
+                }
+            case 3:
+                {
+                    skillTypeLevel = "ppDashSpeedLevel";
+                    break;
+                }
+            case 4:
+                {
+                    skillTypeLevel = "ppDashTimeLevel";
+                    break;
+                }
+            case 5:
+                {
+                    skillTypeLevel = "ppInertiaMinLevel";
+                    break;
+                }
+            case 6:
+                {
+                    skillTypeLevel = "ppInertiaMaxLevel";
+                    break;
+                }
+            case 7:
+                {
+                    skillTypeLevel = "ppLivesLevel";
+                    break;
+                }
+        }
         int level = PlayerPrefs.GetInt(skillTypeLevel, 1);
         int coins = PlayerPrefs.GetInt("ppCoins", 0);
 
@@ -241,7 +281,7 @@ public class MarketController : MonoBehaviour
         int coins = PlayerPrefs.GetInt("ppCoins", 0);
         int livesLevel = PlayerPrefs.GetInt("ppLivesLevel", 1);
 
-        if(livesLevel == 1)
+        if (livesLevel == 1 && coins == 1000) 
         {
             PlayerPrefs.SetInt("ppLives", 2);
             PlayerPrefs.SetInt("ppLivesLevel", 2);

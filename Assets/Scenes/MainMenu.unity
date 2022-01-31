@@ -6373,7 +6373,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 334492245}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 986845294}
+        m_TargetAssemblyTypeName: MarketController, Assembly-CSharp
+        m_MethodName: CheckCoins
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &334492245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7578,7 +7590,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 679603624}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 986845294}
+        m_TargetAssemblyTypeName: MarketController, Assembly-CSharp
+        m_MethodName: CheckCoins
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &679603624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8761,6 +8785,7 @@ GameObject:
   - component: {fileID: 986845291}
   - component: {fileID: 986845290}
   - component: {fileID: 986845293}
+  - component: {fileID: 986845294}
   m_Layer: 0
   m_Name: ShopCanvas
   m_TagString: Untagged
@@ -8878,6 +8903,18 @@ MonoBehaviour:
   inertiaMinPriceText: {fileID: 725165078}
   inertiaMaxPriceText: {fileID: 1933487349}
   coinsText: {fileID: 2143794702}
+--- !u!114 &986845294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986845288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a25c78352a5ef3f4599f8d6fcc06340f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &991407314
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9784,7 +9821,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1174088845}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 986845294}
+        m_TargetAssemblyTypeName: MarketController, Assembly-CSharp
+        m_MethodName: CheckCoins
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1174088845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9908,7 +9957,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1222763123}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 986845294}
+        m_TargetAssemblyTypeName: MarketController, Assembly-CSharp
+        m_MethodName: CheckCoins
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 6
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1222763123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11622,7 +11683,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1548778131}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 986845294}
+        m_TargetAssemblyTypeName: MarketController, Assembly-CSharp
+        m_MethodName: CheckCoins
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1548778131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12783,7 +12856,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1816490634}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 986845294}
+        m_TargetAssemblyTypeName: MarketController, Assembly-CSharp
+        m_MethodName: IncreaseLives
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1816490634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13614,7 +13699,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2105467709}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 986845294}
+        m_TargetAssemblyTypeName: MarketController, Assembly-CSharp
+        m_MethodName: CheckCoins
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 5
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2105467709
 MonoBehaviour:
   m_ObjectHideFlags: 0
