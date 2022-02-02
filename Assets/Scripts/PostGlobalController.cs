@@ -67,6 +67,10 @@ public class PostGlobalController : MonoBehaviour
     [SerializeField] private Material[] otherMaterials;
 
     [Space]
+    [Tooltip("RunText")]
+    [SerializeField] Material RunText;
+
+    [Space]
     [SerializeField] private Palette[] palettes;
 
 
@@ -106,6 +110,8 @@ public class PostGlobalController : MonoBehaviour
                 material.SetColor("_EmissionColor", Color.Lerp(material.GetColor("_EmissionColor"), otherColor, lerpSpeed));
             }
         }
+
+        RunText.color = otherColor;
     }
 
     private void GenerateRandomIndex()
