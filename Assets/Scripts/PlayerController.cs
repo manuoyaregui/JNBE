@@ -90,13 +90,20 @@ public class PlayerController : MonoBehaviour
     {
         toogleGravity = true;
         //getSettings
-        lives = playerSettings.lives;
+        //lives = playerSettings.lives;
+        lives = PlayerPrefs.GetInt("ppLives",1);
         mousesensitivity = playerSettings.mouseSensibility;
         gravity = playerSettings.gravity;
-        jump = playerSettings.jumpValue;
-        dashSpeed = playerSettings.dashSpeed;
-        dashTime = playerSettings.dashTime;
-        moveSpeed = playerSettings.moveSpeed;
+        //jump = playerSettings.jumpValue;
+        jump = PlayerPrefs.GetFloat("ppJump", 150f);
+        //dashSpeed = playerSettings.dashSpeed;
+        dashSpeed = PlayerPrefs.GetFloat("ppDashSpeed", 25f);
+        //dashTime = playerSettings.dashTime;
+        dashTime = PlayerPrefs.GetFloat("ppDashTime", 0.3f);
+        //moveSpeed = playerSettings.moveSpeed;
+        moveSpeed = PlayerPrefs.GetFloat("ppMoveSpeed", 20);
+        inertiaMin = PlayerPrefs.GetFloat("ppInertiaMin", 1f);
+        inertiaMax = PlayerPrefs.GetFloat("ppInertiaMax", 1.5f);
         ///////
         isAlive = true;
         onLivesChange?.Invoke(lives);
@@ -112,6 +119,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("movespeed " + moveSpeed);
         if (isAlive && 
             HUDController.isPause == false && 
             !GameManager.singletonGameManager.isInCinematic)
@@ -344,7 +352,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] 
     public void InertiaMove() //Modifico un flot que esta directamente relacionado con el movimiento
     {
-        inertia = Mathf.Clamp(inertia, 1f, 1.5f); // Limitar los valores que puede tomar inertia
+        inertia = Mathf.Clamp(inertia, inertiaMin, inertiaMax); // Limitar los valores que puede tomar inertia
 
         if ( ! isInFloor)//Si no estoy en el piso aumento la inercia
         {
