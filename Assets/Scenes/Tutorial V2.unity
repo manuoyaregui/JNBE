@@ -5027,6 +5027,26 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[4].m_Target
       value: 
       objectReference: {fileID: 2180476892401515155}
+    - target: {fileID: 5737921809034083419, guid: 325c7111f7c617a4cacf7638d58e213c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5737921809034083419, guid: 325c7111f7c617a4cacf7638d58e213c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1213001632}
+    - target: {fileID: 5737921809034083419, guid: 325c7111f7c617a4cacf7638d58e213c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleIsPause
+      objectReference: {fileID: 0}
+    - target: {fileID: 5737921809034083419, guid: 325c7111f7c617a4cacf7638d58e213c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: ResetTutorialScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 5737921809034083419, guid: 325c7111f7c617a4cacf7638d58e213c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5737921809970079834, guid: 325c7111f7c617a4cacf7638d58e213c, type: 3}
       propertyPath: OnScoreSpecificValueUnityEvent.m_PersistentCalls.m_Calls.Array.size
       value: 2
