@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para
     public static GameManager singletonGameManager;
     private AudioSource audioSource;
     [NonSerialized] public int coinsGrabbed;
-    [NonSerialized] public bool isInCinematic;
+    [NonSerialized] public bool isInCinematic = true;
 
     
     // Start is called before the first frame update

@@ -102,6 +102,8 @@ public class HUDController : MonoBehaviour
         isPause = !isPause;
     }
 
+
+    public static bool tutorialSlowDown;
     private void CheckIfItPaused()
     {
         if (isPause)
@@ -111,8 +113,16 @@ public class HUDController : MonoBehaviour
         }
         else
         {
-            Time.timeScale = 1;
-            Cursor.visible = false;
+            if (!tutorialSlowDown)
+            {
+                Time.timeScale = 1;
+                Cursor.visible = false;
+            }
+            else
+            {
+                Time.timeScale = .5f;
+                Application.targetFrameRate = 60;
+            }
         }
     }
     private void GetGun(GameObject gun)
@@ -202,6 +212,11 @@ public class HUDController : MonoBehaviour
     public void ResetScene()
     {
         StartCoroutine(LoadLevel("Main Scene"));
+    }
+
+    public void ResetTutorialScene()
+    {
+        StartCoroutine(LoadLevel("Tutorial V2"));
     }
 
     public void GoToMainMenu()
