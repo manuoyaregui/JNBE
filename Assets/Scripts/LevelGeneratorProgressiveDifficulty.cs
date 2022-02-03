@@ -48,7 +48,6 @@ public class LevelGeneratorProgressiveDifficulty : MonoBehaviour
         if(!firstScoreTrigger && currentScore >= easyMediumChangeValue)
         {
             firstScoreTrigger = true;
-            Debug.Log("PrimerTrigger");
             foreach (GameBlock item in MediumGameblocks)
             {
                 allTheGameBlocks.Add(item);
@@ -57,7 +56,9 @@ public class LevelGeneratorProgressiveDifficulty : MonoBehaviour
         else if( !secondScoreTrigger && currentScore >= mediumHardChangeValue)
         {
             secondScoreTrigger = true;
-            Debug.Log("SegundoTrigger");
+
+            allTheGameBlocks.RemoveRange(0, EasyGameblocks.Capacity);
+
             foreach (GameBlock item in HardGameblocks)
             {
                 allTheGameBlocks.Add(item);

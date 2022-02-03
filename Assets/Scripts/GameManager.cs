@@ -44,6 +44,10 @@ public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para
     {
         coinsGrabbed += value;
     }
+    public int GetCoins()
+    {
+        return coinsGrabbed;
+    }
 
     public void OnDeathUnityEventHandler()
     {

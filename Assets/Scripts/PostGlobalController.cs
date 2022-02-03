@@ -7,9 +7,11 @@ public class PostGlobalController : MonoBehaviour
 {
     private PostProcessVolume globalVolume;
     int randomIndex,buffer;
-    ChromaticAberration crazyEffect;
+    ChromaticAberration chromaticAberration;
+
 
     [SerializeField] float lerpSpeed = .03f;
+    [SerializeField] float chrAbSpeed = .1f;
 
     // Start is called before the first frame update
     void Start()
@@ -17,20 +19,23 @@ public class PostGlobalController : MonoBehaviour
         globalVolume = GetComponent<PostProcessVolume>();
         buffer = Random.Range(0, palettes.Length);
         ChangePalette();
-        crazyEffect = globalVolume.profile.GetSetting<ChromaticAberration>();
-        crazyEffect.active = false;
+
+        chromaticAberration = globalVolume.profile.GetSetting<ChromaticAberration>();
+        chromaticAberration.intensity.value = 0;
+        chromaticAberration.active = true;
+
         PlayerController.onInertiaChange += SetAberrationActive;
     }
 
     public void SetAberrationActive(float inertiaValue)
     {
-        if(inertiaValue >= 1.49f)
+        if(inertiaValue >= 1.49f && chromaticAberration.intensity.value < 1)
         {
-            crazyEffect.active = true;
+            chromaticAberration.intensity.value += chrAbSpeed;
         }
-        else
+        else if(inertiaValue < 1.49f)
         {
-            crazyEffect.active = false;
+            chromaticAberration.intensity.value -= chrAbSpeed;
         }
     }
 

@@ -174,7 +174,6 @@ public class HUDController : MonoBehaviour
 
         }
     }
-
     private void CheckScore() //Este metodo se llama cuando colisiono con el LeaveZone mediante un evento
     {
         if(playerLives > 0)
@@ -193,7 +192,6 @@ public class HUDController : MonoBehaviour
             }
         }
     }
-
     private void ResetScore()
     {
         formula = 0;
@@ -225,37 +223,33 @@ public class HUDController : MonoBehaviour
         ToggleIsPause();
         deathPanel.SetActive(true);
         deathPanel.GetComponentsInChildren<Text>()[1].text = formula.ToString("0");
+
+        int previousCoins = PlayerPrefs.GetInt("ppCoins", 0);
+        PlayerPrefs.SetInt("ppCoins", previousCoins + GameManager.singletonGameManager.GetCoins());
         coinsInDeathPanelText.text = PlayerPrefs.GetInt("ppCoins", 0).ToString();
+        
         currentHighScoreText.text = "High Score: " + PlayerPrefs.GetFloat("HighScore", 0).ToString("0");
         if(formula > PlayerPrefs.GetFloat("HighScore", 0))
         {
-            //playerSettings.highScore = formula;
             PlayerPrefs.SetFloat("HighScore", formula);
             highScorePanel.SetActive(true);
         }        
     }
-
-    
-
+  
     public void EscapeButtonMenu()
     {
         ToggleIsPause();
 
         if (isPause)
-        {
             pauseMenu.SetActive(true);
-        }
         else
-        {
             pauseMenu.SetActive(false);
-        }
     }
 
     public void SetInertiaBar(float inertia)
     {
         inertiaBar.value = inertia;
     }
-
 
     private void OnDestroy()
     {
