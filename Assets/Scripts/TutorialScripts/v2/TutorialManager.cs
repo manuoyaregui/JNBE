@@ -5,7 +5,7 @@ using TMPro;
 
 public class TutorialManager : MonoBehaviour
 {
-    [SerializeField] TMP_Text tutorialTextBox;
+    /*[SerializeField] TMP_Text tutorialTextBox;
     [SerializeField] TMP_Text continueMessage;
     [SerializeField] string firstMessage = "un texto";
     public static TutorialManager instance;
@@ -61,5 +61,5 @@ public class TutorialManager : MonoBehaviour
     private void OnDestroy()
     {
         HUDController.tutorialSlowDown = false;
-    }
+    }*/
 }
