@@ -113,16 +113,8 @@ public class HUDController : MonoBehaviour
         }
         else
         {
-            if (!tutorialSlowDown)
-            {
-                Time.timeScale = 1;
-                Cursor.visible = false;
-            }
-            else
-            {
-                Time.timeScale = .5f;
-                Application.targetFrameRate = 60;
-            }
+            Time.timeScale = 1;
+            Cursor.visible = false;
         }
     }
     private void GetGun(GameObject gun)
@@ -216,7 +208,8 @@ public class HUDController : MonoBehaviour
 
     public void ResetTutorialScene()
     {
-        StartCoroutine(LoadLevel("Tutorial V2"));
+        if (GameManager.singletonGameManager.isTutorialFinished) ResetScene();
+        else StartCoroutine(LoadLevel("Tutorial V2"));
     }
 
     public void GoToMainMenu()

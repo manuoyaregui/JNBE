@@ -373,6 +373,15 @@ public class PlayerController : MonoBehaviour
         onInertiaChange?.Invoke(inertia);
     }
     private bool alreadyIn;
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("tutorialFinished"))
+        {
+            GameManager.singletonGameManager.isTutorialFinished = true;
+        }
+    }
+
     private void OnTriggerStay(Collider other)
     {
         

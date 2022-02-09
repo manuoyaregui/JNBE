@@ -10,8 +10,12 @@ public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para
     private AudioSource audioSource;
     [NonSerialized] public int coinsGrabbed;
     [NonSerialized] public bool isInCinematic = true;
+    [NonSerialized] public bool isTutorialFinished;
 
-    
+    [SerializeField] AudioClip onOneCoinGrabbedSfx;
+    [SerializeField] AudioClip onALotOfCoinsGrabbedSfx;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +47,15 @@ public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para
     public void AddCoins(int value)
     {
         coinsGrabbed += value;
+
+        if(value == 1)
+        {
+            audioSource.PlayOneShot(onOneCoinGrabbedSfx);
+        }
+        else
+        {
+            audioSource.PlayOneShot(onALotOfCoinsGrabbedSfx);
+        }
     }
     public int GetCoins()
     {

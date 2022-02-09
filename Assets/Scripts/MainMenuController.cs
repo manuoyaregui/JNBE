@@ -120,11 +120,11 @@ public class MainMenuController : MonoBehaviour
     {
         switch (dondeMeEncuentro) // depende de donde entro lanzo la transicion
         {
-            case 0: StartCoroutine(LoadLevel("Tutorial", transitionMainMenu));
+            case 0: StartCoroutine(LoadLevel("Tutorial V2", transitionMainMenu));
                 break;
-            case 1: StartCoroutine(LoadLevel("Tutorial", transitionOptions));
+            case 1: StartCoroutine(LoadLevel("Tutorial V2", transitionOptions));
                 break;
-            default: StartCoroutine(LoadLevel("Tutorial", transitionMainMenu));
+            default: StartCoroutine(LoadLevel("Tutorial V2", transitionMainMenu));
                 break;
         }
     }

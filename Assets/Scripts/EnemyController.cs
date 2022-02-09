@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    [SerializeField] int dropCoins = 5;
     [SerializeField] int lives = 1;
     [SerializeField] private float bulletPerSec = .3f; //cantidad máxima de balas q dispara el enemigo por segundo
     [SerializeField] Transform barrel; //obtengo la posicion de la punta del arma
@@ -60,6 +61,7 @@ public class EnemyController : MonoBehaviour
     {
         if(lives <= 0)
         {
+            
             Destroy(gameObject);
         }
     }
@@ -96,5 +98,9 @@ public class EnemyController : MonoBehaviour
         lives--;
     }
 
+    public int GetEnemyDropCoinsValue()
+    {
+        return dropCoins;
+    }
 
 }

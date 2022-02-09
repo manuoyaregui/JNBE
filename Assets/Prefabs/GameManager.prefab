@@ -47,8 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a94eedd9cbfa764ca101af85f6a0cf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coinsGrabbed: 0
-  isInCinematic: 0
+  onOneCoinGrabbedSfx: {fileID: 8300000, guid: 315e257debe156b4ea76d50aa3a9dc7c, type: 3}
+  onALotOfCoinsGrabbedSfx: {fileID: 0}
 --- !u!114 &1257174691013452302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,8 +199,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelStartPoint: {fileID: 0}
-  easyMediumChangeValue: 1000
-  mediumHardChangeValue: 4000
+  easyMediumChangeValue: 800
+  mediumHardChangeValue: 3000
   EasyGameblocks:
   - {fileID: 251853890602171151, guid: 945cb322c4e4ab240b7ab9ad72fcc9d2, type: 3}
   - {fileID: 251853890602171151, guid: 3cfb629f910cdd54481f0ce30ecdfd14, type: 3}
@@ -209,6 +209,9 @@ MonoBehaviour:
   - {fileID: 251853890602171151, guid: d9e056112f3b6ce418a206ad27e61560, type: 3}
   - {fileID: 251853890602171151, guid: c9a4f59b2aba264448afb50166379d3a, type: 3}
   - {fileID: 251853890602171151, guid: 6aaacdaed00699a48880f0446290e3ad, type: 3}
+  - {fileID: 251853890602171151, guid: f9c5db35a0ecf684386c6057fbdcac06, type: 3}
+  - {fileID: 251853890602171151, guid: 784e4a23982ed714387390e2eab7bfa3, type: 3}
+  - {fileID: 251853890602171151, guid: 85454b0955b749a42a236d79e4c85fff, type: 3}
   MediumGameblocks:
   - {fileID: 251853890602171151, guid: 62a34fb2573caff4ebbe21991ababfd9, type: 3}
   - {fileID: 251853890602171151, guid: 5c34dd5371d9d6441ac9f17ad28cff8c, type: 3}
@@ -221,6 +224,7 @@ MonoBehaviour:
   - {fileID: 251853890602171151, guid: 768f8453576eab5418abaa0a63394c3f, type: 3}
   - {fileID: 251853890602171151, guid: 028184ee52d1e924cbdc09112b24f44d, type: 3}
   - {fileID: 251853890602171151, guid: 3989cb969798e4f49bc0660d872d77ed, type: 3}
+  - {fileID: 251853890602171151, guid: d20dbeb5072a78549bdee6b5c12b9062, type: 3}
   HardGameblocks:
   - {fileID: 251853890602171151, guid: 13c36dcd9455b3a408f3a6734161431e, type: 3}
   - {fileID: 251853890602171151, guid: 01da738e077da094fab67b6f9bd5d451, type: 3}

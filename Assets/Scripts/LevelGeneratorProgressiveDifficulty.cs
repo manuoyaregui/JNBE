@@ -23,11 +23,6 @@ public class LevelGeneratorProgressiveDifficulty : MonoBehaviour
     int buffer;
 
 
-
-
-
-
-
     // Start is called before the first frame update
     void Start()
     {

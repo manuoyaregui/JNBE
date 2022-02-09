@@ -241,6 +241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52df3d56dae47d04bb4385b2d1ba83a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dropCoins: 10
   lives: 1
   bulletPerSec: 1
   barrel: {fileID: 7993466218255491476}

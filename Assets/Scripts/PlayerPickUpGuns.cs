@@ -40,7 +40,7 @@ public class PlayerPickUpGuns : MonoBehaviour
 
     private void SwitchWeapons()
     {
-        if (HUDController.isPause == false && Input.GetKeyDown(KeyCode.Q))
+        if (HUDController.isPause == false && (Input.GetKeyDown(KeyCode.Q) /*|| Input.GetKeyDown(KeyCode.mo)*/))
         {
             GameManager.singletonGameManager.PlaySound(ChangeWeapon);
             //obtener el nro de arma activa
