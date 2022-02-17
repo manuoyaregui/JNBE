@@ -37,6 +37,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private ParticleSystem extraBulletParticles;
 
 
+    [SerializeField] Animator pistolAnim;
+    [SerializeField] Animator shotgunAnim;
+
+
     [Header("Tutorial")] [Tooltip("Dont use in main game")]
     [SerializeField] private LayerMask tutorialLayerDieZone;
 
@@ -297,10 +301,13 @@ public class PlayerController : MonoBehaviour
     private void Dash() //Dash para adelante apretando el shift, no esta del todo terminado
     {
         float CD = 1F;
-        if (Time.time > dashCD && Input.GetButtonDown("Fire3"))
+        if (   Time.time > dashCD && 
+            Input.GetButtonDown("Fire3") && (Input.GetAxis("Horizontal") != 0  || Input.GetAxis("Vertical") != 0)  ) // si presiono dash y me estoy moviendo, realizalo
         {
             GameManager.singletonGameManager.PlaySound(DashSound);
             StartCoroutine(IDash());
+            pistolAnim.SetBool("isDashing", true);
+            shotgunAnim.SetBool("isDashing", true);
             dashCD = Time.time + CD;
         }
     }
