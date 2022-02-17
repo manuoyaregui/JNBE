@@ -9807,7 +9807,7 @@ GameObject:
   - component: {fileID: 3671765639798592437}
   - component: {fileID: 2069488366423556786}
   - component: {fileID: 632082740201163352}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player 1
   m_TagString: Player
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
@@ -9845,7 +9845,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c13e57965e724740bde7a4e7d7a9304, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSettings: {fileID: 0}
+  playerSettings: {fileID: 11400000, guid: 44232b7473632db4f9db5cf9a7ece147, type: 2}
   playerBody: {fileID: 3671765640089704013}
   camera: {fileID: 8251052766463556782}
   GunCamera: {fileID: 6808182596173768346}
@@ -9861,7 +9861,6 @@ MonoBehaviour:
   ramp:
     serializedVersion: 2
     m_Bits: 8192
-  isAlive: 1
   inertiaChargerLayer:
     serializedVersion: 2
     m_Bits: 4096
@@ -9870,13 +9869,12 @@ MonoBehaviour:
   DashSound: {fileID: 8300000, guid: 02c3c04da122c624c9dc4941a4ea9daf, type: 3}
   killZoneDeath: {fileID: 8300000, guid: 96af09457887b2947ade9bf0bf904c00, type: 3}
   InertiaParticles: {fileID: 3221805786589413051}
-  resetCamera: 0
-  tutorialLayerDieZone:
-    serializedVersion: 2
-    m_Bits: 0
   shieldActivated: {fileID: 2016496196370076245}
   shieldDisabled: {fileID: 5457350736733241546}
   extraBulletParticles: {fileID: 2840087992086710}
+  tutorialLayerDieZone:
+    serializedVersion: 2
+    m_Bits: 0
   OnDeathUnityEvent:
     m_PersistentCalls:
       m_Calls:
@@ -9892,6 +9890,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  isAlive: 1
+  resetCamera: 0
 --- !u!143 &3671765639798592437
 CharacterController:
   m_ObjectHideFlags: 0
@@ -15202,7 +15202,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 15415
+    m_Bits: 146487
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

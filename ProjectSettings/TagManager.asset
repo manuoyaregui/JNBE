@@ -17,6 +17,7 @@ TagManager:
   - TutorialPickUps
   - FallingFloor
   - tutorialFinished
+  - HUD
   layers:
   - Default
   - TransparentFX
@@ -27,7 +28,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - PlayerLayer
   - floor
   - wall
   - InertiaCharger
@@ -35,7 +36,7 @@ TagManager:
   - FPSGunLayer
   - TutorialDieZone
   - Particles
-  - 
+  - PlayerIgnoreCollision
   - 
   - 
   - 

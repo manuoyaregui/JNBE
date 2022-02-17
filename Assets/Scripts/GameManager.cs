@@ -16,11 +16,14 @@ public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para
     [SerializeField] AudioClip onALotOfCoinsGrabbedSfx;
 
 
+    HUDController _hud;
+
     // Start is called before the first frame update
     void Start()
     {
         singletonGameManager = this;
         audioSource = GetComponent<AudioSource>();
+        _hud = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDController>();
     }
     public void AddLives()
     {
@@ -57,6 +60,17 @@ public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para
             audioSource.PlayOneShot(onALotOfCoinsGrabbedSfx);
         }
     }
+
+    public void EnemyKilledAction(int scoreValue)
+    {
+        if (_hud != null)
+        {
+            _hud.addScoreValue(scoreValue);
+        }
+        else Debug.Log("there is no HUD in the game");
+    }
+
+
     public int GetCoins()
     {
         return coinsGrabbed;
@@ -64,7 +78,6 @@ public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para
 
     public void OnDeathUnityEventHandler()
     {
-
         int previousCoins = PlayerPrefs.GetInt("ppCoins", 0);
         PlayerPrefs.SetInt("ppCoins", previousCoins + coinsGrabbed);
     }

@@ -162,19 +162,17 @@ public class HUDController : MonoBehaviour
         if(inertiaValue >= 1.3f && inertiaValue < 1.49f) //Si estoy en estado de inercia
         {
             scoreMultiplier = 2; //duplica el score
-            scoreMultiplierText.text = "X 2";
         }
         else if(inertiaValue >= 1.49f) //Si estoy en estado de "locura"
         {
             scoreMultiplier = 4; //cuadruplicalo
-            scoreMultiplierText.text = "X 4";
         }
         else
         {
             scoreMultiplier = 1; //Sino no hagas nada
-            scoreMultiplierText.text = "X 1";
-
         }
+
+        scoreMultiplierText.text = "X " + scoreMultiplier;
     }
     private void CheckScore() //Este metodo se llama cuando colisiono con el LeaveZone mediante un evento
     {
@@ -182,18 +180,24 @@ public class HUDController : MonoBehaviour
         {
             extraValue += (int)(scoreAddition * scoreMultiplier);
             formula += (int)(scoreAddition * scoreMultiplier);
-            textScore.text = "SCORE = " + formula;
             if(extraValue >= changeColorValue)
             {
                 extraValue = 0;
                 OnScoreSpecificValueUnityEvent?.Invoke(formula);
             }
-            if(formula > PlayerPrefs.GetFloat("HighScore", 0))
-            {
-                panelHighScoreAdvisor.SetActive(true);
-            }
+            UpdateScorePanel();
         }
     }
+
+    private void UpdateScorePanel()
+    {
+        textScore.text = "SCORE = " + formula;
+        if (formula > PlayerPrefs.GetFloat("HighScore", 0))
+        {
+            panelHighScoreAdvisor.SetActive(true);
+        }
+    }
+
     private void ResetScore()
     {
         formula = 0;
@@ -242,6 +246,13 @@ public class HUDController : MonoBehaviour
             PlayerPrefs.SetFloat("HighScore", formula);
             highScorePanel.SetActive(true);
         }        
+    }
+
+
+    public void addScoreValue(int value)
+    {
+        formula += value * scoreMultiplier;
+        UpdateScorePanel();
     }
   
     public void EscapeButtonMenu()
