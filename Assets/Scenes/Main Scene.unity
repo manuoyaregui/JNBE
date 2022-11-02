@@ -4581,6 +4581,14 @@ PrefabInstance:
       propertyPath: RotationModule.curve.scalar
       value: 4.363323
       objectReference: {fileID: 0}
+    - target: {fileID: 54827797837200057, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 54827797837200062, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 153634563739975553, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.08
@@ -4633,6 +4641,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: d87d1e869c4a41340af1d9d0ff852c95, type: 2}
+    - target: {fileID: 3221805787016070405, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3266281154710187480, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -5017,6 +5029,10 @@ PrefabInstance:
       propertyPath: m_BoundingSphereOverride.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8251052766381141370, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 1448940643}
     - target: {fileID: 8251052766463556778, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
       propertyPath: far clip plane
       value: 500
