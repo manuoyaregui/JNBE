@@ -39,9 +39,10 @@ public class ShootWeapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-            if (HUDController.isPause == false
-                &&
-                !GameManager.singletonGameManager.isInCinematic 
+
+        if (!GameManager.singletonGameManager.GetPausedStatus() ){
+
+            if (!GameManager.singletonGameManager.isInCinematic
                 &&
                 player.GetComponent<PlayerController>().isAlive //si está vivo
                 &&
@@ -51,19 +52,18 @@ public class ShootWeapon : MonoBehaviour
             }
             else
             {
-            anim.SetBool("isShoot", false);
+                anim.SetBool("isShoot", false);
             }
 
-            if(HUDController.isPause == false
-               && 
-               bulletsRemaining == 0 
-               && 
-               Input.GetButtonDown("Fire1") 
+            if (bulletsRemaining <= 0
+               &&
+               Input.GetButtonDown("Fire1")
                &&
                !GameManager.singletonGameManager.isInCinematic)
             {
                 GameManager.singletonGameManager.PlaySound(emptyMagazineClip);
             }
+        }
     }
 
     protected virtual bool FireWeapon()
@@ -93,11 +93,11 @@ public class ShootWeapon : MonoBehaviour
         else
         {
             anim.SetBool("isShoot", false);
-            return false;
             if(bulletsRemaining <= 0 && Input.GetButtonDown("Fire1"))
             {
                 GameManager.singletonGameManager.PlaySound(emptyMagazineClip);
             }
+            return false;
         }
     }
     IEnumerator IShootParticle()

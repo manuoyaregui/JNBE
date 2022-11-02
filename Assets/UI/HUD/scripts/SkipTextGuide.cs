@@ -17,12 +17,12 @@ public class SkipTextGuide : MonoBehaviour
         if (Input.anyKeyDown)
         {
             canvas.enabled = false;
-            HUDController.isPause = false;
+            GameManager.singletonGameManager.PauseTheGame();
             Destroy(gameObject);
         }
         else
         {
-            HUDController.isPause = true;
+            GameManager.singletonGameManager.UnPauseTheGame();
         }
     }
 }

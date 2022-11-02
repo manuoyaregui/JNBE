@@ -9872,16 +9872,16 @@ MonoBehaviour:
   shieldActivated: {fileID: 2016496196370076245}
   shieldDisabled: {fileID: 5457350736733241546}
   extraBulletParticles: {fileID: 2840087992086710}
-  pistolAnim: {fileID: 0}
-  shotgunAnim: {fileID: 0}
+  pistolAnim: {fileID: 3221805788067666622}
+  shotgunAnim: {fileID: 3221805786676314309}
   tutorialLayerDieZone:
     serializedVersion: 2
     m_Bits: 0
   OnDeathUnityEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: HUDController, Assembly-CSharp
+      - m_Target: {fileID: 1257174691013452304, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: OnDeathUnityEventHandler
         m_Mode: 1
         m_Arguments:

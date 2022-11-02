@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 public class HUDController : MonoBehaviour
 {
-    public static bool isPause;
+    
     //Valor de Score
     [SerializeField] private float scoreAddition;
     private int scoreMultiplier;
@@ -73,7 +73,7 @@ public class HUDController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isPause = false;
+        
         ResetScore();
         scoreMultiplier = 1;
         loadingScreen.SetActive(true);
@@ -87,7 +87,6 @@ public class HUDController : MonoBehaviour
         {
             EscapeButtonMenu();
         }
-        CheckIfItPaused();
 
         CheckCoins();
     }
@@ -97,26 +96,8 @@ public class HUDController : MonoBehaviour
         coinsText.text = GameManager.singletonGameManager.coinsGrabbed.ToString();
     }
 
-    public void ToggleIsPause()
-    {
-        isPause = !isPause;
-    }
-
-
     public static bool tutorialSlowDown;
-    private void CheckIfItPaused()
-    {
-        if (isPause)
-        {
-            Time.timeScale = 0;
-            Cursor.visible = true;
-        }
-        else
-        {
-            Time.timeScale = 1;
-            Cursor.visible = false;
-        }
-    }
+    
     private void GetGun(GameObject gun)
     {
         this.gun = gun;
@@ -207,6 +188,8 @@ public class HUDController : MonoBehaviour
     //Eventos de Buttons
     public void ResetScene()
     {
+        UnPauseGame();
+
         StartCoroutine(LoadLevel("Main Scene"));
     }
 
@@ -218,6 +201,7 @@ public class HUDController : MonoBehaviour
 
     public void GoToMainMenu()
     {
+        UnPauseGame();
         StartCoroutine(LoadLevel("MainMenu"));
     }
 
@@ -230,9 +214,8 @@ public class HUDController : MonoBehaviour
         SceneManager.LoadScene(levelName);
     }
 
-    public void OnDeathUnityEventHandler()
+    public void OnDeathHandler()
     {
-        ToggleIsPause();
         deathPanel.SetActive(true);
         deathPanel.GetComponentsInChildren<Text>()[1].text = formula.ToString("0");
 
@@ -257,9 +240,9 @@ public class HUDController : MonoBehaviour
   
     public void EscapeButtonMenu()
     {
-        ToggleIsPause();
+        GameManager.singletonGameManager.ToggleIsPause();
 
-        if (isPause)
+        if ( GameManager.singletonGameManager.GetPausedStatus() )
             pauseMenu.SetActive(true);
         else
             pauseMenu.SetActive(false);
@@ -268,6 +251,16 @@ public class HUDController : MonoBehaviour
     public void SetInertiaBar(float inertia)
     {
         inertiaBar.value = inertia;
+    }
+
+    public void UnPauseGame()
+    {
+        GameManager.singletonGameManager.UnPauseTheGame();
+    }
+
+    public void PauseGame()
+    {
+        GameManager.singletonGameManager.PauseTheGame();
     }
 
     private void OnDestroy()

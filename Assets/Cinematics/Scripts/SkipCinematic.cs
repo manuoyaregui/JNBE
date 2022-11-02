@@ -28,7 +28,9 @@ public class SkipCinematic : MonoBehaviour
     }
     private void SkipPlayable()
     {
-        if(Input.GetButtonDown("Fire2") && wasSkiped == false && ! HUDController.isPause ) // Tiempo que dura la cinematic
+        if(Input.GetButtonDown("Fire2") && 
+            wasSkiped == false && 
+            ! GameManager.singletonGameManager.GetPausedStatus() ) // Tiempo que dura la cinematic
         {
             this.gameObject.SetActive(false);
             wasSkiped = true;

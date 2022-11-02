@@ -125,8 +125,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (isAlive && 
-            HUDController.isPause == false && 
-            !GameManager.singletonGameManager.isInCinematic)
+            ! GameManager.singletonGameManager.GetPausedStatus() && 
+            ! GameManager.singletonGameManager.isInCinematic)
         {
             Jumpp();
             Dash();
@@ -153,7 +153,8 @@ public class PlayerController : MonoBehaviour
     {
         RaycastGravity();
         ActiveGravity();
-        if (isAlive && HUDController.isPause == false && toogleGravity)
+        if (! GameManager.singletonGameManager.GetPausedStatus() &&
+            toogleGravity)
         {
             GravityForce();
         }

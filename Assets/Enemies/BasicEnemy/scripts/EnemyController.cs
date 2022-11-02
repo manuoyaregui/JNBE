@@ -31,7 +31,7 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if( ! HUDController.isPause)
+        if( ! GameManager.singletonGameManager.GetPausedStatus() )
         {
             distance = Vector3.Distance(PlayerObject.transform.position, transform.position);
             CheckLives(); // chequear si está vivo o muerto

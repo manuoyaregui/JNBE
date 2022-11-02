@@ -16,7 +16,7 @@ public class BulletController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (HUDController.isPause)
+        if ( GameManager.singletonGameManager.GetPausedStatus() )
         {
             Destroy(gameObject);
         }

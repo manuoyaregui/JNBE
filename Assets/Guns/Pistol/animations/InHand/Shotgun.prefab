@@ -79,10 +79,10 @@ MonoBehaviour:
   GunSettings: {fileID: 11400000, guid: fabde8c7228b37f4da043d9e3610124a, type: 2}
   barrel: {fileID: 2609182147819031272}
   ammo: {fileID: 5865359197413278604, guid: 91f69e3ffd68767429d7dfa205403d73, type: 3}
-  anim: {fileID: 0}
-  shootParticles: {fileID: 0}
-  shootClip: {fileID: 0}
-  emptyMagazineClip: {fileID: 0}
+  anim: {fileID: 934844271685508099}
+  shootParticles: {fileID: 4238400571812220550}
+  shootClip: {fileID: 8300000, guid: 94d669c4507428849bbe930d347a2ecd, type: 3}
+  emptyMagazineClip: {fileID: 8300000, guid: 0ca083ccdee72b547b65d4387bd1882c, type: 3}
   recoilTime: 0
   recoilSpeed: 0
 --- !u!1 &6905576930881488045
@@ -102,7 +102,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5758582741708489434
 Transform:
   m_ObjectHideFlags: 0
@@ -5036,5 +5036,10 @@ PrefabInstance:
 --- !u!4 &934844271692444641 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400002, guid: e870f12990348ad4b94b4cdb8f09b7a0, type: 3}
+  m_PrefabInstance: {fileID: 934844271692835171}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &934844271685508099 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: e870f12990348ad4b94b4cdb8f09b7a0, type: 3}
   m_PrefabInstance: {fileID: 934844271692835171}
   m_PrefabAsset: {fileID: 0}

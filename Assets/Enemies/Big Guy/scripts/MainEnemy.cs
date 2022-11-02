@@ -29,7 +29,7 @@ public class MainEnemy : MonoBehaviour
     // Update is called once per fram
     void Update()
     {
-        if( ! HUDController.isPause)
+        if( ! GameManager.singletonGameManager.GetPausedStatus() )
         {
             Move();
             LookPlayer();

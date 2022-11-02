@@ -571,7 +571,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2057656271}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &595823366
 MonoBehaviour:
@@ -1087,17 +1087,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6742486434691082068, guid: 86853763df4f20445b3ee739ec33c00d, type: 3}
   m_PrefabInstance: {fileID: 94533013822413713}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1213001632 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5737921809970079834, guid: 325c7111f7c617a4cacf7638d58e213c, type: 3}
-  m_PrefabInstance: {fileID: 5737921809034463226}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c9ed2f42fe162f4398c20b5bec984a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1241882515
 GameObject:
   m_ObjectHideFlags: 0
@@ -2457,6 +2446,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1893189655}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1976186551 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1257174691013452304, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
+  m_PrefabInstance: {fileID: 1257174689670600832}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a94eedd9cbfa764ca101af85f6a0cf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2057656270
 GameObject:
   m_ObjectHideFlags: 0
@@ -2486,8 +2486,8 @@ Transform:
   m_Children:
   - {fileID: 200367699}
   - {fileID: 1474216571}
-  - {fileID: 170116892}
   - {fileID: 595823365}
+  - {fileID: 170116892}
   - {fileID: 1627430408}
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -4623,7 +4623,15 @@ PrefabInstance:
     - target: {fileID: 3671765639798592436, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
       propertyPath: OnDeathUnityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1213001632}
+      objectReference: {fileID: 1976186551}
+    - target: {fileID: 3671765639798592436, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: OnDeathUnityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnDeathUnityEventHandler
+      objectReference: {fileID: 0}
+    - target: {fileID: 3671765639798592436, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: OnDeathUnityEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3671765639798592438, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
       propertyPath: m_Name
       value: Player 1

@@ -31,7 +31,8 @@ public class PlayerPickUpGuns : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(HUDController.isPause == false && !GameManager.singletonGameManager.isInCinematic)
+        if( ! GameManager.singletonGameManager.GetPausedStatus() && 
+            ! GameManager.singletonGameManager.isInCinematic)
         {
             gun = GetActiveGun();
             SwitchWeapons();
@@ -40,7 +41,8 @@ public class PlayerPickUpGuns : MonoBehaviour
 
     private void SwitchWeapons()
     {
-        if (HUDController.isPause == false && (Input.GetKeyDown(KeyCode.Q) /*|| Input.GetKeyDown(KeyCode.mo)*/))
+        if ( ! GameManager.singletonGameManager.GetPausedStatus() && 
+            Input.GetKeyDown(KeyCode.Q) )
         {
             GameManager.singletonGameManager.PlaySound(ChangeWeapon);
             //obtener el nro de arma activa

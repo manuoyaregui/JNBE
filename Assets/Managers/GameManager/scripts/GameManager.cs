@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para
     private int lives; //Cantidad de vidas, sin uso actualmente
     public static GameManager singletonGameManager;
     private AudioSource audioSource;
+
+    public static bool isPaused=false;
+
     [NonSerialized] public int coinsGrabbed;
     [NonSerialized] public bool isInCinematic = true;
     [NonSerialized] public bool isTutorialFinished;
@@ -21,10 +24,53 @@ public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para
     // Start is called before the first frame update
     void Start()
     {
+        UnPauseTheGame();
         singletonGameManager = this;
         audioSource = GetComponent<AudioSource>();
         _hud = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDController>();
+
     }
+
+    private void Update()
+    {
+        CheckIfItPaused();
+    }
+
+    public void PauseTheGame()
+    {
+        isPaused = true;
+    }
+
+    public void UnPauseTheGame()
+    {
+        isPaused = false;
+    }
+
+    public void ToggleIsPause()
+    {
+        isPaused = !isPaused;
+    }
+
+    private void CheckIfItPaused()
+    {
+        if (isPaused)
+        {
+            Time.timeScale = 0;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Time.timeScale = 1;
+            Cursor.visible = false;
+        }
+    }
+
+    public bool GetPausedStatus()
+    {
+        return isPaused;
+    }
+
+
     public void AddLives()
     {
         lives++;
@@ -78,7 +124,13 @@ public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para
 
     public void OnDeathUnityEventHandler()
     {
+        PauseTheGame();
         int previousCoins = PlayerPrefs.GetInt("ppCoins", 0);
         PlayerPrefs.SetInt("ppCoins", previousCoins + coinsGrabbed);
+
+        _hud.OnDeathHandler();
     }
+
+    
+
 }
