@@ -21,13 +21,9 @@ public class PlayerController : MonoBehaviour
     public AudioClip DashSound;
     public AudioClip killZoneDeath;
 
-
     [SerializeField] Animator pistolAnim;
     [SerializeField] Animator shotgunAnim;
 
-
-
-    
     //eventos
     public static event Action<int> onLivesChange;
     public static event Action<float> onInertiaChange;
@@ -190,6 +186,7 @@ public class PlayerController : MonoBehaviour
     }
     public void PlayerIsDashing()
     {
+        _particles.DashParticles();
         GameManager.singletonGameManager.PlaySound(DashSound);
         pistolAnim.SetBool("isDashing", true);
         shotgunAnim.SetBool("isDashing", true);

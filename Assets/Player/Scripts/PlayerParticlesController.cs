@@ -10,6 +10,7 @@ public class PlayerParticlesController : MonoBehaviour
     [SerializeField] private ParticleSystem shieldActivated;
     [SerializeField] private ParticleSystem shieldDisabled;
     [SerializeField] private ParticleSystem extraBulletParticles;
+    [SerializeField] private ParticleSystem dashParticles;
 
     private PlayerController _MC_;
 
@@ -54,5 +55,10 @@ public class PlayerParticlesController : MonoBehaviour
     internal void StopInertiaParticles()
     {
         InertiaParticles.Pause();
+    }
+
+    internal void DashParticles()
+    {
+        dashParticles.Play();
     }
 }
