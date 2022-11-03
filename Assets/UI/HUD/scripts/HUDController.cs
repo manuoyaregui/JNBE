@@ -266,9 +266,9 @@ public class HUDController : MonoBehaviour
     private void OnDestroy()
     {
         PlayerController.onLivesChange -= CheckShield;
-        PlayerController.onInertiaChange -= SetInertiaBar;
         PlayerPickUpGuns.onGunChange -= GetGun;
         PlayerPickUpGuns.OnExtraBullets -= ShowPlusBulletsPannel;
+        PlayerController.onInertiaChange -= SetInertiaBar;
         PlayerController.onInertiaChange -= SetScoreMultiplier;
         ShootWeapon.onBulletsChange -= CheckBullets;
         ShielPUController.OnShieldPickedUp -= CheckShield;
