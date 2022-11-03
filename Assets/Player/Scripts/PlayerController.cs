@@ -21,12 +21,6 @@ public class PlayerController : MonoBehaviour
     public AudioClip DashSound;
     public AudioClip killZoneDeath;
 
-    [Header("Particles")]
-    [SerializeField] private ParticleSystem InertiaParticles;
-    [SerializeField] private ParticleSystem shieldActivated;
-    [SerializeField] private ParticleSystem shieldDisabled;
-    [SerializeField] private ParticleSystem extraBulletParticles;
-
 
     [SerializeField] Animator pistolAnim;
     [SerializeField] Animator shotgunAnim;
@@ -59,20 +53,19 @@ public class PlayerController : MonoBehaviour
 
 
         PlayerPickUpGuns.OnExtraBullets += ExtraBulletsPS; //Evento
-        ShielPUController.OnShieldPickedUp += ActivateShieldParticleSystem;
+        ShielPUController.OnShieldPickedUp += PlayerGotAShield;
     }
 
     void Start()
     {
         _physics = GetComponent<PlayerPhysicsController>();
-        //_particles = GetComponent<PlayerParticlesController>();
+        _particles = GetComponent<PlayerParticlesController>();
 
 
         //getSettings
         lives = playerSettings.lives;
         isAlive = true;
         onLivesChange?.Invoke(lives);
-        InertiaParticles.Stop();
         onInertiaChange?.Invoke(inertia);
 
     }
@@ -92,7 +85,7 @@ public class PlayerController : MonoBehaviour
     {
         if(lives == 2)
         {
-            DisableShieldParticleSystem();
+            PlayerLostAShield();
         }
 
         lives--;
@@ -145,25 +138,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnDestroy()
     {
-        ShielPUController.OnShieldPickedUp -= ActivateShieldParticleSystem;
+        ShielPUController.OnShieldPickedUp -= PlayerGotAShield;
         PlayerPickUpGuns.OnExtraBullets -= ExtraBulletsPS;
     }
 
-    public void ActivateShieldParticleSystem(int value)
-    {
-        if(lives == 1) //Sólo si no tenía el escudo activar las particulas
-            shieldActivated.Play();
-    }
-
-    public void DisableShieldParticleSystem()
-    {
-        shieldDisabled.Play();
-    }
-
-    public void ExtraBulletsPS() 
-    {
-        extraBulletParticles.Play();
-    }
+    
 
 
     //Actions Called By other Scripts
@@ -189,13 +168,13 @@ public class PlayerController : MonoBehaviour
     {
         onInertiaChange?.Invoke(value);
     }
-    public void PlayerHasHighInertia()
+    public void PlayerHaveHighInertia()
     {
-        InertiaParticles.Play();
+        _particles.PlayInertiaParticles();
     }
-    public void PlayerDoesntHasHighInertia()
+    public void PlayerDoesntHaveHighInertia()
     {
-        InertiaParticles.Pause();
+        _particles.StopInertiaParticles();
     }
 
 
@@ -204,18 +183,36 @@ public class PlayerController : MonoBehaviour
         if(JumpSound != null)
             GameManager.singletonGameManager.PlaySound(JumpSound);
     }
-
     public void PlayerIsDoubleJumping()
     {
         if (DobleJumpSound != null)
             GameManager.singletonGameManager.PlaySound(DobleJumpSound);
     }
-
     public void PlayerIsDashing()
     {
         GameManager.singletonGameManager.PlaySound(DashSound);
         pistolAnim.SetBool("isDashing", true);
         shotgunAnim.SetBool("isDashing", true);
     }
+
+    public void PlayerGotAShield(int value)
+    {
+        if (lives == 1) //Sólo si no tenía el escudo activar las particulas
+        {
+            _particles.ShieldActivatedParticles();
+            lives = value;
+        }
+
+    }
+    public void PlayerLostAShield()
+    {
+        _particles.ShieldDisabledParticles();
+    }
+
+    public void ExtraBulletsPS()
+    {
+        _particles.ExtraBulletParticles();
+    }
+
 
 }

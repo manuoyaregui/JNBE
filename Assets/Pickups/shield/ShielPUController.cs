@@ -38,6 +38,5 @@ public class ShielPUController : MonoBehaviour
     private void GiveShield()
     {
         OnShieldPickedUp?.Invoke(2);
-        Player.GetComponent<PlayerController>().SetLives(2); // cambio vida de player a 2, valor el cual pone el escudo activo
     }
 }

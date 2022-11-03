@@ -162,11 +162,11 @@ public class PlayerPhysicsController : MonoBehaviour
         }
         if (inertia >= 1.3f)
         {
-            _MC_.PlayerHasHighInertia();
+            _MC_.PlayerHaveHighInertia();
         }
         else
         {
-            _MC_.PlayerDoesntHasHighInertia();
+            _MC_.PlayerDoesntHaveHighInertia();
         }
         _MC_.PlayerInertiaAltered(inertia);
     }
