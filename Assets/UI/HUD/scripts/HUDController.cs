@@ -189,7 +189,7 @@ public class HUDController : MonoBehaviour
     public void ResetScene()
     {
         UnPauseGame();
-
+        GameManager.singletonGameManager.SceneIsGoingToReset();
         StartCoroutine(LoadLevel("Main Scene"));
     }
 

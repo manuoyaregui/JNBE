@@ -7,8 +7,10 @@ public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para
 {
     private int lives; //Cantidad de vidas, sin uso actualmente
     
+
     public static GameManager singletonGameManager;
     private SfxManager _sfx_;
+    [SerializeField] private PostGlobalController _postProcc_;
     
 
     public static bool isPaused=false;
@@ -121,6 +123,8 @@ public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para
         _hud.OnDeathHandler();
     }
 
-    
-
+    public void SceneIsGoingToReset()
+    {
+        _postProcc_.resetMaterials();
+    }
 }

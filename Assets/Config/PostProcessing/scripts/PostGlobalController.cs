@@ -119,6 +119,28 @@ public class PostGlobalController : MonoBehaviour
         RunText.color = otherColor;
     }
 
+    internal void resetMaterials()
+    {
+        foreach (Material material in primaryMaterials)
+        {
+            material.SetColor("_EmissionColor", Color.white);
+            //Lerp allows the smooth transition between colors
+        }
+
+        foreach (Material material in secondaryMaterials)
+        {
+            material.SetColor("_EmissionColor", Color.white);
+        }
+
+        if (otherMaterials.Length > 0)
+        {
+            foreach (Material material in otherMaterials)
+            {
+                material.SetColor("_EmissionColor", Color.white);
+            }
+        }
+    }
+
     private void GenerateRandomIndex()
     {
         do
@@ -126,6 +148,11 @@ public class PostGlobalController : MonoBehaviour
             randomIndex = Random.Range(0, palettes.Length);
         } while (buffer == randomIndex);
         buffer = randomIndex;
+    }
+
+    private void OnApplicationQuit()
+    {
+        resetMaterials();
     }
 
     private void OnDestroy()
