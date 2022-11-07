@@ -4404,6 +4404,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452304, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
+      propertyPath: PU_Duration
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1257174691013452304, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: _postProcc_
       value: 
       objectReference: {fileID: 595823366}
@@ -4418,11 +4422,11 @@ PrefabInstance:
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: allTheGameBlocks.Array.data[0]
       value: 
-      objectReference: {fileID: 251853890602171151, guid: 945cb322c4e4ab240b7ab9ad72fcc9d2, type: 3}
+      objectReference: {fileID: 251853890602171151, guid: 55b07c7466c7ade4db3a43490762c964, type: 3}
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: allTheGameBlocks.Array.data[1]
       value: 
-      objectReference: {fileID: 251853890602171151, guid: 945cb322c4e4ab240b7ab9ad72fcc9d2, type: 3}
+      objectReference: {fileID: 251853890602171151, guid: 55b07c7466c7ade4db3a43490762c964, type: 3}
     - target: {fileID: 1257174691013452306, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: Loop
       value: 0
@@ -4436,6 +4440,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3816565183444507725, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3816565183444507725, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: levelStartPoint
       value: 
       objectReference: {fileID: 149767719}
@@ -4447,7 +4455,8 @@ PrefabInstance:
       propertyPath: HardGameblocks.Array.data[5]
       value: 
       objectReference: {fileID: 251853890602171151, guid: 081143c5b261cf241bc75151e05509fb, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1257174691013452302, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
 --- !u!65 &1596832302448184017
 BoxCollider:
@@ -5176,6 +5185,10 @@ PrefabInstance:
     - target: {fileID: 1360918470629343599, guid: 325c7111f7c617a4cacf7638d58e213c, type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2203574049358766570, guid: 325c7111f7c617a4cacf7638d58e213c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2595511323911219084, guid: 325c7111f7c617a4cacf7638d58e213c, type: 3}
       propertyPath: m_SizeDelta.x
