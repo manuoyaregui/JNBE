@@ -294,25 +294,27 @@ public class PlayerPhysicsController : MonoBehaviour
     }
     public void RotateCamaraZ()
     {
+        float rotationSpeed = .5f;
+
         rotatezLeft = Mathf.Clamp(rotatezLeft, -15, 15);
 
         if (isInWallLeft)
         {
-            rotatezLeft -= 1f;
+            rotatezLeft -= 1f * rotationSpeed;
         }
         if (isInWallRight)
         {
-            rotatezLeft += 1f;
+            rotatezLeft += 1f * rotationSpeed;
         }
         if (!isInWall && rotatezLeft < 0)
         {
             rotatezLeft = Mathf.Clamp(rotatezLeft, -15, 0);
-            rotatezLeft += 1f;
+            rotatezLeft += 1f * rotationSpeed;
         }
         if (!isInWall && rotatezLeft > 0)
         {
             rotatezLeft = Mathf.Clamp(rotatezLeft, 0, 15);
-            rotatezLeft -= 1f;
+            rotatezLeft -= 1f * rotationSpeed;
         }
     }
 
