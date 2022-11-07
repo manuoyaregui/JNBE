@@ -4568,6 +4568,10 @@ PrefabInstance:
       propertyPath: recoilSpeed
       value: 36
       objectReference: {fileID: 0}
+    - target: {fileID: 669749871069641059, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: impactEffect
+      value: 
+      objectReference: {fileID: 1594341645032166058, guid: 2e870dd2a06567d4596e6674c43f9bb8, type: 3}
     - target: {fileID: 909978431174224585, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
       propertyPath: looping
       value: 0
@@ -5060,6 +5064,10 @@ PrefabInstance:
       propertyPath: anim
       value: 
       objectReference: {fileID: 1448940643}
+    - target: {fileID: 8251052766381141370, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: impactEffect
+      value: 
+      objectReference: {fileID: 1594341645032166058, guid: 2e870dd2a06567d4596e6674c43f9bb8, type: 3}
     - target: {fileID: 8251052766463556778, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
       propertyPath: far clip plane
       value: 500

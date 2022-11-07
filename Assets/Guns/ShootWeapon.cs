@@ -8,6 +8,7 @@ public class ShootWeapon : MonoBehaviour
     public Weapon GunSettings;
     [SerializeField] protected Transform barrel; //de donde salen las balas?
     [SerializeField] protected GameObject ammo;  //qué balas usa?
+    [SerializeField] protected GameObject impactEffect;
     protected float rps; // Rondas por segundo del arma
     protected float timeBwShots; // Tiempo entre disparos
     protected int bulletsRemaining;
@@ -86,6 +87,10 @@ public class ShootWeapon : MonoBehaviour
                 {
                     hit.transform.GetComponent<EnemyDestroy>().KillEnemy();
                 }
+
+
+                GameObject impactGO = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal) );
+                Destroy(impactGO, 2f);
             }
             
             MinusBullets(); //Resto una Bala del cargador
