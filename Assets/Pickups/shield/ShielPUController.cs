@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 public class ShielPUController : MonoBehaviour
 {
     protected GameObject Player;
-    public static event Action<int> OnShieldPickedUp;
 
     public AudioClip PickUpShield;
 
@@ -20,8 +19,7 @@ public class ShielPUController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate (Vector3.up * 50 * Time.deltaTime, Space.World);
-
+        transform.Rotate(Vector3.up * 50 * Time.deltaTime, Space.World);
     }
 
     private void OnTriggerEnter(Collider other) 
@@ -30,13 +28,18 @@ public class ShielPUController : MonoBehaviour
         {
             SfxManager._sfxManager.PlaySoundEffect(PickUpShield);
             GiveShield();
+
+            //TUTORIAL -- > si no estoy en el tutorial destruyo el pickup
             if (!SceneManager.GetSceneByName("Tutorial").Equals(SceneManager.GetActiveScene()))
-                Destroy(gameObject); //si no estoy en el tutorial destruyo el pickup
+                Destroy(gameObject); 
         }
     }
 
+
+    //POSIBLE CAMBIO: al tomar el superCubo, el jugador obtiene el doble de puntos por 'x' tiempo,
+    //si agarra otro, se reinicia el timer y se duplica nuevamente, indefinidamente.
     private void GiveShield()
     {
-        OnShieldPickedUp?.Invoke(2);
+        GameManager.singletonGameManager.playerPickedUpASuperCube();
     }
 }

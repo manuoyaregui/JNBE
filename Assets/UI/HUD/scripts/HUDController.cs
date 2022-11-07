@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
+using System;
 
 public class HUDController : MonoBehaviour
 {
@@ -35,6 +36,7 @@ public class HUDController : MonoBehaviour
     [SerializeField] private Text currentHighScoreText;
     [SerializeField] private GameObject panelHighScoreAdvisor;
     private int formula = 0;
+    private int PUMultiplier = 1;
 
     //Para el mensaje de fin de juego
     [SerializeField] private GameObject deathPanel;
@@ -56,6 +58,11 @@ public class HUDController : MonoBehaviour
     [SerializeField] private Animator transition;
     [SerializeField] private GameObject loadingScreen;
 
+    internal void changePuScoreMultiplier(int pUScoreMultiplier)
+    {
+        PUMultiplier = pUScoreMultiplier;
+    }
+
     private void Awake()
     {
         /*Con eventos*/
@@ -65,9 +72,20 @@ public class HUDController : MonoBehaviour
         PlayerController.onInertiaChange += SetInertiaBar;
         PlayerController.onInertiaChange += SetScoreMultiplier;
         ShootWeapon.onBulletsChange += CheckBullets;
-        ShielPUController.OnShieldPickedUp += CheckShield;
         LeaveZone.OnChangeGB += CheckScore;
         textBullet.text = "";
+    }
+
+    public void PlayerGotShieldPU(int PU_ScoreMultiplier)
+    {
+        activeShield.GetComponent<Image>().color = Color.green;
+        changePuScoreMultiplier(PU_ScoreMultiplier);
+    }
+
+    public void PlayerLostShieldPU(int PU_ScoreMultiplier)
+    {
+        activeShield.GetComponent<Image>().color = new Color(255, 255, 255, 0.6f);
+        changePuScoreMultiplier(PU_ScoreMultiplier);
     }
 
     // Start is called before the first frame update
@@ -111,6 +129,7 @@ public class HUDController : MonoBehaviour
         bulletsValue = bullets;
         textBullet.text = "" + bulletsValue;
     }
+
     private void ShowPlusBulletsPannel()
     {
         StartCoroutine(IEShowPlusBullets());
@@ -144,7 +163,7 @@ public class HUDController : MonoBehaviour
         {
             scoreMultiplier = 2; //duplica el score
         }
-        else if(inertiaValue >= 1.49f) //Si estoy en estado de "locura"
+        else if(inertiaValue >= 1.4f) //Si estoy en estado de "locura"
         {
             scoreMultiplier = 4; //cuadruplicalo
         }
@@ -153,7 +172,11 @@ public class HUDController : MonoBehaviour
             scoreMultiplier = 1; //Sino no hagas nada
         }
 
-        scoreMultiplierText.text = "X " + scoreMultiplier;
+        Debug.Log(PUMultiplier);
+
+        float finalMultiplierValue = scoreMultiplier * PUMultiplier;
+
+        scoreMultiplierText.text = "X " + finalMultiplierValue;
     }
     private void CheckScore() //Este metodo se llama cuando colisiono con el LeaveZone mediante un evento
     {
@@ -271,7 +294,6 @@ public class HUDController : MonoBehaviour
         PlayerController.onInertiaChange -= SetInertiaBar;
         PlayerController.onInertiaChange -= SetScoreMultiplier;
         ShootWeapon.onBulletsChange -= CheckBullets;
-        ShielPUController.OnShieldPickedUp -= CheckShield;
         LeaveZone.OnChangeGB -= CheckScore;
     }
 

@@ -45,10 +45,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-
-
         PlayerPickUpGuns.OnExtraBullets += ExtraBulletsPS; //Evento
-        ShielPUController.OnShieldPickedUp += PlayerGotAShield;
     }
 
     void Start()
@@ -134,7 +131,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnDestroy()
     {
-        ShielPUController.OnShieldPickedUp -= PlayerGotAShield;
         PlayerPickUpGuns.OnExtraBullets -= ExtraBulletsPS;
     }
 
@@ -194,14 +190,10 @@ public class PlayerController : MonoBehaviour
         shotgunAnim.SetBool("isDashing", true);
     }
 
-    public void PlayerGotAShield(int value)
+    public void PlayerGotAShield()
     {
-        if (lives == 1) //Sólo si no tenía el escudo activar las particulas
-        {
-            _particles.ShieldActivatedParticles();
-            lives = value;
-        }
-
+        _particles.ShieldActivatedParticles();
+        lives = 2;
     }
     public void PlayerLostAShield()
     {
