@@ -11,4 +11,5 @@ public class Weapon : ScriptableObject
     public int initialBullets; //Cuantas Balas le quedan al arma
     public float rpm; // Rondas por minuto del arma
     public int magazine;
+    public int maxBulletDistance;
 }

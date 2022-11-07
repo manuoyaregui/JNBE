@@ -19,7 +19,7 @@ public class StaticBackground : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         ChangePosition();
         GenerateRandonNumber();

@@ -11,8 +11,11 @@ public class ShootWeapon : MonoBehaviour
     protected float rps; // Rondas por segundo del arma
     protected float timeBwShots; // Tiempo entre disparos
     protected int bulletsRemaining;
+    protected int maxBulletDistance;
     protected float shootTime; //Tiempo de disparo
     public Animator anim;
+
+    private Camera weaponCam;
 
 
     public static event Action<int, GameObject> onBulletsChange;
@@ -26,9 +29,11 @@ public class ShootWeapon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        weaponCam = GetComponentInParent<Camera>();
         anim = GetComponent<Animator>();
         shootParticles.Pause();
         bulletsRemaining = GunSettings.initialBullets;
+        maxBulletDistance = GunSettings.maxBulletDistance;
         player = GameObject.FindGameObjectWithTag("Player");
         rps = GunSettings.rpm / 60f; // Pasaje de Rondas por minuto a rondas por segundo
         timeBwShots = 1 / rps; // Dividir el 1 entre las rps, da el tiempo que pasa entre cada disparo
@@ -74,16 +79,15 @@ public class ShootWeapon : MonoBehaviour
             anim.SetBool("isShoot", true);
             SfxManager._sfxManager.PlaySoundEffect(shootClip);
             StartCoroutine(IShootParticle());
-            GameObject newAmmo; //Nuevo GameObject para instanciar la bala
 
-            newAmmo = Instantiate(ammo, barrel.position, barrel.rotation); //Se instancia la bala
-
-            newAmmo.GetComponent<Rigidbody>().AddForce(barrel.forward * GunSettings.shotSpeed); //Se agrega fuerza al rigidbody para que la bala se mueva
-
-            shootTime = Time.time + timeBwShots; // Variable para calcular la cadencia de disparo
-
-            Destroy(newAmmo, GunSettings.bulletTime); // La bala es destruida 4 segundos despues de ser instanciada
-
+            RaycastHit hit;
+            if( Physics.Raycast(weaponCam.transform.position, weaponCam.transform.forward, out hit, maxBulletDistance) ){
+                if (hit.transform.CompareTag("Enemy"))
+                {
+                    hit.transform.GetComponent<EnemyDestroy>().KillEnemy();
+                }
+            }
+            
             MinusBullets(); //Resto una Bala del cargador
 
             anim.SetBool("isShoot", true);

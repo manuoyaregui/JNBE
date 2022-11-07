@@ -15,7 +15,7 @@ public class RotateMarc : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         GetRandomNumber();
         Rotate();

@@ -15,7 +15,7 @@ public class EnemyDestroy : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "PlayerBullet")
+        /*if(other.tag == "PlayerBullet")
         {
 
             GameManager.singletonGameManager.EnemyKilledAction(deathScoreAddition);
@@ -24,6 +24,16 @@ public class EnemyDestroy : MonoBehaviour
             SfxManager._sfxManager.PlaySoundEffect(EnemyDestroySound);
             Instantiate(enemyFrag, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
-        }
+        }*/
+    }
+
+    public void KillEnemy()
+    {
+        GameManager.singletonGameManager.EnemyKilledAction(deathScoreAddition);
+        GameManager.singletonGameManager.AddCoins(dropCoins);
+
+        SfxManager._sfxManager.PlaySoundEffect(EnemyDestroySound);
+        Instantiate(enemyFrag, transform.position, Quaternion.identity);
+        Destroy(this.gameObject);
     }
 }

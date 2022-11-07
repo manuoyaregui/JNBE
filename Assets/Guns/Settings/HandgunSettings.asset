@@ -17,3 +17,4 @@ MonoBehaviour:
   initialBullets: 10
   rpm: 500
   magazine: 10
+  maxBulletDistance: 10000
