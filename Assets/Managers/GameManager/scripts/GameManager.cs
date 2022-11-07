@@ -6,8 +6,10 @@ using System;
 public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para cumplir un desafio
 {
     private int lives; //Cantidad de vidas, sin uso actualmente
+    
     public static GameManager singletonGameManager;
-    private AudioSource audioSource;
+    private SfxManager _sfx_;
+    
 
     public static bool isPaused=false;
 
@@ -26,7 +28,7 @@ public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para
     {
         UnPauseTheGame();
         singletonGameManager = this;
-        audioSource = GetComponent<AudioSource>();
+        _sfx_ = SfxManager._sfxManager;
         _hud = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDController>();
 
     }
@@ -79,32 +81,20 @@ public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para
     {
         lives--;
     }
-    public void PlaySound(AudioClip sound)
-    {
-        audioSource.PlayOneShot(sound);
-    }
-    public void StopMusic()
-    {
-        audioSource.Stop();
-    }
-
-    public AudioSource GetAudioSource()
-    {
-        return audioSource;
-    }
+    
 
     public void AddCoins(int value)
     {
-        coinsGrabbed += value;
+        /*coinsGrabbed += value;
 
-        if(value == 1)
+        if(value <= 1)
         {
-            audioSource.PlayOneShot(onOneCoinGrabbedSfx);
+            _sfx_.playSoundEffect(onOneCoinGrabbedSfx);
         }
         else
         {
-            audioSource.PlayOneShot(onALotOfCoinsGrabbedSfx);
-        }
+            _sfx_.playSoundEffect(onALotOfCoinsGrabbedSfx);
+        }*/
     }
 
     public void EnemyKilledAction(int scoreValue)

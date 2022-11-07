@@ -9,7 +9,7 @@ public class PlayerDeathBody : MonoBehaviour
     {
         transform.position = playerTransform.position;
         gameObject.SetActive(true);
-        GameManager.singletonGameManager.PlaySound(deathSound);
+        SfxManager._sfxManager.PlaySoundEffect(deathSound);
     }
 
     public void SetSound(AudioClip clip)

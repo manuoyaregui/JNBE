@@ -17,9 +17,11 @@ public class EnemyDestroy : MonoBehaviour
     {
         if(other.tag == "PlayerBullet")
         {
+
             GameManager.singletonGameManager.EnemyKilledAction(deathScoreAddition);
             GameManager.singletonGameManager.AddCoins(dropCoins);
-            GameManager.singletonGameManager.PlaySound(EnemyDestroySound);
+
+            SfxManager._sfxManager.PlaySoundEffect(EnemyDestroySound);
             Instantiate(enemyFrag, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }

@@ -61,7 +61,7 @@ public class ShootWeapon : MonoBehaviour
                &&
                !GameManager.singletonGameManager.isInCinematic)
             {
-                GameManager.singletonGameManager.PlaySound(emptyMagazineClip);
+                SfxManager._sfxManager.PlaySoundEffect(emptyMagazineClip);
             }
         }
     }
@@ -72,7 +72,7 @@ public class ShootWeapon : MonoBehaviour
         if (bulletsRemaining > 0 && Time.time > shootTime && Input.GetButtonDown("Fire1")) //Si el tiempo es mayor al tiempo de disparo
         {
             anim.SetBool("isShoot", true);
-            GameManager.singletonGameManager.PlaySound(shootClip);
+            SfxManager._sfxManager.PlaySoundEffect(shootClip);
             StartCoroutine(IShootParticle());
             GameObject newAmmo; //Nuevo GameObject para instanciar la bala
 
@@ -95,7 +95,7 @@ public class ShootWeapon : MonoBehaviour
             anim.SetBool("isShoot", false);
             if(bulletsRemaining <= 0 && Input.GetButtonDown("Fire1"))
             {
-                GameManager.singletonGameManager.PlaySound(emptyMagazineClip);
+                SfxManager._sfxManager.PlaySoundEffect(emptyMagazineClip);
             }
             return false;
         }

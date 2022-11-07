@@ -26,14 +26,14 @@ public class BulletController : MonoBehaviour
     {
         GameObject collObj = collision.gameObject;
         string tagColl = collObj.tag;
-        GameManager.singletonGameManager.PlaySound(bulletHitSound);
+        SfxManager._sfxManager.PlaySoundEffect(bulletHitSound);
         if (damage)
         {
             switch (tagColl){
                 case "Player": //Si colisione con Player
                     if(this.CompareTag("EnemyBullet")) //y la bala viene del enemigo...
                     {
-                        GameManager.singletonGameManager.PlaySound(PlayerDamageSound);
+                        SfxManager._sfxManager.PlaySoundEffect(PlayerDamageSound);
                         collObj.GetComponent<PlayerController>().MinusLives(); // sacale una vida al Player
                         damage = false;
                         Destroy(gameObject);

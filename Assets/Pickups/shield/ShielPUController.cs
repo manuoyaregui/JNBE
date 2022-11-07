@@ -28,7 +28,7 @@ public class ShielPUController : MonoBehaviour
     {
         if (other.CompareTag("Player") || other.CompareTag("PlayerBullet")) // si choco o disparo, activar el escudo
         {
-            GameManager.singletonGameManager.PlaySound(PickUpShield);
+            SfxManager._sfxManager.PlaySoundEffect(PickUpShield);
             GiveShield();
             if (!SceneManager.GetSceneByName("Tutorial").Equals(SceneManager.GetActiveScene()))
                 Destroy(gameObject); //si no estoy en el tutorial destruyo el pickup

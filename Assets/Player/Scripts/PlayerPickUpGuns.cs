@@ -44,7 +44,7 @@ public class PlayerPickUpGuns : MonoBehaviour
         if ( ! GameManager.singletonGameManager.GetPausedStatus() && 
             Input.GetKeyDown(KeyCode.Q) )
         {
-            GameManager.singletonGameManager.PlaySound(ChangeWeapon);
+            SfxManager._sfxManager.PlaySoundEffect(ChangeWeapon);
             //obtener el nro de arma activa
             int currentWeapon = 0;
             for (int i=0 ; i < listOfGuns.Length; i++)
@@ -86,7 +86,7 @@ public class PlayerPickUpGuns : MonoBehaviour
         //si colisiono con el PickUpGun
         if (other.CompareTag("PUgun"))
         {
-            GameManager.singletonGameManager.PlaySound(PickUp);
+            SfxManager._sfxManager.PlaySoundEffect(PickUp);
             int numberOfGun = other.GetComponent<PickUpGunController>().GetTypeOfGun(); //chequeo que tipo de arma es
             listOfGuns[numberOfGun].GetComponent<ShootWeapon>().SetExtraBullets(); //y le agrego balas
             OnExtraBullets?.Invoke();

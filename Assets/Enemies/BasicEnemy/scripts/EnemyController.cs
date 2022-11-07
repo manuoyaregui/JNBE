@@ -83,7 +83,7 @@ public class EnemyController : MonoBehaviour
 
     void FireWeapon()
     {
-            GameManager.singletonGameManager.PlaySound(shootEnemy);
+            SfxManager._sfxManager.PlaySoundEffect(shootEnemy);
             GameObject newAmmo;
 
             newAmmo = Instantiate(ammo, barrel.position, barrel.rotation); // creo una bala

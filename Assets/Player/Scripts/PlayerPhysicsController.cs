@@ -23,11 +23,7 @@ public class PlayerPhysicsController : MonoBehaviour
     [Header("References")]
     [SerializeField] GameObject camera; // trabaja la rotacion de la camara
 
-    
-
     CharacterController characterController;
-
-
 
 
     /// Variables ///

@@ -7,9 +7,10 @@ using UnityEngine.Events;
 public class PlayerController : MonoBehaviour
 {
     //Este es el script central del player, contiene los stats
-    internal PlayerPhysicsController _physics;
-    internal PlayerParticlesController _particles;
-    internal PlayerSoundController _sound;
+    private PlayerPhysicsController _physics;
+    private PlayerParticlesController _particles;
+    private PlayerSoundController _sounds;
+    
 
     [Header("Settings")]
     public Player playerSettings;
@@ -44,8 +45,6 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        //Esto NO debería estar acá (no deberia estar directamente jajaja)
-        Application.targetFrameRate = 60; //Capear los fps en 60
 
 
         PlayerPickUpGuns.OnExtraBullets += ExtraBulletsPS; //Evento
@@ -56,6 +55,7 @@ public class PlayerController : MonoBehaviour
     {
         _physics = GetComponent<PlayerPhysicsController>();
         _particles = GetComponent<PlayerParticlesController>();
+        _sounds = GetComponent<PlayerSoundController>();
 
 
         //getSettings
@@ -152,7 +152,8 @@ public class PlayerController : MonoBehaviour
 
         if (alreadyInKillZone == false)
         {
-            GameManager.singletonGameManager.PlaySound(killZoneDeath);
+            _sounds.killZoneDeathSound();
+            
             alreadyInKillZone = true;
         }
 
@@ -176,18 +177,19 @@ public class PlayerController : MonoBehaviour
 
     public void PlayerIsJumping()
     {
-        if(JumpSound != null)
-            GameManager.singletonGameManager.PlaySound(JumpSound);
+        _sounds.jump();
     }
     public void PlayerIsDoubleJumping()
     {
-        if (DobleJumpSound != null)
-            GameManager.singletonGameManager.PlaySound(DobleJumpSound);
+        _sounds.doubleJump();
+        
     }
     public void PlayerIsDashing()
     {
         _particles.DashParticles();
-        GameManager.singletonGameManager.PlaySound(DashSound);
+
+        _sounds.dash();
+
         pistolAnim.SetBool("isDashing", true);
         shotgunAnim.SetBool("isDashing", true);
     }
