@@ -191,11 +191,3 @@ public class PostGlobalControllerURP : MonoBehaviour
         PlayerController.onInertiaChange -= SetAberrationActive;
     }
 }
-
-[System.Serializable]
-public class Palette
-{
-    [ColorUsage(true, true)] public Color primary;
-    [ColorUsage(true, true)] public Color secondary;
-    [ColorUsage(true, true)] public Color terciary;
-}
