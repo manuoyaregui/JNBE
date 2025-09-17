@@ -35,3 +35,45 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# Additional Unity folders
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Ss]criptAssemblies/
+[Mm]emoryCaptures/
+[Ss]haderCache/
+[Pp]rofileAnalyzer/
+CrashReport.txt
+
+# Addressables (keep settings, ignore build/cache outputs)
+Assets/AddressableAssetsData/*/bin/
+Assets/AddressableAssetsData/*/obj/
+Assets/AddressableAssetsData/*/Build*/
+Assets/AddressableAssetsData/*/catalog.json
+Assets/AddressableAssetsData/*/catalog_*.json
+Assets/AddressableAssetsData/*/*_BundleLocalCatalog.json
+Assets/AddressableAssetsData/*/link.xml
+Assets/StreamingAssets/aa/
+
+# Platform-specific build artifacts
+*.aab
+*.ipa
+*.xcarchive
+.gradle/
+*.keystore
+*.jks
+Pods/
+*.xcworkspace/
+xcuserdata/
+
+# IDEs / Editors
+.idea/
+.vscode/
+*.code-workspace
+*.sln.DotSettings.user
+*.DotSettings.user
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
