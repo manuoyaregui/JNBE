@@ -172,8 +172,6 @@ public class HUDController : MonoBehaviour
             scoreMultiplier = 1; //Sino no hagas nada
         }
 
-        Debug.Log(PUMultiplier);
-
         float finalMultiplierValue = scoreMultiplier * PUMultiplier;
 
         scoreMultiplierText.text = "X " + finalMultiplierValue;

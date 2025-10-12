@@ -20,6 +20,7 @@ public class MainMenuController : MonoBehaviour
     private void Awake()
     {
         Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None; // Desbloquear cursor en el menú principal
         Time.timeScale = 1; //Por alguna razon al pasar de una escena desde el DeathPanel El main menu se tilda
         fadeScreenMainCanvas.SetActive(true);
     }

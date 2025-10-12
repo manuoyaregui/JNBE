@@ -5096,6 +5096,34 @@ PrefabInstance:
       propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.minCurve.m_Curve.Array.data[1].outWeight
       value: 0.33333334
       objectReference: {fileID: 0}
+    - target: {fileID: 6134612531608967331, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: maxFOV
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134612531608967331, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: minFOV
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134612531608967331, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: normalFOV
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134612531608967331, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: resetCamera
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134612531608967331, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: fovLerpSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134612531608967331, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: inertiaLerpSpeed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134612531608967331, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: inertiaIncreaseRate
+      value: 0.0025
+      objectReference: {fileID: 0}
     - target: {fileID: 6808182596173768346, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
       propertyPath: m_Layer
       value: 0

@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.Events;
+using DG.Tweening;
 
+/// <summary>
+/// Handles all physics-related behavior for the player including movement, jumping, dashing,
+/// wall detection, camera controls, and inertia system. This is the core physics controller
+/// that manages player movement and environmental interactions.
+/// </summary>
 public class PlayerPhysicsController : MonoBehaviour
 {
     PlayerController _MC_;
 
 
     [Header("Layer Detections")]
-    [SerializeField] LayerMask floor; // capas para reconocer qué cosa es pared y qué cosa es piso
+    [SerializeField] LayerMask floor; // capas para reconocer quï¿½ cosa es pared y quï¿½ cosa es piso
     [SerializeField] LayerMask wall;
     [SerializeField] LayerMask ramp;
     [SerializeField] LayerMask inertiaChargerLayer;
@@ -23,8 +29,37 @@ public class PlayerPhysicsController : MonoBehaviour
     [Header("References")]
     [SerializeField] GameObject camera; // trabaja la rotacion de la camara
 
+    [Header("Physics Constants")]
+    [SerializeField] private float groundCheckRadius = 0.2f;
+    [SerializeField] private float wallCheckDistance = 0.5f;
+    [SerializeField] private float wallSlideGravity = -2f;
+    [SerializeField] private float inertiaIncreaseRate = 0.002f;
+    [SerializeField] private float inertiaDecreaseRate = 0.025f;
+    [SerializeField] private float highInertiaThreshold = 1.3f;
+    [SerializeField] private float wallCheckInterval = 0.1f;
+    [SerializeField] private float cameraRotationSpeed = 0.5f;
+    [SerializeField] private float maxCameraTilt = 15f;
+    [SerializeField] private float fovIncreaseRate = 0.25f;
+    [SerializeField] private float fovDecreaseRate = 0.35f;
+    [SerializeField] private float minFOV = 55f;
+    [SerializeField] private float maxFOV = 80f;
+    [SerializeField] private float normalFOV = 65f;
+    [SerializeField] private float inertiaLerpSpeed = 3f;
+    [SerializeField] private float fovLerpSpeed = 0.5f;
+
     CharacterController characterController;
 
+    // Cached components for better performance
+    private Camera mainCamera;
+    private Camera gunCameraComponent;
+    private float lastWallCheckTime;
+    
+    // DOTween references for better performance
+    private Tween dashTween;
+    private Tween recoilTween;
+    private Tween throwTween;
+    private Tween fovTween;
+    private Tween cameraTiltTween;
 
     /// Variables ///
 
@@ -44,7 +79,7 @@ public class PlayerPhysicsController : MonoBehaviour
     private float rotationX = 0;
 
     public bool resetCamera = false;
-    private float rotatezLeft = 0;
+    private float cameraTiltAngle = 0;
 
     //For Move
     float moveSpeed;
@@ -78,8 +113,10 @@ public class PlayerPhysicsController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        // Cache components for better performance
         characterController = GetComponent<CharacterController>();
+        mainCamera = Camera.main;
+        gunCameraComponent = GunCamera.GetComponent<Camera>();
 
         //getSettings
         mouseSensibility = _MC_.playerSettings.mouseSensibility;
@@ -101,25 +138,24 @@ public class PlayerPhysicsController : MonoBehaviour
             !GameManager.singletonGameManager.GetPausedStatus() &&
             !GameManager.singletonGameManager.isInCinematic)
         {
-            Jumpp();
-            Dash();
+            HandleJump();
+            HandleDash();
 
-            Mouse();
+            HandleMouseInput();
 
-            Move();
-            InertiaMove();
+            HandleMovement();
+            UpdateInertia();
             ChangeFOV();
-            RotateCamaraZ();
-            camera.transform.Rotate(0, 0, rotatezLeft);
+            HandleCameraTilt();
         }
         WallDetection();
-        InerciaCharger();
+        CheckInertiaCharger();
 
 
         if (isInWall && 
             gravityVector.y < 0)
         {
-            gravityVector.y = -2f; //Si estoy en la pared disminuyo la fuerza de la graveda
+            gravityVector.y = wallSlideGravity; //Si estoy en la pared disminuyo la fuerza de la gravedad
         }
     }
 
@@ -133,7 +169,11 @@ public class PlayerPhysicsController : MonoBehaviour
         }
     }
 
-    private void Move() //Movimeinto del personaje
+    /// <summary>
+    /// Handles player movement input and applies movement to the character controller.
+    /// Combines horizontal and vertical input with inertia multiplier for forward movement.
+    /// </summary>
+    private void HandleMovement() //Movimiento del personaje
     {
         float moveX = Input.GetAxis("Horizontal"); //Imput horizontal
 
@@ -144,39 +184,60 @@ public class PlayerPhysicsController : MonoBehaviour
         characterController.Move(moveSpeed * Time.deltaTime * move); // Aplico el vector move en el character controller
     }
 
-    public void InertiaMove() //Modifico un flot que esta directamente relacionado con el movimiento
+    /// <summary>
+    /// Updates the inertia system based on player state. Increases inertia when airborne,
+    /// decreases when grounded. Manages high inertia state and notifies other systems.
+    /// Now with more gradual and controlled inertia changes.
+    /// </summary>
+    public void UpdateInertia() //Modifico un float que esta directamente relacionado con el movimiento
     {
-        inertia = Mathf.Clamp(inertia, inertiaMin, inertiaMax); // Limitar los valores que puede tomar inertia
-
+        float targetInertia = inertia;
+        
         if (!isInFloor)//Si no estoy en el piso aumento la inercia
         {
-            inertia += 0.0025f;
+            targetInertia += inertiaIncreaseRate;
         }
         else
         {
-            inertia -= 0.03f; //Si estoy en el piso disminuyo la inercia
+            targetInertia -= inertiaDecreaseRate; //Si estoy en el piso disminuyo la inercia
         }
-        if (inertia >= 1.3f)
+        
+        // Clamp the target inertia
+        targetInertia = Mathf.Clamp(targetInertia, inertiaMin, inertiaMax);
+        
+        // Smooth transition to target inertia
+        inertia = Mathf.Lerp(inertia, targetInertia, Time.deltaTime * inertiaLerpSpeed);
+        
+        // Check for high inertia state changes
+        bool wasHighInertia = inertia >= highInertiaThreshold;
+        bool isHighInertia = inertia >= highInertiaThreshold;
+        
+        if (isHighInertia && !wasHighInertia)
         {
             _MC_.PlayerHaveHighInertia();
         }
-        else
+        else if (!isHighInertia && wasHighInertia)
         {
             _MC_.PlayerDoesntHaveHighInertia();
         }
+        
         _MC_.PlayerInertiaAltered(inertia);
     }
 
 
 
 
-    private void Jumpp()
+    /// <summary>
+    /// Handles all jump-related input and physics including ground jumping, wall jumping, and double jumping.
+    /// Manages jump state and applies appropriate vertical forces based on current player state.
+    /// </summary>
+    private void HandleJump()
     {
-        isInFloor = Physics.CheckSphere(footPoint.transform.position, 0.2f, floor); // Una espera que controla colicion con el piso
+        isInFloor = Physics.CheckSphere(footPoint.transform.position, groundCheckRadius, floor); // Una espera que controla colicion con el piso
 
         if (isInFloor && gravityVector.y < 0) //Si estoy en el piso disminuyo la gravedad
         {
-            gravityVector.y = -2f;
+            gravityVector.y = wallSlideGravity;
         }
 
         if (Input.GetButtonDown("Jump") && isInFloor) //Si estoy en el piso y salto, aplico un impulso para arriba
@@ -207,31 +268,53 @@ public class PlayerPhysicsController : MonoBehaviour
         }
     }
 
-    private void Dash() //Dash para adelante apretando el shift, no esta del todo terminado
+    /// <summary>
+    /// Handles dash input and execution. Allows the player to dash forward when moving.
+    /// Includes cooldown management to prevent spam dashing. Now uses DOTween for better performance.
+    /// </summary>
+    private void HandleDash() //Dash para adelante apretando el shift, no esta del todo terminado
     {
         float CD = 1F;
         if (Time.time > dashCD &&
             Input.GetButtonDown("Fire3") && (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)) // si presiono dash y me estoy moviendo, realizalo
         {
             _MC_.PlayerIsDashing();
-            StartCoroutine(IDash());
+            ExecuteDash();
             dashCD = Time.time + CD;
         }
     }
-    IEnumerator IDash()
+    
+    /// <summary>
+    /// Executes dash movement using DOTween for smooth and performant animation.
+    /// </summary>
+    private void ExecuteDash()
     {
-        float startTime = Time.time;
-        while (Time.time < startTime + dashTime)
-        {
-            characterController.Move(dashSpeed * Time.deltaTime * move);
-            yield return null;
-        }
+        // Kill any existing dash tween
+        dashTween?.Kill();
+        
+        // Calculate dash target position
+        Vector3 dashTarget = transform.position + move * dashSpeed * dashTime;
+        
+        // Create smooth dash animation
+        dashTween = transform.DOMove(dashTarget, dashTime)
+            .SetEase(Ease.OutQuad)
+            .OnUpdate(() => {
+                // Apply movement to character controller for collision detection
+                Vector3 currentPos = transform.position;
+                Vector3 nextPos = dashTarget;
+                Vector3 movement = (nextPos - currentPos).normalized * dashSpeed * Time.deltaTime;
+                characterController.Move(movement);
+            });
     }
 
 
 
 
-    private void Mouse()
+    /// <summary>
+    /// Handles mouse input for camera rotation. Manages both horizontal (Y-axis) and vertical (X-axis) rotation
+    /// with proper clamping to prevent over-rotation. Also handles camera reset functionality.
+    /// </summary>
+    private void HandleMouseInput()
     {
         float mouseX = Input.GetAxis("Mouse X") * mouseSensibility * Time.fixedDeltaTime;
 
@@ -275,55 +358,88 @@ public class PlayerPhysicsController : MonoBehaviour
 
 
 
+    /// <summary>
+    /// Dynamically adjusts camera FOV based on player state (wall sliding, ground contact, inertia).
+    /// Creates a visual effect that enhances the sense of speed and movement using DOTween.
+    /// Now with more gradual and controlled FOV changes that respond to inertia levels.
+    /// </summary>
     public void ChangeFOV()
     {
-
-        inertiaFOV = Mathf.Clamp(inertiaFOV, 50f, 75f);
-
+        float targetFOV = normalFOV; // Start with normal FOV as base
+        
+        // Apply wall sliding FOV effect
         if (isInWall)
         {
-            inertiaFOV += 0.35f;
+            targetFOV += fovIncreaseRate * Time.deltaTime;
         }
-        if (isInFloor)
+        else if (isInFloor)
         {
-            inertiaFOV -= 0.5f;
+            targetFOV -= fovDecreaseRate * Time.deltaTime;
         }
-
-        Camera.main.fieldOfView = inertiaFOV;
-        GunCamera.GetComponent<Camera>().fieldOfView = inertiaFOV;
+        
+        // Apply inertia-based FOV effect
+        if (inertia > 1.0f) // Only when inertia is above normal
+        {
+            float inertiaMultiplier = (inertia - 1.0f) / (inertiaMax - 1.0f); // Normalize to 0-1
+            float inertiaFOVBoost = inertiaMultiplier * (maxFOV - normalFOV) * 0.5f; // Up to 50% of max boost
+            targetFOV += inertiaFOVBoost;
+        }
+        
+        targetFOV = Mathf.Clamp(targetFOV, minFOV, maxFOV);
+        
+        // Only update if there's a significant change
+        if (Mathf.Abs(targetFOV - inertiaFOV) > 0.1f)
+        {
+            // Kill existing FOV tween
+            fovTween?.Kill();
+            
+            // Smooth FOV transition
+            fovTween = DOTween.To(() => mainCamera.fieldOfView, 
+                                  x => {
+                                      mainCamera.fieldOfView = x;
+                                      gunCameraComponent.fieldOfView = x;
+                                      inertiaFOV = x;
+                                  }, 
+                                  targetFOV, 0.2f)
+                              .SetEase(Ease.OutCubic);
+        }
     }
-    public void RotateCamaraZ()
+    /// <summary>
+    /// Handles camera tilt effect when wall sliding. Creates a dynamic camera rotation
+    /// that responds to which wall the player is sliding on, enhancing immersion.
+    /// </summary>
+    public void HandleCameraTilt()
     {
-        float rotationSpeed = .5f;
-
-        rotatezLeft = Mathf.Clamp(rotatezLeft, -15, 15);
-
+        float targetTilt = 0f;
+        
         if (isInWallLeft)
         {
-            rotatezLeft -= 1f * rotationSpeed;
+            targetTilt = -maxCameraTilt;
         }
-        if (isInWallRight)
+        else if (isInWallRight)
         {
-            rotatezLeft += 1f * rotationSpeed;
+            targetTilt = maxCameraTilt;
         }
-        if (!isInWall && rotatezLeft < 0)
+        else
         {
-            rotatezLeft = Mathf.Clamp(rotatezLeft, -15, 0);
-            rotatezLeft += 1f * rotationSpeed;
+            // Return to center when not on wall
+            targetTilt = 0f;
         }
-        if (!isInWall && rotatezLeft > 0)
-        {
-            rotatezLeft = Mathf.Clamp(rotatezLeft, 0, 15);
-            rotatezLeft -= 1f * rotationSpeed;
-        }
+        
+        // Smooth transition to target tilt
+        cameraTiltAngle = Mathf.Lerp(cameraTiltAngle, targetTilt, Time.deltaTime * 3f);
+        
+        // Apply the rotation directly (absolute rotation)
+        Vector3 currentRotation = camera.transform.eulerAngles;
+        camera.transform.rotation = Quaternion.Euler(currentRotation.x, currentRotation.y, cameraTiltAngle);
     }
 
 
-    public void InerciaCharger()
+    public void CheckInertiaCharger()
     {
         RaycastHit hit;
 
-        isInInertiaCharger = Physics.CheckSphere(footPoint.transform.position, 0.2f, inertiaChargerLayer);
+        isInInertiaCharger = Physics.CheckSphere(footPoint.transform.position, groundCheckRadius, inertiaChargerLayer);
 
         if (isInInertiaCharger)
         {
@@ -333,16 +449,24 @@ public class PlayerPhysicsController : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// Detects wall collisions using raycasts from left and right wall points.
+    /// Optimized to run at intervals rather than every frame for better performance.
+    /// Updates wall state variables for camera tilt and movement systems.
+    /// </summary>
     private void WallDetection()
     {
+        // Only check walls at intervals to improve performance
+        if (Time.time - lastWallCheckTime < wallCheckInterval) return;
+        
         RaycastHit hitL;
         RaycastHit hitR;
 
         //Raycast para detectar colision con la pared
         if (
-            (Physics.Raycast(wallPointL.transform.position, transform.TransformDirection(Vector3.left), out hitL, 0.5f, wall)) 
+            (Physics.Raycast(wallPointL.transform.position, transform.TransformDirection(Vector3.left), out hitL, wallCheckDistance, wall)) 
             ||
-            Physics.Raycast(wallPointR.transform.position, transform.TransformDirection(Vector3.right), out hitR, 0.5f, wall))
+            Physics.Raycast(wallPointR.transform.position, transform.TransformDirection(Vector3.right), out hitR, wallCheckDistance, wall))
         {
             isInWall = true;
         }
@@ -351,8 +475,8 @@ public class PlayerPhysicsController : MonoBehaviour
             isInWall = false;
         }
 
-        //En Qué pared estoy? Izq o Der
-        if (Physics.Raycast(wallPointL.transform.position, transform.TransformDirection(Vector3.left), out hitL, 0.5f, wall))
+        //En Quï¿½ pared estoy? Izq o Der
+        if (Physics.Raycast(wallPointL.transform.position, transform.TransformDirection(Vector3.left), out hitL, wallCheckDistance, wall))
         {
             isInWallLeft = true;
         }
@@ -361,7 +485,7 @@ public class PlayerPhysicsController : MonoBehaviour
             isInWallLeft = false;
         }
 
-        if (Physics.Raycast(wallPointR.transform.position, transform.TransformDirection(Vector3.right), out hitR, 0.5f, wall))
+        if (Physics.Raycast(wallPointR.transform.position, transform.TransformDirection(Vector3.right), out hitR, wallCheckDistance, wall))
         {
             isInWallRight = true;
         }
@@ -369,23 +493,46 @@ public class PlayerPhysicsController : MonoBehaviour
         {
             isInWallRight = false;
         }
+        
+        lastWallCheckTime = Time.time;
     }
 
 
 
+    /// <summary>
+    /// Handles shotgun recoil using DOTween for smooth backward movement.
+    /// </summary>
     private void DoShotgunRecoil(float recoilTime, float recoilSpeed)
     {
-        StartCoroutine(IEShRecoil(recoilTime, recoilSpeed));
+        ExecuteRecoil(recoilTime, recoilSpeed);
     }
-    IEnumerator IEShRecoil(float recoilTime, float recoilSpeed)
+    
+    /// <summary>
+    /// Executes recoil movement using DOTween for better performance and smoother animation.
+    /// </summary>
+    private void ExecuteRecoil(float recoilTime, float recoilSpeed)
     {
-        float startTime = Time.time;
-        while (Time.time < startTime + recoilTime)
-        {
-            characterController.Move(-1 * recoilSpeed * Time.deltaTime * camera.transform.forward); // disparo en sentido contrario a la direccion de la camara
-            yield return null;
-        }
-        gravityVector.y = -2f; // reinicio el vector gravedad, para q no caiga muy rapid
+        // Kill any existing recoil tween
+        recoilTween?.Kill();
+        
+        // Calculate recoil direction (opposite to camera forward)
+        Vector3 recoilDirection = -camera.transform.forward;
+        Vector3 recoilTarget = transform.position + recoilDirection * recoilSpeed * recoilTime;
+        
+        // Create smooth recoil animation
+        recoilTween = transform.DOMove(recoilTarget, recoilTime)
+            .SetEase(Ease.OutQuad)
+            .OnUpdate(() => {
+                // Apply movement to character controller for collision detection
+                Vector3 currentPos = transform.position;
+                Vector3 nextPos = recoilTarget;
+                Vector3 movement = (nextPos - currentPos).normalized * recoilSpeed * Time.deltaTime;
+                characterController.Move(movement);
+            })
+            .OnComplete(() => {
+                // Reset gravity vector after recoil
+                gravityVector.y = wallSlideGravity;
+            });
     }
 
     private void OnTriggerEnter(Collider other)
@@ -408,7 +555,7 @@ public class PlayerPhysicsController : MonoBehaviour
 
 
 
-    bool isthrowed = false;
+    bool isBeingThrown = false;
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
@@ -417,9 +564,9 @@ public class PlayerPhysicsController : MonoBehaviour
 
             Vector3 throwDirection = hit.gameObject.transform.forward;
             RampController rampCont = hit.gameObject.GetComponent<RampController>();
-            if (isthrowed == false)
+            if (isBeingThrown == false)
             {
-                StartCoroutine(IEThrowPlayer(throwDirection, rampCont.GetRampPower(), rampCont.GetRampTime()));
+                ExecuteThrowPlayer(throwDirection, rampCont.GetRampPower(), rampCont.GetRampTime());
             }
             inertia = 1.5f;
             inertiaFOV += 2.5f;
@@ -433,17 +580,34 @@ public class PlayerPhysicsController : MonoBehaviour
         }
     }
 
-    IEnumerator IEThrowPlayer(Vector3 ThrowDirection, float rampPower, float rampTime)
+    /// <summary>
+    /// Executes player throw using DOTween for smooth and performant animation.
+    /// </summary>
+    private void ExecuteThrowPlayer(Vector3 throwDirection, float rampPower, float rampTime)
     {
-        isthrowed = true;
-        float startTime = Time.time;
-        while (Time.time < startTime + rampTime)
-        {
-            characterController.Move(rampPower * Time.deltaTime * ThrowDirection);
-            yield return null;
-        }
-        gravityVector.y = -2f;
-        isthrowed = false;
+        // Kill any existing throw tween
+        throwTween?.Kill();
+        
+        isBeingThrown = true;
+        
+        // Calculate throw target position
+        Vector3 throwTarget = transform.position + throwDirection * rampPower * rampTime;
+        
+        // Create smooth throw animation
+        throwTween = transform.DOMove(throwTarget, rampTime)
+            .SetEase(Ease.OutQuad)
+            .OnUpdate(() => {
+                // Apply movement to character controller for collision detection
+                Vector3 currentPos = transform.position;
+                Vector3 nextPos = throwTarget;
+                Vector3 movement = (nextPos - currentPos).normalized * rampPower * Time.deltaTime;
+                characterController.Move(movement);
+            })
+            .OnComplete(() => {
+                // Reset gravity and throw state
+                gravityVector.y = wallSlideGravity;
+                isBeingThrown = false;
+            });
     }
 
 
@@ -452,6 +616,13 @@ public class PlayerPhysicsController : MonoBehaviour
     private void OnDestroy()
     {
         ShotgunController.OnShotgunRecoil -= DoShotgunRecoil;
+        
+        // Kill all active tweens to prevent memory leaks
+        dashTween?.Kill();
+        recoilTween?.Kill();
+        throwTween?.Kill();
+        fovTween?.Kill();
+        cameraTiltTween?.Kill();
     }
 
 }

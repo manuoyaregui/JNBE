@@ -36,6 +36,21 @@ public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para
         _sfx_ = SfxManager._sfxManager;
         _hud = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDController>();
         _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        
+        // Asegurar que el cursor esté bloqueado al inicio del juego
+        InitializeCursorState();
+    }
+    
+    /// <summary>
+    /// Inicializa el estado del cursor al comenzar el juego
+    /// </summary>
+    private void InitializeCursorState()
+    {
+        if (!isPaused)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
 
     private void Update()
@@ -100,11 +115,13 @@ public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para
         {
             Time.timeScale = 0;
             Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None; // Desbloquear cursor en pausa
         }
         else
         {
             Time.timeScale = 1;
             Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked; // Bloquear cursor durante el juego
         }
     }
 

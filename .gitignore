@@ -77,3 +77,74 @@ xcuserdata/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Unity specific additional files
+*.stackdump
+*.orig
+*.rej
+*.bak
+*.swp
+*~
+
+# Unity Cloud Build
+cloudbuild-manifest.json
+
+# Unity Collaborate
+[Uu]nity[Cc]ollaborateUserSettings.asset
+
+# Unity Analytics
+[Uu]nity[Aa]nalytics/
+
+# Unity Test Framework
+[Uu]nity[Tt]est[Ff]ramework/
+
+# Unity WebGL builds
+WebGLBuilds/
+
+# Unity Package Manager
+Packages/packages-lock.json.bak
+
+# Unity Hub
+hub.log
+
+# Additional Unity cache and temporary files
+*.tmp.meta
+*.cache
+[Bb]ackup/
+[Bb]ackups/
+
+# Unity Profiler
+*.data
+*.prof
+
+# Unity Asset Store
+[Aa]sset[Ss]tore[Mm]anager/
+
+# Unity Services
+[Uu]nity[Ss]ervices/
+
+# Unity Cloud Diagnostics
+[Uu]nity[Cc]loud[Dd]iagnostics/
+
+# Additional IDE files
+*.swp
+*.swo
+*~
+.vscode/settings.json
+.vscode/launch.json
+.vscode/extensions.json
+
+# JetBrains Rider
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Additional Unity folders that might be generated
+[Gg]enerated/
+[Oo]utput/
+[Pp]ublished/
