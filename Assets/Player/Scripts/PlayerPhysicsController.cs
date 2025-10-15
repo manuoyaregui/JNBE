@@ -193,15 +193,16 @@ public class PlayerPhysicsController : MonoBehaviour
 
     /// <summary>
     /// Handles player movement input and applies movement to the character controller.
-    /// Combines horizontal and vertical input with inertia multiplier for forward movement.
+    /// Player always moves forward automatically in the direction they are looking.
+    /// No manual movement controls - only camera direction controls movement.
+    /// Forward movement is multiplied by inertia for enhanced speed when airborne.
     /// </summary>
     private void HandleMovement() //Movimiento del personaje
     {
-        float moveX = Input.GetAxis("Horizontal"); //Imput horizontal
+        // Player always moves forward automatically (no input controls)
+        float moveZ = 1.0f; // Always forward movement
 
-        float moveZ = Input.GetAxis("Vertical"); //Imput vertical
-
-        move = transform.right * moveX + transform.forward * moveZ * inertia; //Creo un vector que contiene mi imput en x y z, y al movimiento en z lo mulplico por inercia
+        move = transform.forward * moveZ * inertia; //Solo movimiento hacia adelante multiplicado por inercia
 
         characterController.Move(moveSpeed * Time.deltaTime * move); // Aplico el vector move en el character controller
     }
