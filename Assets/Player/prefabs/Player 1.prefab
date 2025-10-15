@@ -5138,9 +5138,6 @@ MonoBehaviour:
   wall:
     serializedVersion: 2
     m_Bits: 2048
-  ramp:
-    serializedVersion: 2
-    m_Bits: 8192
   inertiaChargerLayer:
     serializedVersion: 2
     m_Bits: 4096
@@ -5149,6 +5146,30 @@ MonoBehaviour:
   wallPointL: {fileID: 3221805788215379698}
   wallPointR: {fileID: 3221805786776670470}
   camera: {fileID: 8251052766463556782}
+  groundCheckRadius: 0.2
+  wallCheckDistance: 0.5
+  wallSlideGravity: -2
+  inertiaIncreaseRate: 0.002
+  inertiaDecreaseRate: 0.025
+  highInertiaThreshold: 1.3
+  wallCheckInterval: 0.1
+  maxCameraTilt: 15
+  fovIncreaseRate: 0.25
+  fovDecreaseRate: 0.35
+  minFOV: 55
+  maxFOV: 80
+  normalFOV: 65
+  inertiaLerpSpeed: 3
+  pogoDetectionRange: 6
+  pogoForceMultiplier: 0.8
+  pogoDirectionMultiplier: 0.6
+  pogoDurationMultiplier: 1.2
+  pogoFixedAngle: 60
+  pogoConsecutiveMultiplier: 1.2
+  pogoConsecutiveWindow: 1
+  pogoDetectionLayer:
+    serializedVersion: 2
+    m_Bits: 262144
   resetCamera: 0
 --- !u!114 &2069488366423556786
 MonoBehaviour:
@@ -5485,6 +5506,7 @@ MonoBehaviour:
   GunSettings: {fileID: 11400000, guid: 3d499e23181ef7c4d9629fb2d05d19b0, type: 2}
   barrel: {fileID: 7770809527473322413}
   ammo: {fileID: 1119291857556708, guid: 2debf2d1408123949a22d42f6b3a8331, type: 3}
+  impactEffect: {fileID: 0}
   anim: {fileID: 3221805788067666622}
   shootParticles: {fileID: 8251052765291233501}
   shootClip: {fileID: 8300000, guid: 018f0dd134e03e1459cbcc50a129a4b3, type: 3}

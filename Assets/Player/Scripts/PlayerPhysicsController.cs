@@ -4,6 +4,9 @@ using UnityEngine;
 using System;
 using UnityEngine.Events;
 using DG.Tweening;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 /// <summary>
 /// Handles all physics-related behavior for the player including movement, jumping, dashing,
@@ -18,7 +21,6 @@ public class PlayerPhysicsController : MonoBehaviour
     [Header("Layer Detections")]
     [SerializeField] LayerMask floor; // capas para reconocer qu� cosa es pared y qu� cosa es piso
     [SerializeField] LayerMask wall;
-    [SerializeField] LayerMask ramp;
     [SerializeField] LayerMask inertiaChargerLayer;
 
     [Header("RaycastReferences")]
@@ -37,7 +39,6 @@ public class PlayerPhysicsController : MonoBehaviour
     [SerializeField] private float inertiaDecreaseRate = 0.025f;
     [SerializeField] private float highInertiaThreshold = 1.3f;
     [SerializeField] private float wallCheckInterval = 0.1f;
-    [SerializeField] private float cameraRotationSpeed = 0.5f;
     [SerializeField] private float maxCameraTilt = 15f;
     [SerializeField] private float fovIncreaseRate = 0.25f;
     [SerializeField] private float fovDecreaseRate = 0.35f;
@@ -45,7 +46,17 @@ public class PlayerPhysicsController : MonoBehaviour
     [SerializeField] private float maxFOV = 80f;
     [SerializeField] private float normalFOV = 65f;
     [SerializeField] private float inertiaLerpSpeed = 3f;
-    [SerializeField] private float fovLerpSpeed = 0.5f;
+    
+    [Header("Pogo Mechanics")]
+    [SerializeField] private float pogoDetectionRange = 6f; // Raycast distance for detecting poggable elements
+    [SerializeField] private float pogoDetectionAngleDegrees = 72f; // FOV detection angle in degrees (72 = ~0.3 dot product)
+    [SerializeField] private float pogoForceMultiplier = 0.8f; // Multiplier for pogo force strength
+    [SerializeField] private float pogoDirectionMultiplier = 0.6f; // Multiplies the entire bounce direction
+    [SerializeField] private float pogoDurationMultiplier = 1.2f; // Multiplier for pogo duration
+    [SerializeField] private float pogoFixedAngle = 60f; // Fixed bounce angle in degrees (always bounces at this angle)
+    [SerializeField] private float pogoConsecutiveMultiplier = 1.2f; // Boost for consecutive pogos (momentum system)
+    [SerializeField] private float pogoConsecutiveWindow = 1.0f; // Time window for consecutive pogos
+    [SerializeField] private LayerMask pogoDetectionLayer = 256; // Layer mask for raycast detection (Layer 8 = "PoggableAreas")
 
     CharacterController characterController;
 
@@ -103,6 +114,16 @@ public class PlayerPhysicsController : MonoBehaviour
     //ForCollisionDetection
     private bool isInTheRamp;
     private bool isInInertiaCharger;
+    
+    //For Pogo
+    private bool isPogoActive = false;
+    private float lastPogoTime = 0f;
+    private int consecutivePogos = 0;
+    
+    /// <summary>
+    /// Converts degrees to dot product threshold for FOV detection.
+    /// </summary>
+    private float PogoDetectionAngleDotProduct => Mathf.Cos(pogoDetectionAngleDegrees * Mathf.Deg2Rad);
 
 
     private void Awake()
@@ -140,6 +161,7 @@ public class PlayerPhysicsController : MonoBehaviour
         {
             HandleJump();
             HandleDash();
+            CheckForPogo();
 
             HandleMouseInput();
 
@@ -238,6 +260,13 @@ public class PlayerPhysicsController : MonoBehaviour
         if (isInFloor && gravityVector.y < 0) //Si estoy en el piso disminuyo la gravedad
         {
             gravityVector.y = wallSlideGravity;
+            
+            // Reset momentum system when touching ground
+            if (consecutivePogos > 0)
+            {
+                consecutivePogos = 0;
+                Debug.Log("Momentum reset - touched ground");
+            }
         }
 
         if (Input.GetButtonDown("Jump") && isInFloor) //Si estoy en el piso y salto, aplico un impulso para arriba
@@ -269,14 +298,13 @@ public class PlayerPhysicsController : MonoBehaviour
     }
 
     /// <summary>
-    /// Handles dash input and execution. Allows the player to dash forward when moving.
+    /// Handles dash input and execution. Allows the player to dash in camera direction.
     /// Includes cooldown management to prevent spam dashing. Now uses DOTween for better performance.
     /// </summary>
-    private void HandleDash() //Dash para adelante apretando el shift, no esta del todo terminado
+    private void HandleDash() //Dash en dirección de la cámara apretando el shift
     {
         float CD = 1F;
-        if (Time.time > dashCD &&
-            Input.GetButtonDown("Fire3") && (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)) // si presiono dash y me estoy moviendo, realizalo
+        if (Time.time > dashCD && Input.GetButtonDown("Fire3")) // Solo requiere presionar el botón
         {
             _MC_.PlayerIsDashing();
             ExecuteDash();
@@ -286,14 +314,18 @@ public class PlayerPhysicsController : MonoBehaviour
     
     /// <summary>
     /// Executes dash movement using DOTween for smooth and performant animation.
+    /// Dash always goes in the direction the player is looking (camera direction).
     /// </summary>
     private void ExecuteDash()
     {
         // Kill any existing dash tween
         dashTween?.Kill();
         
+        // Get camera forward direction (where player is looking)
+        Vector3 dashDirection = mainCamera.transform.forward;
+        
         // Calculate dash target position
-        Vector3 dashTarget = transform.position + move * dashSpeed * dashTime;
+        Vector3 dashTarget = transform.position + dashDirection * dashSpeed * dashTime;
         
         // Create smooth dash animation
         dashTween = transform.DOMove(dashTarget, dashTime)
@@ -305,6 +337,156 @@ public class PlayerPhysicsController : MonoBehaviour
                 Vector3 movement = (nextPos - currentPos).normalized * dashSpeed * Time.deltaTime;
                 characterController.Move(movement);
             });
+    }
+    
+    /// <summary>
+    /// Checks for pogo opportunities when dashing towards poggable elements.
+    /// Uses OverlapSphere to detect elements with "PoggableElement" tag within camera field of view.
+    /// Now uses a wide field of view for easier pogo activation.
+    /// </summary>
+    private void CheckForPogo()
+    {
+        // Only check for pogo if we're actively dashing (dashTween is active)
+        if (isPogoActive || dashTween == null || !dashTween.IsActive()) return;
+        
+        // Get camera forward direction (where player is looking)
+        Vector3 cameraForward = mainCamera.transform.forward;
+        cameraForward.y = 0; // Only horizontal direction
+        cameraForward = cameraForward.normalized;
+        
+        // Find all poggable elements within detection range
+        Collider[] poggableElements = Physics.OverlapSphere(transform.position, pogoDetectionRange, pogoDetectionLayer);
+        
+        Transform bestElement = null;
+        float bestScore = -1f;
+        
+        foreach (Collider element in poggableElements)
+        {
+            if (element.CompareTag("PoggableElement"))
+            {
+                // Calculate direction from player to poggable element
+                Vector3 directionToElement = (element.transform.position - transform.position).normalized;
+                
+                // Calculate angle between camera direction and element direction
+                float dotProduct = Vector3.Dot(cameraForward, directionToElement);
+                
+                // Wide field of view detection - covers most of what the player can see
+                // Uses configurable angle in degrees converted to dot product threshold
+                if (dotProduct > PogoDetectionAngleDotProduct)
+                {
+                    // Calculate distance score (closer elements get higher score)
+                    float distance = Vector3.Distance(transform.position, element.transform.position);
+                    float distanceScore = 1f - (distance / pogoDetectionRange);
+                    
+                    // Calculate angle score (elements more centered get higher score)
+                    float angleScore = dotProduct; // Use dot product directly as angle score
+                    
+                    // Combined score (weighted towards angle for better feel)
+                    float totalScore = (angleScore * 0.6f) + (distanceScore * 0.4f);
+                    
+                    if (totalScore > bestScore)
+                    {
+                        bestScore = totalScore;
+                        bestElement = element.transform;
+                    }
+                }
+            }
+        }
+        
+        // Execute pogo with the best element found
+        if (bestElement != null)
+        {
+            ExecutePogo(cameraForward);
+        }
+    }
+    
+    /// <summary>
+    /// Executes pogo bounce using a fixed angle of 60 degrees upward.
+    /// Always bounces at the same angle regardless of element position or dash direction.
+    /// Now includes momentum system for consecutive pogos.
+    /// </summary>
+    private void ExecutePogo(Vector3 dashDirection)
+    {
+        if (isPogoActive) return;
+        
+        isPogoActive = true;
+        
+        // Kill any existing dash before applying pogo
+        dashTween?.Kill();
+        
+        // Stop all horizontal movement immediately to prevent delay effect
+        characterController.Move(Vector3.zero);
+        
+        // MOMENTUM SYSTEM: Always increment consecutive pogos (only resets when touching ground)
+        consecutivePogos++;
+        
+        // Calculate momentum multiplier for consecutive pogos
+        float momentumMultiplier = 1f;
+        if (consecutivePogos > 1)
+        {
+            // Apply exponential boost: base_multiplier ^ (consecutive_pogos - 1)
+            momentumMultiplier = Mathf.Pow(pogoConsecutiveMultiplier, consecutivePogos - 1);
+        }
+        
+        // Create bounce direction with fixed angle
+        Vector3 bounceDirection = dashDirection; // Start with dash direction for horizontal component
+        bounceDirection.y = 0; // Reset Y to 0 first
+        
+        // Apply fixed bounce angle (60 degrees upward)
+        float angleInRadians = pogoFixedAngle * Mathf.Deg2Rad;
+        bounceDirection.y = Mathf.Tan(angleInRadians) * bounceDirection.magnitude;
+        
+        // Normalize the direction
+        bounceDirection = bounceDirection.normalized;
+        
+        // Apply direction multiplier to the entire bounce direction
+        bounceDirection *= pogoDirectionMultiplier;
+        
+        // Calculate pogo force with momentum multiplier
+        float pogoForce = dashSpeed * pogoForceMultiplier * momentumMultiplier;
+        float pogoDuration = dashTime * pogoDurationMultiplier;
+        
+        // Debug log for momentum system
+        if (consecutivePogos > 1)
+        {
+            Debug.Log($"Consecutive Pogo #{consecutivePogos}! Force multiplier: {momentumMultiplier:F2}x");
+        }
+        
+        // Use existing ExecuteThrowPlayer method
+        ExecuteThrowPlayer(bounceDirection, pogoForce, pogoDuration);
+        
+        // Reset abilities on successful pogo
+        ResetAbilitiesOnPogo();
+        
+        // Record the time of this pogo for momentum system
+        lastPogoTime = Time.time;
+        
+        // Reset pogo active after duration
+        StartCoroutine(ResetPogoActive(pogoDuration + 0.5f));
+    }
+    
+    /// <summary>
+    /// Resets pogo active state after a delay.
+    /// </summary>
+    private System.Collections.IEnumerator ResetPogoActive(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        isPogoActive = false;
+    }
+    
+    
+    /// <summary>
+    /// Resets dash cooldown and double jump when pogo is successful.
+    /// </summary>
+    private void ResetAbilitiesOnPogo()
+    {
+        // Reset dash cooldown
+        dashCD = 0f;
+        
+        // Reset double jump
+        doubleJump = true;
+        
+        Debug.Log("Pogo successful! Dash and double jump reset.");
     }
 
 
@@ -623,6 +805,138 @@ public class PlayerPhysicsController : MonoBehaviour
         throwTween?.Kill();
         fovTween?.Kill();
         cameraTiltTween?.Kill();
+    }
+
+    /// <summary>
+    /// Draws gizmos to visualize pogo detection ranges and mechanics.
+    /// Shows detection sphere, field of view cone, bounce direction, and momentum visualization.
+    /// Only visible in Scene View when object is selected.
+    /// </summary>
+    private void OnDrawGizmosSelected()
+    {
+        if (mainCamera == null) return;
+        
+        // 1. Pogo Detection Range Sphere
+        Gizmos.color = new Color(0f, 1f, 0f, 0.3f); // Semi-transparent green
+        Gizmos.DrawSphere(transform.position, pogoDetectionRange);
+        
+        // 2. Pogo Detection Range Wireframe
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, pogoDetectionRange);
+        
+        // 3. Camera Direction and Field of View Cone
+        Vector3 cameraForward = mainCamera.transform.forward;
+        cameraForward.y = 0; // Only horizontal direction
+        cameraForward = cameraForward.normalized;
+        
+        // Draw camera direction line
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(transform.position, transform.position + cameraForward * pogoDetectionRange);
+        
+        // Draw field of view cone (based on configurable angle in degrees)
+        // Use the angle directly since it's already in degrees
+        float fovAngle = pogoDetectionAngleDegrees;
+        float halfFov = fovAngle * 0.5f;
+        float coneLength = pogoDetectionRange;
+        
+        // Left edge of FOV cone
+        Vector3 leftEdge = Quaternion.AngleAxis(-halfFov, Vector3.up) * cameraForward;
+        Gizmos.color = new Color(0f, 0f, 1f, 0.5f);
+        Gizmos.DrawLine(transform.position, transform.position + leftEdge * coneLength);
+        
+        // Right edge of FOV cone
+        Vector3 rightEdge = Quaternion.AngleAxis(halfFov, Vector3.up) * cameraForward;
+        Gizmos.DrawLine(transform.position, transform.position + rightEdge * coneLength);
+        
+        // Arc to show FOV cone
+        DrawFOVArc(transform.position, cameraForward, halfFov, coneLength, 20);
+        
+        // 4. Pogo Bounce Direction Visualization (when dashing)
+        if (dashTween != null && dashTween.IsActive())
+        {
+            // Calculate bounce direction with fixed angle
+            Vector3 bounceDirection = cameraForward;
+            bounceDirection.y = 0;
+            float angleInRadians = pogoFixedAngle * Mathf.Deg2Rad;
+            bounceDirection.y = Mathf.Tan(angleInRadians) * bounceDirection.magnitude;
+            bounceDirection = bounceDirection.normalized;
+            bounceDirection *= pogoDirectionMultiplier;
+            
+            // Draw bounce direction
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(transform.position, transform.position + bounceDirection * 3f);
+            
+            // Draw bounce angle indicator
+            Gizmos.color = new Color(1f, 0f, 0f, 0.3f);
+            Vector3 bounceStart = transform.position;
+            Vector3 bounceEnd = transform.position + bounceDirection * 3f;
+            Vector3 bounceUp = Vector3.up * 2f;
+            Gizmos.DrawLine(bounceStart, bounceStart + bounceUp);
+            Gizmos.DrawLine(bounceStart + bounceUp, bounceEnd);
+        }
+        
+        // 5. Consecutive Pogo Momentum Visualization
+        if (consecutivePogos > 0)
+        {
+            // Draw momentum indicator
+            float momentumSize = 0.5f + (consecutivePogos * 0.2f);
+            Gizmos.color = new Color(1f, 1f, 0f, 0.8f); // Yellow for momentum
+            Gizmos.DrawWireSphere(transform.position + Vector3.up * 2f, momentumSize);
+            
+            // Draw momentum text (this won't show in scene view, but helps with debugging)
+            #if UNITY_EDITOR
+            UnityEditor.Handles.Label(transform.position + Vector3.up * 3f, $"Momentum: {consecutivePogos}x");
+            #endif
+        }
+        
+        // 6. Poggable Elements Detection Visualization
+        Collider[] poggableElements = Physics.OverlapSphere(transform.position, pogoDetectionRange, pogoDetectionLayer);
+        foreach (Collider element in poggableElements)
+        {
+            if (element.CompareTag("PoggableElement"))
+            {
+                // Calculate direction from player to poggable element
+                Vector3 directionToElement = (element.transform.position - transform.position).normalized;
+                
+                // Calculate angle between camera direction and element direction
+                float dotProduct = Vector3.Dot(cameraForward, directionToElement);
+                
+                // Color based on whether it's in FOV
+                if (dotProduct > PogoDetectionAngleDotProduct)
+                {
+                    Gizmos.color = Color.green; // In FOV
+                }
+                else
+                {
+                    Gizmos.color = Color.gray; // Out of FOV
+                }
+                
+                // Draw line to poggable element
+                Gizmos.DrawLine(transform.position, element.transform.position);
+                
+                // Draw small sphere at element position
+                Gizmos.DrawWireSphere(element.transform.position, 0.3f);
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Helper method to draw FOV arc for better visualization.
+    /// </summary>
+    private void DrawFOVArc(Vector3 center, Vector3 forward, float halfAngle, float radius, int segments)
+    {
+        Gizmos.color = new Color(0f, 0f, 1f, 0.3f);
+        
+        Vector3 previousPoint = center + Quaternion.AngleAxis(-halfAngle, Vector3.up) * forward * radius;
+        
+        for (int i = 1; i <= segments; i++)
+        {
+            float angle = -halfAngle + (halfAngle * 2f * i / segments);
+            Vector3 currentPoint = center + Quaternion.AngleAxis(angle, Vector3.up) * forward * radius;
+            
+            Gizmos.DrawLine(previousPoint, currentPoint);
+            previousPoint = currentPoint;
+        }
     }
 
 }

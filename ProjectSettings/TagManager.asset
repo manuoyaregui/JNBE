@@ -18,6 +18,7 @@ TagManager:
   - FallingFloor
   - tutorialFinished
   - HUD
+  - PoggableElement
   layers:
   - Default
   - TransparentFX
@@ -37,7 +38,7 @@ TagManager:
   - TutorialDieZone
   - Particles
   - PlayerIgnoreCollision
-  - 
+  - PoggableAreas
   - 
   - 
   - 

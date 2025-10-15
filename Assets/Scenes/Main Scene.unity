@@ -218,7 +218,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 1257174689670600832}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9fa4b28c6f48ae245826b1e114cf3e6a, type: 3}
   m_Name: 
@@ -3681,6 +3681,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2180476892401515153}
     - target: {fileID: 94533012197369171, guid: 86853763df4f20445b3ee739ec33c00d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 94533012197369171, guid: 86853763df4f20445b3ee739ec33c00d, type: 3}
       propertyPath: playerGameObject
       value: 
       objectReference: {fileID: 2180476892401515152}
@@ -4497,7 +4501,7 @@ PrefabInstance:
       objectReference: {fileID: 595823366}
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: levelStartPoint
@@ -4506,11 +4510,11 @@ PrefabInstance:
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: allTheGameBlocks.Array.data[0]
       value: 
-      objectReference: {fileID: 251853890602171151, guid: 55b07c7466c7ade4db3a43490762c964, type: 3}
+      objectReference: {fileID: 8263516156888644900, guid: 56036a9157d583a40b72ce05d16a4872, type: 3}
     - target: {fileID: 1257174691013452305, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: allTheGameBlocks.Array.data[1]
       value: 
-      objectReference: {fileID: 251853890602171151, guid: 55b07c7466c7ade4db3a43490762c964, type: 3}
+      objectReference: {fileID: 8263516156888644900, guid: 56036a9157d583a40b72ce05d16a4872, type: 3}
     - target: {fileID: 1257174691013452306, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: Loop
       value: 0
@@ -4525,7 +4529,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3816565183444507725, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3816565183444507725, guid: 1a83da31b431e78448dc4a8539d5aaab, type: 3}
       propertyPath: levelStartPoint
@@ -5117,12 +5121,48 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6134612531608967331, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: minimumAngle
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134612531608967331, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: pogoUpwardForce
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134612531608967331, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
       propertyPath: inertiaLerpSpeed
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6134612531608967331, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: pogoDetectionRange
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134612531608967331, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: pogoSpeedThreshold
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134612531608967331, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
       propertyPath: inertiaIncreaseRate
       value: 0.0025
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134612531608967331, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: pogoForceMultiplier
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134612531608967331, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: pogoDurationMultiplier
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134612531608967331, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: pogoDirectionMultiplier
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134612531608967331, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: pogoHorizontalReflection
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6134612531608967331, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
+      propertyPath: pogoDetectionLayer.m_Bits
+      value: 262144
       objectReference: {fileID: 0}
     - target: {fileID: 6808182596173768346, guid: 4a5a6fdc0d66dd54bb8fcb4ea561a689, type: 3}
       propertyPath: m_Layer
