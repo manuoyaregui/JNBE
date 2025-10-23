@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] Animator pistolAnim;
     [SerializeField] Animator shotgunAnim;
+    [SerializeField] Animator playerModelAnim;
 
     //eventos
     public static event Action<int> onLivesChange;
@@ -188,6 +189,12 @@ public class PlayerController : MonoBehaviour
 
         pistolAnim.SetBool("isDashing", true);
         shotgunAnim.SetBool("isDashing", true);
+        
+        // Controlar la animación del modelo del jugador
+        if (playerModelAnim != null)
+        {
+            playerModelAnim.SetBool("isDashing", true);
+        }
     }
 
     public void PlayerGotAShield()
@@ -203,6 +210,21 @@ public class PlayerController : MonoBehaviour
     public void ExtraBulletsPS()
     {
         _particles.ExtraBulletParticles();
+    }
+
+    /// <summary>
+    /// Resetea la animación de dash en todos los animadores
+    /// </summary>
+    public void StopDashAnimation()
+    {
+        pistolAnim.SetBool("isDashing", false);
+        shotgunAnim.SetBool("isDashing", false);
+        
+        // Resetear la animación del modelo del jugador
+        if (playerModelAnim != null)
+        {
+            playerModelAnim.SetBool("isDashing", false);
+        }
     }
 
 

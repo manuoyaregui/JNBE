@@ -7,7 +7,7 @@ public class ShootWeapon : MonoBehaviour
 {
     public Weapon GunSettings;
     [SerializeField] protected Transform barrel; //de donde salen las balas?
-    [SerializeField] protected GameObject ammo;  //qué balas usa?
+    [SerializeField] protected GameObject ammo;  //quï¿½ balas usa?
     [SerializeField] protected GameObject impactEffect;
     protected float rps; // Rondas por segundo del arma
     protected float timeBwShots; // Tiempo entre disparos
@@ -50,9 +50,11 @@ public class ShootWeapon : MonoBehaviour
 
             if (!GameManager.singletonGameManager.isInCinematic
                 &&
-                player.GetComponent<PlayerController>().isAlive //si está vivo
+                player.GetComponent<PlayerController>().isAlive //si estÃ¡ vivo
                 &&
-                bulletsRemaining > 0) //y tiene al menos una bala
+                bulletsRemaining > 0 //y tiene al menos una bala
+                &&
+                !GameManager.singletonGameManager.IsPlayerShootingDisabled()) //y los disparos no estÃ¡n desactivados
             {
                 FireWeapon(); // puede disparar el arma
             }
@@ -65,7 +67,9 @@ public class ShootWeapon : MonoBehaviour
                &&
                Input.GetButtonDown("Fire1")
                &&
-               !GameManager.singletonGameManager.isInCinematic)
+               !GameManager.singletonGameManager.isInCinematic
+               &&
+               !GameManager.singletonGameManager.IsPlayerShootingDisabled())
             {
                 SfxManager._sfxManager.PlaySoundEffect(emptyMagazineClip);
             }
@@ -75,7 +79,7 @@ public class ShootWeapon : MonoBehaviour
     protected virtual bool FireWeapon()
     {
 
-        if (bulletsRemaining > 0 && Time.time > shootTime && Input.GetButtonDown("Fire1")) //Si el tiempo es mayor al tiempo de disparo
+        if (bulletsRemaining > 0 && Time.time > shootTime && Input.GetButtonDown("Fire1") && !GameManager.singletonGameManager.IsPlayerShootingDisabled()) //Si el tiempo es mayor al tiempo de disparo
         {
             anim.SetBool("isShoot", true);
             SfxManager._sfxManager.PlaySoundEffect(shootClip);
@@ -102,7 +106,7 @@ public class ShootWeapon : MonoBehaviour
         else
         {
             anim.SetBool("isShoot", false);
-            if(bulletsRemaining <= 0 && Input.GetButtonDown("Fire1"))
+            if(bulletsRemaining <= 0 && Input.GetButtonDown("Fire1") && !GameManager.singletonGameManager.IsPlayerShootingDisabled())
             {
                 SfxManager._sfxManager.PlaySoundEffect(emptyMagazineClip);
             }

@@ -337,6 +337,10 @@ public class PlayerPhysicsController : MonoBehaviour
                 Vector3 nextPos = dashTarget;
                 Vector3 movement = (nextPos - currentPos).normalized * dashSpeed * Time.deltaTime;
                 characterController.Move(movement);
+            })
+            .OnComplete(() => {
+                // Resetear la animación de dash cuando termine
+                _MC_.StopDashAnimation();
             });
     }
     
@@ -414,6 +418,9 @@ public class PlayerPhysicsController : MonoBehaviour
         
         // Kill any existing dash before applying pogo
         dashTween?.Kill();
+        
+        // Resetear la animación de dash cuando se ejecuta pogo
+        _MC_.StopDashAnimation();
         
         // Stop all horizontal movement immediately to prevent delay effect
         characterController.Move(Vector3.zero);

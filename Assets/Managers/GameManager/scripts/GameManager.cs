@@ -21,6 +21,9 @@ public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para
     [NonSerialized] public int coinsGrabbed;
     [NonSerialized] public bool isInCinematic = true;
     [NonSerialized] public bool isTutorialFinished;
+    
+    [Header("Debug Settings")]
+    [SerializeField] private bool disablePlayerShooting = false;
 
     [SerializeField] AudioClip onOneCoinGrabbedSfx;
     [SerializeField] AudioClip onALotOfCoinsGrabbedSfx;
@@ -184,5 +187,14 @@ public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para
     public void SceneIsGoingToReset()
     {
         _postProcc_.resetMaterials();
+    }
+    
+    /// <summary>
+    /// Verifica si los disparos del jugador están desactivados
+    /// </summary>
+    /// <returns>True si los disparos están desactivados, false si están activos</returns>
+    public bool IsPlayerShootingDisabled()
+    {
+        return disablePlayerShooting;
     }
 }
