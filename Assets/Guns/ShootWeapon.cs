@@ -150,9 +150,4 @@ public class ShootWeapon : MonoBehaviour
     {
         shootParticles.Pause();
     }
-
-    public void StopDashAnim()
-    {
-        anim.SetBool("isDashing", false);
-    }
 }

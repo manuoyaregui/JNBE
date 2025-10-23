@@ -183,17 +183,48 @@ public class PlayerController : MonoBehaviour
     }
     public void PlayerIsDashing()
     {
+        Debug.Log("PlayerIsDashing called");
+        
         _particles.DashParticles();
 
         _sounds.dash();
 
-        pistolAnim.SetBool("isDashing", true);
-        shotgunAnim.SetBool("isDashing", true);
+        // Asegurar que los animadores de las armas estén asignados y establecer el parámetro
+        if (pistolAnim != null)
+        {
+            Debug.Log("Setting pistolAnim isDashing to true");
+            pistolAnim.SetBool("isDashing", true);
+            // Forzar la actualización del animador
+            pistolAnim.Update(0);
+        }
+        else
+        {
+            Debug.LogWarning("pistolAnim is null! Make sure to assign it in the inspector.");
+        }
+        
+        if (shotgunAnim != null)
+        {
+            Debug.Log("Setting shotgunAnim isDashing to true");
+            shotgunAnim.SetBool("isDashing", true);
+            // Forzar la actualización del animador
+            shotgunAnim.Update(0);
+        }
+        else
+        {
+            Debug.LogWarning("shotgunAnim is null! Make sure to assign it in the inspector.");
+        }
         
         // Controlar la animación del modelo del jugador
         if (playerModelAnim != null)
         {
+            Debug.Log("Setting playerModelAnim isDashing to true");
             playerModelAnim.SetBool("isDashing", true);
+            // Forzar la actualización del animador
+            playerModelAnim.Update(0);
+        }
+        else
+        {
+            Debug.LogWarning("playerModelAnim is null! Make sure to assign it in the inspector.");
         }
     }
 
@@ -217,13 +248,44 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void StopDashAnimation()
     {
-        pistolAnim.SetBool("isDashing", false);
-        shotgunAnim.SetBool("isDashing", false);
+        Debug.Log("StopDashAnimation called");
+        
+        // Resetear animadores de las armas
+        if (pistolAnim != null)
+        {
+            Debug.Log("Setting pistolAnim isDashing to false");
+            pistolAnim.SetBool("isDashing", false);
+            // Forzar la actualización del animador
+            pistolAnim.Update(0);
+        }
+        else
+        {
+            Debug.LogWarning("pistolAnim is null in StopDashAnimation!");
+        }
+        
+        if (shotgunAnim != null)
+        {
+            Debug.Log("Setting shotgunAnim isDashing to false");
+            shotgunAnim.SetBool("isDashing", false);
+            // Forzar la actualización del animador
+            shotgunAnim.Update(0);
+        }
+        else
+        {
+            Debug.LogWarning("shotgunAnim is null in StopDashAnimation!");
+        }
         
         // Resetear la animación del modelo del jugador
         if (playerModelAnim != null)
         {
+            Debug.Log("Setting playerModelAnim isDashing to false");
             playerModelAnim.SetBool("isDashing", false);
+            // Forzar la actualización del animador
+            playerModelAnim.Update(0);
+        }
+        else
+        {
+            Debug.LogWarning("playerModelAnim is null in StopDashAnimation!");
         }
     }
 
