@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para
     public static bool isPaused=false;
 
     [NonSerialized] public int coinsGrabbed;
-    [NonSerialized] public bool isInCinematic = true;
+    [SerializeField] public bool isInCinematic = true; // Si está en true, bloquea el movimiento del player. Cambiar a false para permitir movimiento.
     [NonSerialized] public bool isTutorialFinished;
     
     [Header("Debug Settings")]
@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para
         UnPauseTheGame();
         singletonGameManager = this;
         _sfx_ = SfxManager._sfxManager;
-        _hud = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDController>();
+        _hud = GameObject.FindGameObjectWithTag("HUD")?.GetComponent<HUDController>();
         _playerController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         
         // Asegurar que el cursor esté bloqueado al inicio del juego
@@ -166,7 +166,10 @@ public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para
         {
             _hud.addScoreValue(scoreValue);
         }
-        else Debug.Log("there is no HUD in the game");
+        else
+        {
+            Debug.LogWarning("HUD not found! Score was not added. Make sure there's a GameObject with 'HUD' tag in the scene.");
+        }
     }
 
 
@@ -181,7 +184,14 @@ public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para
         int previousCoins = PlayerPrefs.GetInt("ppCoins", 0);
         PlayerPrefs.SetInt("ppCoins", previousCoins + coinsGrabbed);
 
-        _hud.OnDeathHandler();
+        if (_hud != null)
+        {
+            _hud.OnDeathHandler();
+        }
+        else
+        {
+            Debug.LogWarning("HUD not found! OnDeathHandler() was not called. Make sure there's a GameObject with 'HUD' tag in the scene.");
+        }
     }
 
     public void SceneIsGoingToReset()
