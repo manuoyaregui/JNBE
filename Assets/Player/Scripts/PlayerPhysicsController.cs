@@ -9,6 +9,18 @@ using UnityEditor;
 #endif
 
 /// <summary>
+/// Tipos de superficie detectados por el sistema de colisiones inteligente
+/// </summary>
+public enum SurfaceType
+{
+    None,       // No hay superficie detectada
+    Floor,      // Superficie horizontal (piso)
+    Wall,       // Superficie vertical (pared)
+    Ceiling,    // Superficie superior
+    Slope       // Superficie inclinada (entre piso y pared)
+}
+
+/// <summary>
 /// Handles all physics-related behavior for the player including movement, jumping, dashing,
 /// wall detection, camera controls, and inertia system. This is the core physics controller
 /// that manages player movement and environmental interactions.
@@ -18,10 +30,11 @@ public class PlayerPhysicsController : MonoBehaviour
     PlayerController _MC_;
 
 
-    [Header("Layer Detections")]
-    [SerializeField] LayerMask floor; // capas para reconocer qu� cosa es pared y qu� cosa es piso
-    [SerializeField] LayerMask wall;
-    [SerializeField] LayerMask inertiaChargerLayer;
+    [Header("Collision Detection")]
+    [SerializeField] LayerMask collisionLayers = -1; // Todas las capas por defecto
+    [SerializeField] private float floorAngleThreshold = 45f; // Ángulo máximo para considerar superficie como piso (en grados)
+    [SerializeField] private float wallAngleThreshold = 15f; // Ángulo máximo para considerar superficie como pared (en grados)
+    [SerializeField] private LayerMask inertiaChargerLayer; // Mantener para elementos especiales
 
     [Header("RaycastReferences")]
     [SerializeField] GameObject GunCamera; //Camara aparte con las armas
@@ -46,6 +59,9 @@ public class PlayerPhysicsController : MonoBehaviour
     [SerializeField] private float maxFOV = 80f;
     [SerializeField] private float normalFOV = 65f;
     [SerializeField] private float inertiaLerpSpeed = 3f;
+    
+    [Header("Debug Controls")]
+    [SerializeField] private bool useWASDControl = false; // Activa controles WASD en lugar de movimiento automático
     
     [Header("Pogo Mechanics")]
     [SerializeField] private float pogoDetectionRange = 6f; // Raycast distance for detecting poggable elements
@@ -84,6 +100,11 @@ public class PlayerPhysicsController : MonoBehaviour
     private bool isInWall;
     private bool isInWallLeft;
     private bool isInWallRight;
+    
+    //For Smart Collision Detection
+    private SurfaceType currentSurfaceType = SurfaceType.None;
+    private Vector3 currentSurfaceNormal = Vector3.up;
+    private float currentSurfaceAngle = 0f;
 
     //For Camera
     float mouseSensibility;
@@ -196,14 +217,39 @@ public class PlayerPhysicsController : MonoBehaviour
     /// Player always moves forward automatically in the direction they are looking.
     /// No manual movement controls - only camera direction controls movement.
     /// Forward movement is multiplied by inertia for enhanced speed when airborne.
+    /// Debug mode: Can toggle between automatic forward movement and WASD controls.
     /// </summary>
     private void HandleMovement() //Movimiento del personaje
     {
-        // Player always moves forward automatically (no input controls)
-        float moveZ = 1.0f; // Always forward movement
-
-        move = transform.forward * moveZ * inertia; //Solo movimiento hacia adelante multiplicado por inercia
-
+        Vector3 inputDirection = Vector3.zero;
+        
+        if (useWASDControl)
+        {
+            // Manual WASD controls
+            float moveX = Input.GetAxis("Horizontal"); // A/D
+            float moveZ = Input.GetAxis("Vertical");   // W/S
+            
+            // Calculate movement direction relative to camera
+            Vector3 cameraForward = camera.transform.forward;
+            Vector3 cameraRight = camera.transform.right;
+            
+            // Flatten the vectors to the ground plane
+            cameraForward.y = 0;
+            cameraRight.y = 0;
+            
+            cameraForward = cameraForward.normalized;
+            cameraRight = cameraRight.normalized;
+            
+            inputDirection = (cameraForward * moveZ + cameraRight * moveX).normalized;
+        }
+        else
+        {
+            // Automatic forward movement (original behavior)
+            inputDirection = transform.forward;
+        }
+        
+        move = inputDirection * inertia; // Movimiento multiplicado por inercia
+        
         characterController.Move(moveSpeed * Time.deltaTime * move); // Aplico el vector move en el character controller
     }
 
@@ -252,13 +298,21 @@ public class PlayerPhysicsController : MonoBehaviour
 
     /// <summary>
     /// Handles all jump-related input and physics including ground jumping, wall jumping, and double jumping.
-    /// Manages jump state and applies appropriate vertical forces based on current player state.
+    /// Now uses intelligent surface detection based on surface angles instead of layer masks.
     /// </summary>
     private void HandleJump()
     {
-        isInFloor = Physics.CheckSphere(footPoint.transform.position, groundCheckRadius, floor); // Una espera que controla colicion con el piso
+        // Detectar superficie usando el nuevo sistema inteligente
+        DetectSurface();
+        
+        // Determinar si estamos en una superficie válida para saltar
+        bool canJumpFromSurface = currentSurfaceType == SurfaceType.Floor || 
+                                 currentSurfaceType == SurfaceType.Slope ||
+                                 currentSurfaceType == SurfaceType.Wall ||
+                                 isInInertiaCharger;
 
-        if (isInFloor && gravityVector.y < 0) //Si estoy en el piso disminuyo la gravedad
+        // Aplicar gravedad reducida cuando estamos en una superficie horizontal
+        if ((currentSurfaceType == SurfaceType.Floor || currentSurfaceType == SurfaceType.Slope) && gravityVector.y < 0)
         {
             gravityVector.y = wallSlideGravity;
             
@@ -270,33 +324,155 @@ public class PlayerPhysicsController : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonDown("Jump") && isInFloor) //Si estoy en el piso y salto, aplico un impulso para arriba
+        // Salto desde piso o pendiente
+        if (Input.GetButtonDown("Jump") && (currentSurfaceType == SurfaceType.Floor || currentSurfaceType == SurfaceType.Slope))
         {
             _MC_.PlayerIsJumping();
             gravityVector.y = Mathf.Sqrt(jump * -2 * gravity);
             characterController.Move(gravityVector * Time.fixedDeltaTime);
         }
-        if (Input.GetButtonDown("Jump") && (isInWall || isInInertiaCharger)) //Si estoy en la pared y salto, aplico un impuso para arriba
+        
+        // Salto desde pared o cargador de inercia
+        if (Input.GetButtonDown("Jump") && (currentSurfaceType == SurfaceType.Wall || isInInertiaCharger))
         {
             _MC_.PlayerIsJumping();
             gravityVector.y = Mathf.Sqrt(jump * -2 * gravity);
             characterController.Move(gravityVector * Time.fixedDeltaTime);
         }
 
-        if (Input.GetButtonDown("Jump") && 
-            (isInFloor == false || isInWall == false || isInInertiaCharger == false) && 
-            doubleJump == true) //Para controlar el doble salto, si no estoy en el piso o la pared, y tengo el doble jump disponible aplico un impulso para arriba
+        // Doble salto
+        if (Input.GetButtonDown("Jump") && !canJumpFromSurface && doubleJump == true)
         {
             _MC_.PlayerIsDoubleJumping();
             gravityVector.y = Mathf.Sqrt(jump * -2 * gravity);
             characterController.Move(gravityVector * Time.fixedDeltaTime);
             doubleJump = false;
         }
-        if ((isInFloor == true || isInWall == true || isInInertiaCharger == true) && doubleJump == false) //Si estoy en la pared o el piso y me gaste el doble salto lo vuelvo a activar
+        
+        // Resetear doble salto cuando tocamos una superficie válida
+        if (canJumpFromSurface && doubleJump == false)
         {
             doubleJump = true;
         }
     }
+
+    /// <summary>
+    /// Sistema inteligente de detección de superficies basado en ángulos.
+    /// Elimina la dependencia de layers específicos y maneja casos complejos como bordes.
+    /// </summary>
+    private void DetectSurface()
+    {
+        // Detectar superficie debajo del player (para piso/pendiente)
+        DetectGroundSurface();
+        
+        // Detectar superficies laterales (para paredes)
+        DetectWallSurfaces();
+        
+        // Actualizar variables legacy para compatibilidad
+        UpdateLegacyVariables();
+    }
+    
+    /// <summary>
+    /// Detecta superficies debajo del player (piso, pendientes, techos)
+    /// </summary>
+    private void DetectGroundSurface()
+    {
+        RaycastHit hit;
+        Vector3 rayOrigin = footPoint.transform.position;
+        Vector3 rayDirection = Vector3.down;
+        
+        if (Physics.Raycast(rayOrigin, rayDirection, out hit, groundCheckRadius + 0.1f, collisionLayers))
+        {
+            currentSurfaceNormal = hit.normal;
+            currentSurfaceAngle = Vector3.Angle(Vector3.up, hit.normal);
+            
+            // Determinar tipo de superficie basado en el ángulo
+            if (currentSurfaceAngle <= floorAngleThreshold)
+            {
+                currentSurfaceType = SurfaceType.Floor;
+            }
+            else if (currentSurfaceAngle <= 90f - wallAngleThreshold)
+            {
+                currentSurfaceType = SurfaceType.Slope;
+            }
+            else if (currentSurfaceAngle <= 90f + wallAngleThreshold)
+            {
+                currentSurfaceType = SurfaceType.Wall;
+            }
+            else
+            {
+                currentSurfaceType = SurfaceType.Ceiling;
+            }
+        }
+        else
+        {
+            currentSurfaceType = SurfaceType.None;
+            currentSurfaceNormal = Vector3.up;
+            currentSurfaceAngle = 0f;
+        }
+    }
+    
+    /// <summary>
+    /// Detecta superficies laterales para determinar si estamos en una pared
+    /// </summary>
+    private void DetectWallSurfaces()
+    {
+        RaycastHit hitL, hitR;
+        bool leftWall = Physics.Raycast(wallPointL.transform.position, transform.TransformDirection(Vector3.left), 
+                                      out hitL, wallCheckDistance, collisionLayers);
+        bool rightWall = Physics.Raycast(wallPointR.transform.position, transform.TransformDirection(Vector3.right), 
+                                       out hitR, wallCheckDistance, collisionLayers);
+        
+        // Determinar qué pared estamos tocando
+        if (leftWall || rightWall)
+        {
+            // Si estamos tocando una pared lateral Y no hay superficie debajo, es una pared
+            if (currentSurfaceType == SurfaceType.None || currentSurfaceType == SurfaceType.Ceiling)
+            {
+                currentSurfaceType = SurfaceType.Wall;
+            }
+            // Si hay superficie debajo, usar sistema de prioridades
+            else if (currentSurfaceType == SurfaceType.Floor || currentSurfaceType == SurfaceType.Slope)
+            {
+                // Caso especial: estamos en un borde (tanto piso como pared)
+                // Priorizar el piso si el ángulo es menor al threshold
+                if (currentSurfaceAngle <= floorAngleThreshold)
+                {
+                    // Mantener como Floor, pero marcar que también hay pared
+                    isInWallLeft = leftWall;
+                    isInWallRight = rightWall;
+                    return;
+                }
+                else
+                {
+                    // Si el ángulo es mayor, tratarlo como pared
+                    currentSurfaceType = SurfaceType.Wall;
+                }
+            }
+        }
+        
+        isInWallLeft = leftWall;
+        isInWallRight = rightWall;
+    }
+    
+    /// <summary>
+    /// Actualiza las variables legacy para mantener compatibilidad con el código existente
+    /// </summary>
+    private void UpdateLegacyVariables()
+    {
+        // Actualizar isInFloor basado en el nuevo sistema
+        isInFloor = (currentSurfaceType == SurfaceType.Floor || currentSurfaceType == SurfaceType.Slope);
+        
+        // Actualizar isInWall basado en el nuevo sistema
+        isInWall = (currentSurfaceType == SurfaceType.Wall || isInWallLeft || isInWallRight);
+    }
+    
+    // Métodos públicos para obtener información sobre la superficie actual
+    public SurfaceType GetCurrentSurfaceType() => currentSurfaceType;
+    public Vector3 GetCurrentSurfaceNormal() => currentSurfaceNormal;
+    public float GetCurrentSurfaceAngle() => currentSurfaceAngle;
+    public bool IsOnWalkableSurface() => currentSurfaceType == SurfaceType.Floor || currentSurfaceType == SurfaceType.Slope;
+    public bool IsOnWallSurface() => currentSurfaceType == SurfaceType.Wall;
 
     /// <summary>
     /// Handles dash input and execution. Allows the player to dash in camera direction.
@@ -640,51 +816,14 @@ public class PlayerPhysicsController : MonoBehaviour
 
 
     /// <summary>
-    /// Detects wall collisions using raycasts from left and right wall points.
-    /// Optimized to run at intervals rather than every frame for better performance.
-    /// Updates wall state variables for camera tilt and movement systems.
+    /// Detects wall collisions using the new intelligent surface detection system.
+    /// Now integrated into DetectSurface() method for better performance and accuracy.
     /// </summary>
     private void WallDetection()
     {
-        // Only check walls at intervals to improve performance
-        if (Time.time - lastWallCheckTime < wallCheckInterval) return;
-        
-        RaycastHit hitL;
-        RaycastHit hitR;
-
-        //Raycast para detectar colision con la pared
-        if (
-            (Physics.Raycast(wallPointL.transform.position, transform.TransformDirection(Vector3.left), out hitL, wallCheckDistance, wall)) 
-            ||
-            Physics.Raycast(wallPointR.transform.position, transform.TransformDirection(Vector3.right), out hitR, wallCheckDistance, wall))
-        {
-            isInWall = true;
-        }
-        else
-        {
-            isInWall = false;
-        }
-
-        //En Qu� pared estoy? Izq o Der
-        if (Physics.Raycast(wallPointL.transform.position, transform.TransformDirection(Vector3.left), out hitL, wallCheckDistance, wall))
-        {
-            isInWallLeft = true;
-        }
-        else
-        {
-            isInWallLeft = false;
-        }
-
-        if (Physics.Raycast(wallPointR.transform.position, transform.TransformDirection(Vector3.right), out hitR, wallCheckDistance, wall))
-        {
-            isInWallRight = true;
-        }
-        else
-        {
-            isInWallRight = false;
-        }
-        
-        lastWallCheckTime = Time.time;
+        // El nuevo sistema de detección ya maneja las paredes en DetectSurface()
+        // Este método se mantiene para compatibilidad pero ahora es redundante
+        // La detección se hace en DetectWallSurfaces() dentro de DetectSurface()
     }
 
 
