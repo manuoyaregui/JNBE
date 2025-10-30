@@ -95,7 +95,7 @@ Material:
     m_Floats:
     - BOOLEAN_PREVENTSTARS: 1
     - Vector1_7d421ef4d57f45e586330be25bfb5941: 11
-    - Vector1_a770b768a8ca40a9b814a01444e6b850: 1.77
+    - Vector1_a770b768a8ca40a9b814a01444e6b850: 1.1
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -107,13 +107,13 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _FogContrast: 5
+    - _FogContrast: 1
     - _FogHeight: 1
-    - _FogPower: 1
+    - _FogPower: 0.5
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _HorizonHeight: 0.28
+    - _HorizonHeight: 0.478
     - _HorizonStrength: 1
     - _Metallic: 0
     - _OcclusionStrength: 1
@@ -137,9 +137,9 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HorizonColor: {r: 1, g: 0, b: 0.5152211, a: 1}
-    - _SkyColor: {r: 0.8182249, g: 0, b: 1, a: 1}
+    - _SkyColor: {r: 0.14578418, g: 0, b: 0.21698111, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
-    - _StarColor: {r: 1, g: 0.042452812, b: 0.042452812, a: 1}
+    - _StarColor: {r: 1, g: 0, b: 0, a: 1}
     - _SunColorOne: {r: 0.13621812, g: 1, b: 0.0141509175, a: 1}
-    - _SunColorTwo: {r: 0.50561714, g: 1, b: 0, a: 1}
+    - _SunColorTwo: {r: 0.03627451, g: 0, b: 0.05392157, a: 1}
   m_BuildTextureStacks: []
