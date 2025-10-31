@@ -1,0 +1,6 @@
+---
+alwaysApply: true
+---
+
+- Unity Version: 2020.3.19
+- Always look for solutions that works in the corresponding unity version of the proyect.
