@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: NeonOutlineMaterial
-  m_Shader: {fileID: -6465566751694194690, guid: 5de429d8808413245a63ef56c0ff902c, type: 3}
+  m_Name: NeonOutlineMaterial_Spherical
+  m_Shader: {fileID: -6465566751694194690, guid: a46a62a067cd24a43a590afb390e3bda, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
@@ -82,19 +82,22 @@ Material:
     - Vector1_1: 0
     - Vector1_115cff4912bf4f6e8618c0c91506af3d: 1
     - Vector1_27a65d4f48a3435883aea4e38c97dffb: 0
-    - Vector1_2ea770fc88bc4bef983f5ac1d3c8203f: 0
-    - Vector1_345ec60a51fe41159d7654dda813e6cc: 0
+    - Vector1_2ea770fc88bc4bef983f5ac1d3c8203f: 0.745
+    - Vector1_345ec60a51fe41159d7654dda813e6cc: 1
     - Vector1_3482d21f50894cc78fbb69e063e48b08: 0.001
     - Vector1_362f9bfe3e9f4ea6a096e3ce1d1d8806: 10
     - Vector1_3a9a794848ba4054ba2f511a3ddf734a: 0.002
     - Vector1_5238bb904b9d43bdaaa5f6cb9c0ce89d: 1
+    - Vector1_58a2e274d7054ebeb62daa8619cdbdf5: 2.05
     - Vector1_5fe7e85f8d9c4513a79bfd8e89478773: 1
     - Vector1_76f0158095ad40c6bf439f7bb68e9c14: 0.0017888
     - Vector1_8453211909fc48e7b75541647b25c19b: 1
     - Vector1_ba28dfeb12f347ab8ba337d56302da97: 100
+    - Vector1_be02545495454ee1837e370fc8746330: 1
     - Vector1_c3fb974c3b4b4d82bd3dde5931bac16b: 8
     - Vector1_c586045588f2453e9d7f4e8f76632eaf: 20
     - Vector1_d9e906dacd314b46a5b4ba81f0412668: 0.36
+    - Vector1_e1a7c1147b2f4172ab5f7f2c23f3450f: 1
     - Vector1_e200338a102844eebd5477ee6556e6e0: 10
     - Vector1_ee038d154e124227a354520fcb179588: 0
     - _AlphaClip: 0
@@ -124,12 +127,15 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_139c4f9fdaab4ae3abc4bbd9baad7349: {r: 0.70110214, g: 0.010329823, b: 0.2831488, a: 1}
     - Color_146f6d57688b4e60a506996e5e94b7ab: {r: 0, g: 4, b: 4, a: 1}
     - Color_176fa1cc99fa412f80ac46c1060ba0c5: {r: 0.6886792, g: 0.0032484946, b: 0.3167703, a: 1}
     - Color_215e86e8c8fb4b069f4f7a621d2afe86: {r: 0.003921569, g: 0.003921569, b: 0.003921569, a: 1}
+    - Color_24ca85f536404161a354440507a5b6ac: {r: 0.8549928, g: 0.5394797, b: 0.038204376, a: 1}
     - Color_6e53d195aaf54cbd9b82925cf694cd34: {r: 1.490566, g: 0, b: 1.490566, a: 1}
     - Color_7e7b1519b90e4467b9479306bdd1ea9e: {r: 0.8666667, g: 0.5647059, b: 0.03529412, a: 1}
     - Color_cd830b719f8447108cbb9362481f5db9: {r: 0, g: 0, b: 0, a: 1}
+    - Color_fb686245ae3a46d195ba3e0469ca2f6b: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
