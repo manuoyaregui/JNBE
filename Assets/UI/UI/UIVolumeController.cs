@@ -18,7 +18,6 @@ public class UIVolumeController : MonoBehaviour
         float volumeValue = volumeSlider.value;
         PlayerPrefs.SetFloat("VolumeValue", volumeValue);
         LoadValues();
-        Debug.Log("Volumen Guardado Correctamente");
     }
 
     public void LoadValues()

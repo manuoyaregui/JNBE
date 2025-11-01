@@ -19,7 +19,6 @@ public class UICameraSensibilityController : MonoBehaviour
         float sensivilityValue = sensibilitySlider.value;
         playerSettings.mouseSensibility = sensivilityValue;
         LoadValues();
-        Debug.Log("Sensibility Guardado Correctamente");
     }
 
     public void LoadValues()

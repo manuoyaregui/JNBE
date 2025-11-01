@@ -213,14 +213,6 @@ public class PlayerPhysicsController : MonoBehaviour
                     climbController.DetectClimbableEdge();
                 }
             }
-            else
-            {
-                // Log ocasional si climbController es null (solo una vez cada muchos frames)
-                if (Time.frameCount % 300 == 0)
-                {
-                    Debug.LogWarning("[PlayerPhysicsController] Update: climbController es null!");
-                }
-            }
         }
         
         // Surface detection always runs

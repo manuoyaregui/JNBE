@@ -48,8 +48,6 @@ public class ClimbController : MonoBehaviour
         playerController = playerCtrl;
         footPoint = footPointRef;
         climbableLayers = layers;
-        
-        Debug.Log($"[ClimbController] Setup completado - Layers: {climbableLayers}, Forward: {climbCheckForward}, Height: {climbUpHeight}");
     }
     
     /// <summary>
@@ -64,14 +62,12 @@ public class ClimbController : MonoBehaviour
             canClimbCooldown -= Time.deltaTime;
             if (canClimbCooldown <= 0f && canClimb)
             {
-                Debug.Log("[ClimbController] DetectClimbableEdge: Cooldown expirado, reseteando canClimb");
                 canClimb = false;
             }
         }
         
         if (characterController == null || footPoint == null || surfaceDetector == null)
         {
-            if (canClimb) Debug.Log("[ClimbController] DetectClimbableEdge: Componentes null");
             canClimb = false;
             canClimbCooldown = 0f;
             return;
@@ -85,7 +81,6 @@ public class ClimbController : MonoBehaviour
         {
             if (currentSurface == SurfaceType.Floor || currentSurface == SurfaceType.Slope)
             {
-                Debug.Log("[ClimbController] DetectClimbableEdge: En suelo, cancelando canClimb activo");
                 canClimb = false;
                 canClimbCooldown = 0f;
             }
@@ -109,7 +104,6 @@ public class ClimbController : MonoBehaviour
         if (isOnGround)
         {
             // Si está claramente en el suelo (no en el aire), no puede trepar
-            if (canClimb) Debug.Log($"[ClimbController] DetectClimbableEdge: En suelo/pendiente ({currentSurface}), gravity.y: {gravityVec.y}");
             canClimb = false;
             canClimbCooldown = 0f;
             return;
@@ -123,7 +117,6 @@ public class ClimbController : MonoBehaviour
         if (isMovingVeryFast)
         {
             // Si se mueve extremadamente rápido (saltos muy potentes o caídas muy rápidas), probablemente no está cerca de un borde
-            if (canClimb) Debug.Log($"[ClimbController] DetectClimbableEdge: Movimiento vertical muy rápido ({gravityVec.y}), puede no estar cerca del borde");
             // No bloquear completamente, solo advertir - dejar que la detección de pared decida
         }
         
@@ -142,36 +135,15 @@ public class ClimbController : MonoBehaviour
         // Usar el valor tal cual (sin limitar) - dejar que el usuario experimente
         float detectionHeight = playerHeight * climbDetectionHeightRatio;
         
-        // Log informativo si el ratio es muy alto o muy bajo (solo para ayudar a entender)
-        if (climbDetectionHeightRatio > 2f || climbDetectionHeightRatio < 0.1f)
-        {
-            if (Time.frameCount % 60 == 0) // Solo cada segundo aprox
-            {
-                Debug.Log($"[ClimbController] INFO: climbDetectionHeightRatio={climbDetectionHeightRatio} → detectando en altura={detectionHeight}m (jugador={playerHeight}m). Valores típicos: 0.5-1.0");
-            }
-        }
         float startHeight = -playerHeight * 0.4f + centerOffset; // Desde la parte baja del jugador
         float endHeight = playerHeight * 0.4f + centerOffset; // Hasta la parte alta
         
         // Usar el valor tal cual (sin limitar)
         float safeForward = climbCheckForward;
         
-        // Log informativo si la distancia es muy grande
-        if (climbCheckForward > 3f)
-        {
-            if (Time.frameCount % 60 == 0)
-            {
-                Debug.Log($"[ClimbController] INFO: climbCheckForward={climbCheckForward}m es muy grande. Puede detectar paredes lejanas que no son el borde que quieres trepar. Valores típicos: 0.3-1.0m");
-            }
-        }
         
         // Probar desde diferentes alturas a lo largo del cuerpo del jugador
         int numChecks = Mathf.Max(3, Mathf.RoundToInt(detectionHeight / 0.2f)); // Al menos 3 checks, uno cada ~0.2m
-        
-        if (Time.frameCount % 60 == 0 && numChecks > 20)
-        {
-            Debug.Log($"[ClimbController] INFO: Realizando {numChecks} raycasts (puede ser costoso). Altura detección: {detectionHeight}m, Ratio: {climbDetectionHeightRatio}");
-        }
         for (int i = 0; i <= numChecks; i++)
         {
             float heightOffset = Mathf.Lerp(startHeight, endHeight, (float)i / numChecks);
@@ -188,14 +160,12 @@ public class ClimbController : MonoBehaviour
                                safeForward, climbableLayers))
             {
                 wallDetected = true;
-                Debug.Log($"[ClimbController] DetectClimbableEdge: Pared detectada a altura relativa {heightOffset:F2}m (desde base), distancia: {wallHit.distance}, normal: {wallHit.normal}");
                 break;
             }
         }
         
         if (!wallDetected)
         {
-            if (canClimb) Debug.Log("[ClimbController] DetectClimbableEdge: No se detectó pared");
             canClimb = false;
             return;
         }
@@ -205,15 +175,12 @@ public class ClimbController : MonoBehaviour
         float wallAngle = Vector3.Angle(Vector3.up, wallHit.normal);
         if (wallAngle < 65f || wallAngle > 115f)
         {
-            if (canClimb && canClimbCooldown <= 0f) Debug.Log($"[ClimbController] DetectClimbableEdge: Ángulo de pared no válido ({wallAngle}°)");
             if (canClimbCooldown <= 0f)
             {
                 canClimb = false;
             }
             return;
         }
-        
-        Debug.Log($"[ClimbController] DetectClimbableEdge: Pared válida detectada - Ángulo: {wallAngle}°, Distancia: {wallHit.distance}m");
         
         // Verificar que haya espacio arriba para trepar
         Vector3 checkPosition = wallHit.point + wallHit.normal * 0.1f + Vector3.up * 0.2f;
@@ -227,7 +194,6 @@ public class ClimbController : MonoBehaviour
         
         if (hasCeiling)
         {
-            if (canClimb) Debug.Log($"[ClimbController] DetectClimbableEdge: Techo detectado a {ceilingHit.distance}m");
             canClimb = false;
             return;
         }
@@ -246,7 +212,6 @@ public class ClimbController : MonoBehaviour
         
         if (!hasPlatformTop)
         {
-            if (canClimb) Debug.Log("[ClimbController] DetectClimbableEdge: No se encontró piso de plataforma arriba");
             canClimb = false;
             return;
         }
@@ -255,12 +220,9 @@ public class ClimbController : MonoBehaviour
         float floorAngle = Vector3.Angle(Vector3.up, floorHit.normal);
         if (floorAngle > 30f)
         {
-            if (canClimb) Debug.Log($"[ClimbController] DetectClimbableEdge: Superficie superior muy inclinada ({floorAngle}°)");
             canClimb = false;
             return;
         }
-        
-        Debug.Log($"[ClimbController] DetectClimbableEdge: Superficie superior válida - Ángulo: {floorAngle}°");
         
         // Calcular la posición objetivo (arriba de la plataforma)
         climbTargetPosition = floorHit.point + Vector3.up * (characterController.height * 0.5f + 0.1f);
@@ -284,7 +246,6 @@ public class ClimbController : MonoBehaviour
             // Está abajo, debe estar dentro del rango para trepar hacia arriba
             if (verticalDistanceAbs > maxClimbUp || verticalDistanceAbs < 0.2f)
             {
-                if (canClimb && canClimbCooldown <= 0f) Debug.Log($"[ClimbController] DetectClimbableEdge: Distancia vertical hacia arriba fuera de rango ({verticalDistanceAbs}m, max: {maxClimbUp}m)");
                 if (canClimbCooldown <= 0f)
                 {
                     canClimb = false;
@@ -297,7 +258,6 @@ public class ClimbController : MonoBehaviour
             // Está arriba (cayendo), debe estar muy cerca del borde
             if (verticalDistanceAbs > maxClimbDown)
             {
-                if (canClimb && canClimbCooldown <= 0f) Debug.Log($"[ClimbController] DetectClimbableEdge: Distancia vertical hacia abajo fuera de rango ({verticalDistanceAbs}m, max: {maxClimbDown}m - cayendo desde muy arriba)");
                 if (canClimbCooldown <= 0f)
                 {
                     canClimb = false;
@@ -306,25 +266,14 @@ public class ClimbController : MonoBehaviour
             }
         }
         
-        Debug.Log($"[ClimbController] DetectClimbableEdge: Distancia vertical válida - {verticalDistanceAbs:F2}m ({(!isBelowPlatform ? "arriba/cayendo" : "abajo/subiendo")})");
-        
         // Verificar que el jugador esté lo suficientemente cerca horizontalmente
         float horizontalDistance = Vector3.Distance(
             new Vector3(climbTargetPosition.x, transform.position.y, climbTargetPosition.z),
             transform.position);
         float maxHorizontalDist = climbCheckForward * 1.5f; // Margen razonable (1.5x la distancia de detección)
         
-        // Log informativo si la distancia horizontal máxima es muy grande
-        if (maxHorizontalDist > 5f)
-        {
-            if (canClimb && Time.frameCount % 60 == 0)
-            {
-                Debug.Log($"[ClimbController] INFO: maxHorizontalDist={maxHorizontalDist}m (climbCheckForward={climbCheckForward}m * 1.5). Con valores grandes puede detectar bordes muy lejanos.");
-            }
-        }
         if (horizontalDistance > maxHorizontalDist)
         {
-            if (canClimb && canClimbCooldown <= 0f) Debug.Log($"[ClimbController] DetectClimbableEdge: Distancia horizontal muy lejana ({horizontalDistance}m, max: {maxHorizontalDist}m)");
             if (canClimbCooldown <= 0f)
             {
                 canClimb = false;
@@ -336,11 +285,6 @@ public class ClimbController : MonoBehaviour
         canClimb = true;
         canClimbCooldown = CLIMB_COOLDOWN_TIME; // Resetear cooldown cuando detectamos borde válido
         
-        if (!wasClimbable)
-        {
-            Debug.Log($"[ClimbController] DetectClimbableEdge: ✓ BORDE TREPABLE DETECTADO! Pos: {transform.position}, Target: {climbTargetPosition}, Dist V: {verticalDistance}m, Dist H: {horizontalDistance}m, Cooldown: {canClimbCooldown}s");
-        }
-        
         // Si el trepar automático está activado, intentar trepar automáticamente cuando se detecta un borde válido
         // Funciona EXACTAMENTE igual que el trepar manual: si canClimb es true, trepa
         if (autoClimb && !isClimbing && canClimb)
@@ -348,7 +292,6 @@ public class ClimbController : MonoBehaviour
             // Simplemente intentar trepar - sin condiciones adicionales
             // Si canClimb es true, significa que ya pasó todas las validaciones
             // (distancia, altura, ángulos, etc.), igual que el trepar manual
-            Debug.Log($"[ClimbController] DetectClimbableEdge: Auto-trepar activado! canClimb={canClimb}");
             TryStartClimb(); // Intentar iniciar trepar automáticamente (mismas condiciones que manual)
         }
     }
@@ -358,11 +301,8 @@ public class ClimbController : MonoBehaviour
     /// </summary>
     public bool TryStartClimb()
     {
-        Debug.Log($"[ClimbController] TryStartClimb llamado - canClimb: {canClimb}, isClimbing: {isClimbing}");
-        
         if (!canClimb || isClimbing)
         {
-            Debug.Log($"[ClimbController] TryStartClimb: No se puede iniciar - canClimb: {canClimb}, isClimbing: {isClimbing}");
             return false;
         }
         
@@ -373,15 +313,12 @@ public class ClimbController : MonoBehaviour
         // Guardar distancia inicial para cálculo de progreso
         initialClimbDistance = Vector3.Distance(transform.position, climbTargetPosition);
         
-        Debug.Log($"<color=green><size=16>✓ TREPAR INICIADO!</size></color> Distancia inicial: {initialClimbDistance}m | Target: {climbTargetPosition}", this);
-        
         // Detener la gravedad temporalmente y resetear completamente
         if (gravityController != null)
         {
             gravityController.SetGravityEnabled(false);
             // Resetear completamente el vector de gravedad
             gravityController.SetGravityVector(Vector3.zero);
-            Debug.Log("[ClimbController] TryStartClimb: Gravedad desactivada y vector reseteado");
         }
         
         return true;
@@ -394,10 +331,6 @@ public class ClimbController : MonoBehaviour
     {
         if (!isClimbing || characterController == null)
         {
-            if (isClimbing && characterController == null)
-            {
-                Debug.LogWarning("[ClimbController] UpdateClimb: CharacterController es null durante trepar!");
-            }
             return;
         }
         
@@ -405,16 +338,9 @@ public class ClimbController : MonoBehaviour
         Vector3 currentDirection = (climbTargetPosition - transform.position);
         float distanceToTarget = currentDirection.magnitude;
         
-        // Log cada cierto tiempo para verificar progreso (más visible)
-        if (Time.frameCount % 10 == 0)
-        {
-            Debug.Log($"<color=cyan>[TREPANDO]</color> Distancia: {distanceToTarget:F2}m | Progreso: {climbProgress:P0} | Pos: {transform.position} | Target: {climbTargetPosition}", this);
-        }
-        
         // Si llegamos al objetivo, terminar el trepar
         if (distanceToTarget < 0.2f)
         {
-            Debug.Log($"<color=green><size=16>✓ OBJETIVO ALCANZADO!</size></color> Distancia final: {distanceToTarget}m", this);
             FinishClimb();
             return;
         }
@@ -422,7 +348,6 @@ public class ClimbController : MonoBehaviour
         // Si nos alejamos demasiado, cancelar el trepar
         if (distanceToTarget > initialClimbDistance * 1.5f && initialClimbDistance > 0.1f)
         {
-            Debug.LogWarning($"[ClimbController] UpdateClimb: Nos alejamos demasiado! Distancia: {distanceToTarget}m, Inicial: {initialClimbDistance}m");
             CancelClimb();
             return;
         }
@@ -437,14 +362,12 @@ public class ClimbController : MonoBehaviour
         if (!hasWall && climbProgress > 0.3f)
         {
             // Solo cancelar si estamos avanzados en el trepar y ya no hay pared
-            Debug.LogWarning("[ClimbController] UpdateClimb: Ya no hay pared delante durante trepar avanzado");
             // No cancelar, continuar hacia el objetivo
         }
         
         // Asegurar que la gravedad esté desactivada durante el trepar
         if (gravityController != null && gravityController.IsGravityEnabled())
         {
-            Debug.LogWarning("[ClimbController] UpdateClimb: Gravedad estaba activada, desactivando...");
             gravityController.SetGravityEnabled(false);
             gravityController.SetGravityVector(Vector3.zero);
         }
@@ -475,38 +398,12 @@ public class ClimbController : MonoBehaviour
         // Aplicar movimiento y verificar resultado
         CollisionFlags flags = characterController.Move(moveVector);
         
-        // Log de movimiento aplicado (solo cuando hay cambios significativos o problemas)
-        if (Time.frameCount % 15 == 0 || moveVector.magnitude < 0.001f) // Menos frecuente pero más visible
-        {
-            string flagInfo = "";
-            if ((flags & CollisionFlags.Sides) != 0) flagInfo += " [Colisión lateral]";
-            if ((flags & CollisionFlags.Above) != 0) flagInfo += " [Colisión arriba]";
-            if ((flags & CollisionFlags.Below) != 0) flagInfo += " [Colisión abajo]";
-            
-            if (moveVector.magnitude < 0.001f)
-            {
-                Debug.LogWarning($"<color=yellow>[TREPANDO] Movimiento muy pequeño: {moveVector.magnitude:F5}m{flagInfo}</color>", this);
-            }
-            else
-            {
-                Debug.Log($"<color=cyan>[TREPANDO] Movimiento: {moveVector.magnitude:F3}m/frame{flagInfo}</color>", this);
-            }
-        }
-        
         // Verificar si el movimiento fue bloqueado
-        if ((flags & CollisionFlags.Sides) != 0 && climbProgress < 0.3f)
-        {
-            Debug.LogWarning($"[ClimbController] UpdateClimb: Colisión lateral detectada durante inicio del trepar. Flags: {flags}");
-        }
         
         // Actualizar progreso basado en la distancia inicial
         if (initialClimbDistance > 0.01f)
         {
             climbProgress = Mathf.Clamp01(1f - (distanceToTarget / initialClimbDistance));
-        }
-        else
-        {
-            Debug.LogWarning("[ClimbController] UpdateClimb: initialClimbDistance es muy pequeño o cero!");
         }
     }
     
@@ -515,7 +412,6 @@ public class ClimbController : MonoBehaviour
     /// </summary>
     private void FinishClimb()
     {
-        Debug.Log("[ClimbController] FinishClimb: Finalizando trepar y restaurando gravedad");
         isClimbing = false;
         climbProgress = 0f;
         initialClimbDistance = 0f;
@@ -525,7 +421,6 @@ public class ClimbController : MonoBehaviour
         {
             gravityController.SetGravityEnabled(true);
             // No resetear el vector inmediatamente, dejar que ActiveGravity lo haga
-            Debug.Log("[ClimbController] FinishClimb: Gravedad reactivada");
         }
     }
     
@@ -536,7 +431,6 @@ public class ClimbController : MonoBehaviour
     {
         if (isClimbing)
         {
-            Debug.Log("[ClimbController] CancelClimb: Trepar cancelado");
             isClimbing = false;
             climbProgress = 0f;
             initialClimbDistance = 0f;
@@ -559,10 +453,6 @@ public class ClimbController : MonoBehaviour
     public bool CanClimb() 
     {
         bool result = canClimb && !isClimbing;
-        if (result && Time.frameCount % 30 == 0) // Log ocasional cuando está disponible
-        {
-            Debug.Log($"[ClimbController] CanClimb: {result} (canClimb: {canClimb}, cooldown: {canClimbCooldown:F2}s, isClimbing: {isClimbing})");
-        }
         return result;
     }
     

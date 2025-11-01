@@ -65,8 +65,6 @@ namespace JNBE
 
         private void EnterSpectatorMode()
         {
-            Debug.Log("MODO ESPECTADOR ACTIVADO - Presiona F12 para salir");
-
             // Guardar el estado de pausa del juego
             wasGamePaused = false;
 
@@ -112,8 +110,6 @@ namespace JNBE
 
         private void ExitSpectatorMode()
         {
-            Debug.Log("MODO ESPECTADOR DESACTIVADO");
-
             // Restaurar la cámara original
             if (originalCamera != null)
             {

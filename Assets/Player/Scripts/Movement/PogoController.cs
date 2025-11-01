@@ -167,12 +167,6 @@ public class PogoController : MonoBehaviour
         float pogoForce = dashSpeed * pogoForceMultiplier * momentumMultiplier;
         float pogoDuration = dashTime * pogoDurationMultiplier;
         
-        // Debug log for momentum system
-        if (consecutivePogos > 1)
-        {
-            Debug.Log($"Consecutive Pogo #{consecutivePogos}! Force multiplier: {momentumMultiplier:F2}x");
-        }
-        
         // Use existing ExecuteThrowPlayer method from ExternalForceController
         externalForceController.ExecuteThrow(bounceDirection, pogoForce, pogoDuration);
         
@@ -209,8 +203,6 @@ public class PogoController : MonoBehaviour
         {
             jumpController.ResetDoubleJump();
         }
-        
-        Debug.Log("Pogo successful! Dash and double jump reset.");
     }
     
     /// <summary>

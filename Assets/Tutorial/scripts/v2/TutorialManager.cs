@@ -29,7 +29,6 @@ public class TutorialManager : MonoBehaviour
     {
         if(!firstTrigger && !GameManager.singletonGameManager.isInCinematic) //si termino la cinematica lanza esto
         {
-            Debug.Log("Entro aca");
             firstTrigger = true;
             ShowMessage(firstMessage);
         }

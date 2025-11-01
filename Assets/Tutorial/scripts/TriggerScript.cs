@@ -17,7 +17,6 @@ public class TriggerScript : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Se activo el evento");
             OnActivateTutorialUnityEvent?.Invoke();
             Destroy(gameObject);
         }

@@ -166,10 +166,6 @@ public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para
         {
             _hud.addScoreValue(scoreValue);
         }
-        else
-        {
-            Debug.LogWarning("HUD not found! Score was not added. Make sure there's a GameObject with 'HUD' tag in the scene.");
-        }
     }
 
 
@@ -187,10 +183,6 @@ public class GameManager : MonoBehaviour //Por ahora en desuso, solo se uso para
         if (_hud != null)
         {
             _hud.OnDeathHandler();
-        }
-        else
-        {
-            Debug.LogWarning("HUD not found! OnDeathHandler() was not called. Make sure there's a GameObject with 'HUD' tag in the scene.");
         }
     }
 

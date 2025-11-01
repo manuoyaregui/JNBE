@@ -69,7 +69,6 @@ public class JumpController : MonoBehaviour
             if (pogoController != null && pogoController.GetConsecutivePogos() > 0)
             {
                 pogoController.ResetConsecutivePogos();
-                Debug.Log("Momentum reset - touched ground");
             }
         }
 
@@ -77,20 +76,13 @@ public class JumpController : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
         {
             bool canClimbCheck = climbController != null && climbController.CanClimb();
-            Debug.Log($"[JumpController] HandleJump: Jump presionado - climbController null: {climbController == null}, CanClimb: {canClimbCheck}");
             
             if (canClimbCheck)
             {
-                Debug.Log("[JumpController] HandleJump: Intentando iniciar trepar...");
                 if (climbController.TryStartClimb())
                 {
-                    Debug.Log("[JumpController] HandleJump: ✓ Trepar iniciado, cancelando salto");
                     // Si se inició el trepar, no ejecutar salto
                     return;
-                }
-                else
-                {
-                    Debug.Log("[JumpController] HandleJump: Trepar falló, continuando con salto normal");
                 }
             }
         }

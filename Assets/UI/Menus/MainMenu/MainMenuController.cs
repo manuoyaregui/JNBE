@@ -34,7 +34,6 @@ public class MainMenuController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(currentState);
         ChangeCanvas();
     }
     public void SetMainMenu()
