@@ -19,6 +19,11 @@ public class ClimbController : MonoBehaviour
     [Header("Raycast Settings")]
     [SerializeField] private LayerMask climbableLayers = -1; // Capas que se pueden trepar
     
+    [Header("Anti-Stuck Settings")]
+    [SerializeField] private float maxClimbDuration = 3f; // Duración máxima del trepar antes de cancelar (segundos)
+    [SerializeField] private float stuckDetectionTime = 0.3f; // Tiempo sin progreso antes de cancelar (segundos)
+    [SerializeField] private float minProgressDistance = 0.05f; // Distancia mínima de progreso para no considerarse atascado (m)
+    
     private CharacterController characterController;
     private SurfaceDetector surfaceDetector;
     private GravityController gravityController;
@@ -34,6 +39,11 @@ public class ClimbController : MonoBehaviour
     private float initialClimbDistance = 0f;
     private float canClimbCooldown = 0f; // Tiempo que mantiene canClimb en true aunque las condiciones cambien ligeramente
     private const float CLIMB_COOLDOWN_TIME = 0.3f; // Segundos de cooldown
+    
+    // Anti-stuck tracking
+    private float climbStartTime = 0f;
+    private float lastProgressTime = 0f;
+    private float lastDistanceToTarget = 0f;
     
     /// <summary>
     /// Initialize climb controller with required dependencies
@@ -313,6 +323,11 @@ public class ClimbController : MonoBehaviour
         // Guardar distancia inicial para cálculo de progreso
         initialClimbDistance = Vector3.Distance(transform.position, climbTargetPosition);
         
+        // Inicializar tracking anti-stuck
+        climbStartTime = Time.time;
+        lastProgressTime = Time.time;
+        lastDistanceToTarget = initialClimbDistance;
+        
         // Detener la gravedad temporalmente y resetear completamente
         if (gravityController != null)
         {
@@ -334,6 +349,13 @@ public class ClimbController : MonoBehaviour
             return;
         }
         
+        // Verificar timeout total del trepar
+        if (Time.time - climbStartTime > maxClimbDuration)
+        {
+            CancelClimb();
+            return;
+        }
+        
         // Calcular progreso del trepar
         Vector3 currentDirection = (climbTargetPosition - transform.position);
         float distanceToTarget = currentDirection.magnitude;
@@ -352,17 +374,49 @@ public class ClimbController : MonoBehaviour
             return;
         }
         
-        // Verificar si todavía hay una superficie válida para trepar
-        // (por si algo cambió durante el trepar - hacer esto menos estricto durante el trepar)
-        float safeForward = Mathf.Clamp(climbCheckForward, 0.2f, 2f);
-        Vector3 checkPos = transform.position + transform.forward * 0.2f;
-        RaycastHit wallCheck;
-        bool hasWall = Physics.Raycast(checkPos, transform.forward, out wallCheck, safeForward * 1.5f, climbableLayers);
+        // Detectar si estamos atascados (sin progreso suficiente)
+        float distanceProgress = lastDistanceToTarget - distanceToTarget; // Positivo = acercándose
+        float timeSinceLastProgress = Time.time - lastProgressTime;
         
-        if (!hasWall && climbProgress > 0.3f)
+        // Si no hay progreso significativo durante demasiado tiempo, cancelar
+        if (distanceProgress < minProgressDistance && timeSinceLastProgress > stuckDetectionTime)
         {
-            // Solo cancelar si estamos avanzados en el trepar y ya no hay pared
-            // No cancelar, continuar hacia el objetivo
+            CancelClimb();
+            return;
+        }
+        
+        // Si hay progreso, actualizar el tracking
+        if (distanceProgress > minProgressDistance)
+        {
+            lastProgressTime = Time.time;
+        }
+        
+        // Actualizar distancia para próxima comparación
+        lastDistanceToTarget = distanceToTarget;
+        
+        // Verificar que el target position sigue siendo válido
+        // Si estamos muy cerca del target pero no llegamos, podría ser un target inválido
+        if (distanceToTarget < 0.5f && climbProgress > 0.7f)
+        {
+            // Si estamos cerca del objetivo y avanzados en el trepar, intentar finalización forzada
+            Vector3 directMove = currentDirection.normalized * Mathf.Min(distanceToTarget, 0.3f);
+            characterController.Move(directMove);
+            
+            // Verificar si llegamos después del movimiento forzado
+            float newDistance = Vector3.Distance(transform.position, climbTargetPosition);
+            if (newDistance < 0.2f)
+            {
+                FinishClimb();
+                return;
+            }
+            
+            // Si después del movimiento forzado aún no llegamos y estamos muy cerca, cancelar
+            // Esto indica que el target es inalcanzable
+            if (newDistance < 0.35f && Mathf.Abs(newDistance - distanceToTarget) < 0.05f)
+            {
+                CancelClimb();
+                return;
+            }
         }
         
         // Asegurar que la gravedad esté desactivada durante el trepar
@@ -395,15 +449,32 @@ public class ClimbController : MonoBehaviour
             moveVector = moveDirection * distanceToTarget;
         }
         
+        // Guardar posición antes del movimiento para detectar bloqueos
+        Vector3 positionBeforeMove = transform.position;
+        
         // Aplicar movimiento y verificar resultado
         CollisionFlags flags = characterController.Move(moveVector);
         
         // Verificar si el movimiento fue bloqueado
+        Vector3 actualMovement = transform.position - positionBeforeMove;
+        float actualMoveDistance = actualMovement.magnitude;
+        
+        // Si el movimiento fue bloqueado significativamente (colisión lateral), intentar movimiento más vertical
+        bool hasLateralCollision = (flags & CollisionFlags.Sides) != 0;
+        if (hasLateralCollision && actualMoveDistance < moveVector.magnitude * 0.3f && climbProgress < 0.5f)
+        {
+            // Intentar movimiento más vertical para evitar la colisión lateral
+            Vector3 verticalMove = new Vector3(0, Mathf.Max(moveVector.y * 1.5f, currentMoveSpeed * Time.deltaTime * 0.5f), 0);
+            characterController.Move(verticalMove);
+        }
+        
+        // Recalcular distancia después del movimiento
+        float newDistanceToTarget = Vector3.Distance(transform.position, climbTargetPosition);
         
         // Actualizar progreso basado en la distancia inicial
         if (initialClimbDistance > 0.01f)
         {
-            climbProgress = Mathf.Clamp01(1f - (distanceToTarget / initialClimbDistance));
+            climbProgress = Mathf.Clamp01(1f - (newDistanceToTarget / initialClimbDistance));
         }
     }
     
@@ -415,6 +486,11 @@ public class ClimbController : MonoBehaviour
         isClimbing = false;
         climbProgress = 0f;
         initialClimbDistance = 0f;
+        
+        // Resetear tracking anti-stuck
+        climbStartTime = 0f;
+        lastProgressTime = 0f;
+        lastDistanceToTarget = 0f;
         
         // Restaurar gravedad gradualmente
         if (gravityController != null)
@@ -436,6 +512,11 @@ public class ClimbController : MonoBehaviour
             initialClimbDistance = 0f;
             canClimb = false;
             canClimbCooldown = 0f;
+            
+            // Resetear tracking anti-stuck
+            climbStartTime = 0f;
+            lastProgressTime = 0f;
+            lastDistanceToTarget = 0f;
             
             // Restaurar gravedad
             if (gravityController != null)
