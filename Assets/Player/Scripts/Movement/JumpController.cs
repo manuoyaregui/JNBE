@@ -18,6 +18,7 @@ public class JumpController : MonoBehaviour
     private InertiaController inertiaController;
     private PogoController pogoController;
     private PlayerController playerController;
+    private ClimbController climbController;
     
     private bool doubleJump = true;
     
@@ -27,7 +28,7 @@ public class JumpController : MonoBehaviour
     public void Setup(CharacterController controller, SurfaceDetector detector, 
                      GravityController gravityCtrl, InertiaController inertiaCtrl,
                      PogoController pogoCtrl, PlayerController playerCtrl,
-                     float jump, float grav)
+                     float jump, float grav, ClimbController climbCtrl = null)
     {
         characterController = controller;
         surfaceDetector = detector;
@@ -35,6 +36,7 @@ public class JumpController : MonoBehaviour
         inertiaController = inertiaCtrl;
         pogoController = pogoCtrl;
         playerController = playerCtrl;
+        climbController = climbCtrl;
         jumpValue = jump;
         gravity = grav;
     }
@@ -71,6 +73,28 @@ public class JumpController : MonoBehaviour
             }
         }
 
+        // Prioridad: Verificar si se puede trepar primero (cuando estamos cerca de un borde)
+        if (Input.GetButtonDown("Jump"))
+        {
+            bool canClimbCheck = climbController != null && climbController.CanClimb();
+            Debug.Log($"[JumpController] HandleJump: Jump presionado - climbController null: {climbController == null}, CanClimb: {canClimbCheck}");
+            
+            if (canClimbCheck)
+            {
+                Debug.Log("[JumpController] HandleJump: Intentando iniciar trepar...");
+                if (climbController.TryStartClimb())
+                {
+                    Debug.Log("[JumpController] HandleJump: ✓ Trepar iniciado, cancelando salto");
+                    // Si se inició el trepar, no ejecutar salto
+                    return;
+                }
+                else
+                {
+                    Debug.Log("[JumpController] HandleJump: Trepar falló, continuando con salto normal");
+                }
+            }
+        }
+        
         // Salto desde piso o pendiente
         if (Input.GetButtonDown("Jump") && 
             (surfaceDetector.GetCurrentSurfaceType() == SurfaceType.Floor || 

@@ -32,6 +32,7 @@ public class PlayerPhysicsController : MonoBehaviour
     private PlayerMovementController movementController;
     private PlayerCameraController cameraController;
     private ExternalForceController externalForceController;
+    private ClimbController climbController;
     
     // Serialized fields (keep for Inspector compatibility)
     [Header("Collision Detection")]
@@ -154,20 +155,25 @@ public class PlayerPhysicsController : MonoBehaviour
         pogoController.Setup(mainCamera, characterController, dashController, null, // JumpController will be set after
                            externalForceController, surfaceDetector, _MC_, dashSpd, dashTm);
         
-        // 7. JumpController (depends on all above)
+        // 7. ClimbController (depends on SurfaceDetector and GravityController)
+        climbController = gameObject.AddComponent<ClimbController>();
+        climbController.Setup(characterController, surfaceDetector, gravityController,
+                            _MC_, footPoint, collisionLayers);
+        
+        // 8. JumpController (depends on all above, including ClimbController)
         jumpController = gameObject.AddComponent<JumpController>();
         jumpController.Setup(characterController, surfaceDetector, gravityController,
-                           inertiaController, pogoController, _MC_, jumpVal, grav);
+                           inertiaController, pogoController, _MC_, jumpVal, grav, climbController);
         
         // Update PogoController with JumpController reference
         pogoController.Setup(mainCamera, characterController, dashController, jumpController,
                            externalForceController, surfaceDetector, _MC_, dashSpd, dashTm);
         
-        // 8. PlayerMovementController
+        // 9. PlayerMovementController
         movementController = gameObject.AddComponent<PlayerMovementController>();
         movementController.Setup(characterController, inertiaController, camera, moveSpd, useWASDControl);
         
-        // 9. PlayerCameraController
+        // 10. PlayerCameraController
         cameraController = gameObject.AddComponent<PlayerCameraController>();
         cameraController.Setup(camera, GunCamera, mainCamera, surfaceDetector, inertiaController,
                              mouseSens, maxCameraTilt, fovIncreaseRate, fovDecreaseRate,
@@ -185,20 +191,49 @@ public class PlayerPhysicsController : MonoBehaviour
             if (dashController != null) dashController.HandleDash();
             if (pogoController != null) pogoController.CheckForPogo();
             if (cameraController != null) cameraController.HandleMouseInput();
-            if (movementController != null) movementController.HandleMovement();
+            if (movementController != null && (climbController == null || !climbController.IsClimbing()))
+            {
+                // Solo mover si no estamos trepando
+                movementController.HandleMovement();
+            }
             if (inertiaController != null) inertiaController.UpdateInertia();
             if (cameraController != null) cameraController.ChangeFOV();
             if (cameraController != null) cameraController.HandleCameraTilt();
+            
+            // Actualizar trepar si está activo
+            if (climbController != null)
+            {
+                if (climbController.IsClimbing())
+                {
+                    climbController.UpdateClimb();
+                }
+                else
+                {
+                    // Detectar bordes trepables cuando no estamos trepando
+                    climbController.DetectClimbableEdge();
+                }
+            }
+            else
+            {
+                // Log ocasional si climbController es null (solo una vez cada muchos frames)
+                if (Time.frameCount % 300 == 0)
+                {
+                    Debug.LogWarning("[PlayerPhysicsController] Update: climbController es null!");
+                }
+            }
         }
         
         // Surface detection always runs
         if (surfaceDetector != null) surfaceDetector.DetectSurface();
         if (inertiaController != null) inertiaController.CheckInertiaCharger();
         
-        // Apply wall slide gravity
+        // Apply wall slide gravity (pero no si estamos trepando)
         if (surfaceDetector != null && surfaceDetector.IsInWall && gravityController != null)
         {
-            gravityController.ApplyWallSlideGravity();
+            if (climbController == null || !climbController.IsClimbing())
+            {
+                gravityController.ApplyWallSlideGravity();
+            }
         }
     }
     
@@ -210,7 +245,11 @@ public class PlayerPhysicsController : MonoBehaviour
             if (!GameManager.singletonGameManager.GetPausedStatus() &&
                 gravityController.IsGravityEnabled())
             {
-                gravityController.GravityForce();
+                // No aplicar gravedad si estamos trepando
+                if (climbController == null || !climbController.IsClimbing())
+                {
+                    gravityController.GravityForce();
+                }
             }
         }
     }

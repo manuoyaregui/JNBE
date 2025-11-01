@@ -134,7 +134,6 @@ GameObject:
   - component: {fileID: 632082740201163352}
   - component: {fileID: 3671765639798592436}
   - component: {fileID: 6134612531608967331}
-  - component: {fileID: 2069488366423556786}
   - component: {fileID: 7952891761075308966}
   - component: {fileID: 8754657214398193106}
   m_Layer: 9
@@ -272,6 +271,8 @@ MonoBehaviour:
   maxFOV: 80
   normalFOV: 65
   inertiaLerpSpeed: 3
+  inertiaMin: 1
+  inertiaMax: 1.5
   useWASDControl: 0
   pogoDetectionRange: 6
   pogoDetectionAngleDegrees: 72
@@ -285,23 +286,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 262144
   resetCamera: 0
---- !u!114 &2069488366423556786
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3671765639798592438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9da8a0367d53a554f9589924c4afb237, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  listOfGuns:
-  - {fileID: 0}
-  - {fileID: 0}
-  ChangeWeapon: {fileID: 8300000, guid: f95784b1a06bc72419739ed244c3d41b, type: 3}
-  PickUp: {fileID: 8300000, guid: af1dcbf5c46f82b4aa2d95758402472b, type: 3}
 --- !u!114 &7952891761075308966
 MonoBehaviour:
   m_ObjectHideFlags: 0

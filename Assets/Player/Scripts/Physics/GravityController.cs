@@ -47,6 +47,13 @@ public class GravityController : MonoBehaviour
     {
         if (surfaceDetector == null) return;
         
+        // Solo reactivar gravedad si no está desactivada manualmente
+        // (evitar que se reactive durante acciones especiales como trepar)
+        if (!toggleGravity)
+        {
+            return; // Si está desactivada manualmente, no reactivarla automáticamente
+        }
+        
         if (surfaceDetector.IsInFloor || surfaceDetector.IsInWall)
         {
             toggleGravity = true;
